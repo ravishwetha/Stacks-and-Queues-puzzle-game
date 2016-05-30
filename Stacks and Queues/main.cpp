@@ -14,7 +14,7 @@ float RES_Y2 = RES_Y/2;
 class Ball {
 private:
     float x, y;
-    float vx, vy; //vx is (pixels per second/framerate) eg. if vx is 0.5 and framerate is 60 then the speed of this object in pixels per second is 30px/s
+    float vx, vy;
     float radius = 10;
     float dia;
     
@@ -87,7 +87,7 @@ class Level {
 private:
     std::vector<float> ballsPositionX { RES_X, RES_X , RES_X};
     std::vector<float> ballsPositionY { RES_Y2, RES_Y2, RES_Y };
-    std::vector<float> ballsPeriod { 2.0, 2.0, 2.0 }; //balls appear on screen every x seconds
+    std::vector<float> ballsPeriod { 3.0, 2.0, 2.0 }; //balls appear on screen every x seconds
     std::vector<float> ballsVX { 1.0, 1.0, 1.0 }; //respective vx of balls in a level by level number
     std::vector<float> ballsRadii { 10, 10, 10 };
     
@@ -132,7 +132,7 @@ public:
     float getInterval() {
         clock_t interval;
         interval = clock() - ballClock;
-        return (((float)interval)/CLOCKS_PER_SEC);
+        return (((float)interval)/(CLOCKS_PER_SEC));
     }
     
     void updateLevel() {
@@ -153,8 +153,8 @@ public:
                     startBallClock();
                 }
                 else {
-                    cout << getInterval();
-                    if(getInterval() >= ballsPeriod.at(i-1)) {
+                    //cout << getInterval();
+                    if(getInterval() >= ballsPeriod.at(num)) {
                         //cout << " Ball " << i << " moved after right interval" << ".\n";
                         balls.at(i).update(true);
                         startBallClock();
@@ -195,7 +195,7 @@ public:
     
     //once all balls are off screen
     void clearLevel() {
-        
+        //TO-DO
     }
 };
 
@@ -227,6 +227,7 @@ void initialiseLevel1() {
 }
 
 void initialiseMainMenu() {
+    //TO-DO
     //for a start, it says something like 'press enter to play'
 }
 
