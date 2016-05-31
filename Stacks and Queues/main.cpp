@@ -1,100 +1,27 @@
-#include <SFML/Graphics.hpp>
-#include <math.h>
-#include <iostream>
-#include <string>
-#include <time.h>
-using namespace std;
+//Stacks and Queues
+//Copyright © 2016 TeamSQ. All rights reserved.
 
-/// Globals
-sf::RenderWindow* window;
+//main.cpp
+
+#include "Ball.hpp"
+
+///Globals
+sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(RES_X, RES_Y), "Stacks and Queues");
 float RES_X = 1200;
 float RES_Y = 800;
 float RES_Y2 = RES_Y/2;
-
-class Ball {
-private:
-    float x, y;
-    float vx, vy;
-    float radius = 10;
-    float dia;
-    
-    sf::Color color;
-    sf::String label; //text on the ball, typically a single character
-    
-public:
-    bool isActive;
-    bool isMoving;
-    bool isOnScreen;
-    
-    Ball(float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label) {
-        this->x = x;
-        this->y = y;
-        this->vx = vx;
-        this->vy = vy;
-        this->radius = radius;
-        this->color = color;
-        this->label = label;
-        
-        dia = radius*2;
-        isActive = true;
-        isMoving = false;
-    }
-    
-    bool checkOnScreen() {
-        if (x < -(radius) || y < -(radius) || x > RES_X + x || y > RES_Y + y) {
-            return false;
-        }
-        return true;
-    }
-    
-    void update(bool status) {
-        isOnScreen = checkOnScreen();
-        
-        isMoving = status;
-        if(!isMoving || !isActive) return;
-        x -= vx;
-        if (x < -(dia) ||
-            y < -(dia)) isActive = false;
-    }
-    
-    void draw() {
-        if(!isOnScreen || !isActive) return;
-        
-        sf::CircleShape ballCircle;
-        ballCircle.setFillColor(color);
-        ballCircle.setRadius(radius);
-        ballCircle.setPosition(x, y);
-        ballCircle.setOrigin(radius, radius);
-        
-        //place label on ball
-        // Declare and load a font
-        sf::Font ballFont;
-        ballFont.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Stacks and Queues/sansation.ttf");
-        // Create a text
-        sf::Text ballText(label, ballFont);
-        ballText.setCharacterSize(dia);
-        ballText.setStyle(sf::Text::Bold);
-        ballText.setColor(sf::Color::White);
-        //ballText.setOrigin(x+radius, y+radius);
-        ballText.setPosition(x-(radius/1.50), y-(radius/0.75));
-        
-        window->draw(ballCircle);
-        window->draw(ballText);
-    }
-};
 
 class Level {
 private:
     std::vector<float> ballsPositionX { RES_X, RES_X , RES_X};
     std::vector<float> ballsPositionY { RES_Y2, RES_Y2, RES_Y };
-    std::vector<float> ballsPeriod { 3.0, 2.0, 2.0 }; //balls appear on screen every x seconds
+    std::vector<float> ballsPeriod { 1.0, 2.0, 2.0 }; //balls appear on screen every x seconds
     std::vector<float> ballsVX { 1.0, 1.0, 1.0 }; //respective vx of balls in a level by level number
     std::vector<float> ballsRadii { 10, 10, 10 };
     
 public:
     int num;
     bool isActive;
-    bool domino; //when the level starts, the movement of the first ball triggers the movement of the rest at constant intervals
     
     //objects in level
     clock_t ballClock;
@@ -132,7 +59,7 @@ public:
     float getInterval() {
         clock_t interval;
         interval = clock() - ballClock;
-        return (((float)interval)/(CLOCKS_PER_SEC));
+        return (((float)interval)/(CLOCKS_PER_SEC))*6;
     }
     
     void updateLevel() {
@@ -202,6 +129,46 @@ public:
 Level* level1;
 std::vector<Level> levels;
 
+bool key_return; //start game
+bool key_P; //pause game
+bool key_escape; //reset game
+
+void keyDown(sf::Keyboard::Key keyCode) {
+    switch(keyCode) {
+        case sf::Keyboard::Return: key_return = true; break;
+        case sf::Keyboard::Escape: key_escape = true; break;
+        case sf::Keyboard::P: key_P = true; break;
+        default: ;
+    }
+}
+
+void keyUp(sf::Keyboard::Key keyCode) {
+    switch(keyCode) {
+        case sf::Keyboard::Return: key_return = false; break;
+        case sf::Keyboard::Escape: key_escape = false; break;
+        case sf::Keyboard::P: key_P = false; break;
+        default: ;
+    }
+}
+
+void processEvent(sf::Event& event) {
+    switch(event.type) {
+        case sf::Event::Closed: {
+            window->close();
+            break;
+        }
+        case sf::Event::KeyPressed: {
+            keyDown(event.key.code);
+            break;
+        }
+        case sf::Event::KeyReleased: {
+            keyUp(event.key.code);
+            break;
+        }
+        default: ; //nothing
+    }
+}
+
 void initialiseLevel1() {
     
     level1 = new Level(1);
@@ -212,7 +179,6 @@ void initialiseLevel1() {
     float y = level1->getBallPositionY();
     float vx1 = level1->getBallVX();
     float vy1 = vx1;
-    float period = level1->getBallPeriod();
     float radius = level1->getBallRadius();
     
     //create level objects accordingly
@@ -226,14 +192,18 @@ void initialiseLevel1() {
     level1->balls.push_back(lvl1ball4);
 }
 
-void initialiseMainMenu() {
+void runMainMenu() {
     //TO-DO
     //for a start, it says something like 'press enter to play'
+    window->clear();
+    window->display();
 }
 
-void initialiseGame() {
-    initialiseMainMenu();
-    initialiseLevel1();
+void runPauseScreen() {
+    //TO-DO
+    //just says 'paused'
+    window->clear();
+    window->display();
 }
 
 void updateGame() {
@@ -252,53 +222,79 @@ void drawGameFrame() {
     }
 }
 
-void processEvent(sf::Event& event) {
-    switch(event.type) {
-            
-        case sf::Event::Closed: {
-            window->close();
-            break;
-        }
-        default: ; //nothing
-    }
+void initialiseGame() {
+    initialiseLevel1();
 }
 
 int main() {
-    window = new sf::RenderWindow(sf::VideoMode(RES_X, RES_Y), "Stacks and Queues");
+    bool gameRunning = false;
+    bool gameNotPaused = true;
     
     sf::Clock clock;
     float frameTime = 1/60.0f;
     float dTime = 0;
     
-    
     initialiseGame();
     
     while (window->isOpen()) {
-        dTime += clock.getElapsedTime().asSeconds();
-        clock.restart();
         
         // Event handling
         sf::Event event;
         while(window->pollEvent(event)) {
             processEvent(event);
+            if(key_return) {
+                //cout << "Return key pressed.\n";
+                gameRunning = true;
+                gameNotPaused = true;
+            }
+        }
+    
+        if(gameRunning && gameNotPaused) {
+            
+            dTime += clock.getElapsedTime().asSeconds();
+            clock.restart();
+            
+            // Safeguard (slowdown) to prevent game from lagging to death
+            if (dTime > 5*frameTime) dTime = 5*frameTime;
+            
+            // Update game
+            while (dTime > frameTime) {
+                dTime -= frameTime;
+                updateGame();
+            }
+            
+            // Draw frame
+            window->clear();
+            drawGameFrame();
+            window->display();
+            
+            //cout << "Game is running.\n";
+            while(window->pollEvent(event)) {
+                processEvent(event);
+                if(key_escape) {
+                    //cout << "Escape key pressed.\n";
+                    gameRunning = false;
+                }
+                if(key_P) {
+                    //cout << "P key pressed.\n";
+                    gameNotPaused = false;
+                }
+            }
         }
         
-        // Safeguard (slowdown) to prevent game from lagging to death
-        if (dTime > 5*frameTime) dTime = 5*frameTime;
-        
-        // Update game
-        while (dTime > frameTime) {
-            dTime -= frameTime;
-            updateGame();
+        //'P' key to pause game by making gameRunning false
+        else if(gameRunning && !gameNotPaused) {
+            //cout << "Game is paused.\n";
+            runPauseScreen();
         }
         
-        // Draw frame
-        window->clear();
-        drawGameFrame();
-        window->display();
+        //'Escape' go to msin menu and reset game //It currently only pauses the game
+        else if(!gameRunning) {
+            runMainMenu();
+        }
     }
     
-    //read somewhere that it was good c++ practice to delete all objects once they're out of scope
+    //read somewhere that it was good c++ practice to delete all objects once they're out of scope, I don't think there is a garbage collector like in Java
     
     delete window;
     return 0;
