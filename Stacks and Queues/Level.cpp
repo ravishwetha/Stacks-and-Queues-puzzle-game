@@ -6,8 +6,8 @@
 #include "Level.hpp"
 
 Level::Level(int num) {
-    ballsPositionX = { RES_X, RES_X , RES_X };
-    ballsPositionY = { RES_Y2, RES_Y2, RES_Y };
+    inTubePositionX = { RES_X, RES_X , RES_X };
+    inTubePositionY = { RES_Y2, RES_Y2, RES_Y };
     ballsPeriod = { 1.0, 2.0, 2.0 };
     ballsVX = { 1.0, 1.0, 1.0 };
     ballsRadii = { 10, 10, 10 };
@@ -16,12 +16,12 @@ Level::Level(int num) {
     isActive = true;
 }
     
-float Level::getBallPositionX() {
-    return ballsPositionX.at(num);
+float Level::getInTubePositionX() {
+    return inTubePositionX.at(num);
 }
     
-float Level::getBallPositionY() {
-    return ballsPositionY.at(num);
+float Level::getInTubePositionY() {
+    return inTubePositionY.at(num);
 }
     
 float Level::getBallVX() {
@@ -101,7 +101,7 @@ void Level::drawInTube() {
     inTube.setOutlineThickness((height/5.0));
     inTube.setSize(sf::Vector2f(width, height));
     inTube.setOrigin(width/2.0, height/2.0);
-    inTube.setPosition(ballsPositionX.at(num)-width/2.0, ballsPositionY.at(num));
+    inTube.setPosition(inTubePositionX.at(num)-width/2.0, inTubePositionY.at(num));
     window->draw(inTube);
     
     sf::CircleShape leftEnd;
@@ -110,7 +110,7 @@ void Level::drawInTube() {
     leftEnd.setOutlineThickness((height/5.0)); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
     leftEnd.setRadius(height/2);
     leftEnd.setOrigin(width/2.0, height/2.0);
-    leftEnd.setPosition(ballsPositionX.at(num)-width*(2.0/3.0), ballsPositionY.at(num));
+    leftEnd.setPosition(inTubePositionX.at(num)-width*(2.0/3.0), inTubePositionY.at(num));
     window->draw(leftEnd);
 }
 
@@ -128,7 +128,7 @@ void Level::drawOutTube() {
     outTube.setOutlineThickness(height/5.0);
     outTube.setSize(sf::Vector2f(width, height));
     outTube.setOrigin(width/2.0, height/2.0);
-    outTube.setPosition(RES_X-(ballsPositionX.at(num)-width/2.0), RES_Y-ballsPositionY.at(num));
+    outTube.setPosition(RES_X-(inTubePositionX.at(num)-width/2.0), RES_Y-inTubePositionY.at(num));
     window->draw(outTube);
     
     sf::CircleShape rightEnd;
@@ -137,7 +137,7 @@ void Level::drawOutTube() {
     rightEnd.setOutlineThickness((height/5.0)); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
     rightEnd.setRadius(height/2);
     rightEnd.setOrigin(width/2.0, height/2.0);
-    rightEnd.setPosition(RES_X-(ballsPositionX.at(num)-width*(4.0/3.0)), RES_Y-ballsPositionY.at(num));
+    rightEnd.setPosition(RES_X-(inTubePositionX.at(num)-width*(4.0/3.0)), RES_Y-inTubePositionY.at(num));
     window->draw(rightEnd);
 }
     
