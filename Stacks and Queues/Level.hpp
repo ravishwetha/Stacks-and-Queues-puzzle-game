@@ -40,6 +40,7 @@ public:
     void updateLevel();
     void drawInTube();
     void drawOutTube();
+    void drawPath();
     void drawLevel();
     void clearLevel();
 };
