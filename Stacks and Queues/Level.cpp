@@ -140,10 +140,41 @@ void Level::drawOutTube() {
     rightEnd.setPosition(RES_X-(inTubePositionX.at(num)-width*(4.0/3.0)), RES_Y-inTubePositionY.at(num));
     window->draw(rightEnd);
 }
+
+void Level::drawPath() {
+    float pathWidth = (ballsRadii.at(num)*8.0);
+    float pathHeight = (ballsRadii.at(num)*2.0)/5.0; //inTube height/5.0
+    
+    sf::Color lineColor = sf::Color::Yellow;
+    
+    //path coming out of inTube
+    sf::RectangleShape inLine;
+    inLine.setFillColor(lineColor);
+    inLine.setOutlineColor(sf::Color::Black);
+    inLine.setOutlineThickness(pathHeight/5.0);
+    inLine.setSize(sf::Vector2f(pathWidth, pathHeight));
+    inLine.setOrigin(pathWidth/2.0, pathHeight/2.0);
+    inLine.setPosition(inTubePositionX.at(num)-pathWidth/2.0, inTubePositionY.at(num));
+    window->draw(inLine);
+    
+    for(int i=0; i<stacks.size(); i++) {
+        
+    }
+    
+    sf::RectangleShape outLine;
+    outLine.setFillColor(lineColor);
+    outLine.setOutlineColor(sf::Color::Black);
+    outLine.setOutlineThickness(pathHeight/5.0);
+    outLine.setSize(sf::Vector2f(pathWidth, pathHeight));
+    outLine.setOrigin(pathWidth/2.0, pathHeight/2.0);
+    outLine.setPosition(RES_X-(inTubePositionX.at(num)-pathWidth/2.0), RES_Y-inTubePositionY.at(num));
+    window->draw(outLine);
+}
     
 void Level::drawLevel() {
     drawInTube();
     drawOutTube();
+    drawPath();
     
     //balls drawn after tubes makes tubes transparent
     for( int i = 0; i < balls.size(); i++ ) {
