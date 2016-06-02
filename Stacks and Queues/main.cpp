@@ -105,6 +105,13 @@ void runMainMenu() {
     window->display();
 }
 
+void clear() {
+    for(int i=0; i<levels.size(); i++) {
+        levels.at(i).balls.clear();
+        levels.at(i).stacks.clear();
+    }
+}
+
 void runPauseScreen() {
     //TODO: just says 'paused' and you can still see the level under the word
     window->clear();
@@ -126,6 +133,7 @@ void drawGameFrame() {
 int main() {
     
     bool gameRunning = false;
+    bool reinitialise = false;
     bool gameNotPaused = true;
     
     sf::Clock clock;
@@ -136,6 +144,10 @@ int main() {
     initialiseGame();
     
     while (window->isOpen()) {
+        if(reinitialise) {
+            initialiseGame();
+            reinitialise = false;
+        }
         
         // Event handling
         sf::Event event;
@@ -188,13 +200,13 @@ int main() {
             runPauseScreen();
         }
         
-        //'Escape' go to main menu and reset game //It currently only pauses the game
+        //'Escape' go to main menu and reset game
         else if(!gameRunning) {
+            clear();
             runMainMenu();
+            reinitialise = true;
         }
     }
-    
-    //read somewhere that it was good c++ practice to delete all objects once they're out of scope, I don't think there is a garbage collector like in Java
     
     delete window;
     return 0;
