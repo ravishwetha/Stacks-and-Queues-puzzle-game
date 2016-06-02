@@ -101,16 +101,16 @@ void Level::drawInTube() {
     inTube.setOutlineThickness((height/5.0));
     inTube.setSize(sf::Vector2f(width, height));
     inTube.setOrigin(width/2.0, height/2.0);
-    inTube.setPosition(RES_X-width/2.0, RES_Y2);
+    inTube.setPosition(ballsPositionX.at(num)-width/2.0, ballsPositionY.at(num));
     window->draw(inTube);
     
     sf::CircleShape leftEnd;
     leftEnd.setFillColor(inner);
     leftEnd.setOutlineColor(sf::Color::Black);
-    leftEnd.setOutlineThickness(height/5.0); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
+    leftEnd.setOutlineThickness((height/5.0)); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
     leftEnd.setRadius(height/2);
     leftEnd.setOrigin(width/2.0, height/2.0);
-    leftEnd.setPosition(RES_X - width*(2.0/3.0), RES_Y2);
+    leftEnd.setPosition(ballsPositionX.at(num)-width*(2.0/3.0), ballsPositionY.at(num));
     window->draw(leftEnd);
 }
 
@@ -125,10 +125,10 @@ void Level::drawOutTube() {
     sf::RectangleShape outTube;
     outTube.setFillColor(outer);
     outTube.setOutlineColor(sf::Color::Black);
-    outTube.setOutlineThickness((height/5.0));
+    outTube.setOutlineThickness(height/5.0);
     outTube.setSize(sf::Vector2f(width, height));
     outTube.setOrigin(width/2.0, height/2.0);
-    outTube.setPosition(width/2.0, RES_Y2);
+    outTube.setPosition(RES_X-(ballsPositionX.at(num)-width/2.0), RES_Y-ballsPositionY.at(num));
     window->draw(outTube);
     
     sf::CircleShape rightEnd;
@@ -137,7 +137,7 @@ void Level::drawOutTube() {
     rightEnd.setOutlineThickness((height/5.0)); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
     rightEnd.setRadius(height/2);
     rightEnd.setOrigin(width/2.0, height/2.0);
-    rightEnd.setPosition(width*(4.0/3.0), RES_Y2);
+    rightEnd.setPosition(RES_X-(ballsPositionX.at(num)-width*(4.0/3.0)), RES_Y-ballsPositionY.at(num));
     window->draw(rightEnd);
 }
     
