@@ -3,15 +3,18 @@
 
 //main.cpp
 
-#include "Ball.hpp"
 #include "Level.hpp"
 
 ///Globals
-sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(RES_X, RES_Y), "Stacks and Queues");
 float RES_X = 1200;
 float RES_Y = 800;
-float RES_Y2 = RES_Y/2;
+float RES_Y2 = RES_Y/2.0;
+sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(RES_X, RES_Y), "Stacks and Queues");
 
+//Window
+sf::Color backgroundColor = sf::Color::White;
+
+//Game
 std::vector<Level> levels;
 Level* level1;
 
@@ -68,12 +71,15 @@ void initialiseLevel1() {
     float vy1 = vx1;
     float radius = level1->getBallRadius();
     
+    
     //cout << "Level 1 variables initialised.\n";
     
     //create level objects accordingly
     Ball lvl1ball1 = Ball(x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "1");
     Ball lvl1ball3 = Ball(x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
     Ball lvl1ball4 = Ball(x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
+    
+    tStack lvl1stack1 = tStack(600, 200, radius*6, radius*2);
     
     //cout << "Level 1 objects initialised.\n";
     
@@ -82,8 +88,15 @@ void initialiseLevel1() {
     level1->balls.push_back(lvl1ball3);
     level1->balls.push_back(lvl1ball4);
     
+    level1->stacks.push_back(lvl1stack1);
+    
     //cout << "Level 1 vectors initialised.\n";
 
+}
+
+void initialiseGame() {
+    //cout << "about to initialise lvl 1.\n";
+    initialiseLevel1();
 }
 
 void runMainMenu() {
@@ -110,12 +123,8 @@ void drawGameFrame() {
     }
 }
 
-void initialiseGame() {
-    //cout << "about to initialise lvl 1.\n";
-    initialiseLevel1();
-}
-
 int main() {
+    
     bool gameRunning = false;
     bool gameNotPaused = true;
     
@@ -154,7 +163,8 @@ int main() {
             }
             
             // Draw frame
-            window->clear();
+            //window->clear();
+            window->sf::RenderTarget::clear(backgroundColor);
             drawGameFrame();
             window->display();
             
