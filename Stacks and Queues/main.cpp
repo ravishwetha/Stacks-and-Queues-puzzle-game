@@ -65,8 +65,8 @@ void initialiseLevel1() {
     //cout << "Created level object.\n";
     
     //get level info
-    float x = level1->getBallPositionX();
-    float y = level1->getBallPositionY();
+    float x = level1->getInTubePositionX();
+    float y = level1->getInTubePositionY();
     float vx1 = level1->getBallVX();
     float vy1 = vx1;
     float radius = level1->getBallRadius();
@@ -79,7 +79,7 @@ void initialiseLevel1() {
     Ball lvl1ball3 = Ball(x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
     Ball lvl1ball4 = Ball(x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
-    tStack lvl1stack1 = tStack(600, 200, radius*6, radius*2);
+    tStack lvl1stack1 = tStack(600, 200, radius*2, radius*6);
     
     //cout << "Level 1 objects initialised.\n";
     
