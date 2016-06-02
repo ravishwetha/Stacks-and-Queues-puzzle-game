@@ -107,7 +107,7 @@ void Level::drawInTube() {
     sf::CircleShape leftEnd;
     leftEnd.setFillColor(inner);
     leftEnd.setOutlineColor(sf::Color::Black);
-    leftEnd.setOutlineThickness((height/5.0)); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
+    leftEnd.setOutlineThickness(height/5.0); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
     leftEnd.setRadius(height/2);
     leftEnd.setOrigin(width/2.0, height/2.0);
     leftEnd.setPosition(RES_X - width*(2.0/3.0), RES_Y2);
