@@ -10,8 +10,8 @@
 
 class Level {
 private:
-    std::vector<float> ballsPositionX;
-    std::vector<float> ballsPositionY;
+    std::vector<float> inTubePositionX;
+    std::vector<float> inTubePositionY;
     std::vector<float> ballsPeriod; //balls appear on screen every x seconds
     std::vector<float> ballsVX; //respective vx of balls in a level by level number
     std::vector<float> ballsRadii;
@@ -28,8 +28,8 @@ public:
     Level(int num);
     
     //getters
-    float getBallPositionX();
-    float getBallPositionY();
+    float getInTubePositionX();
+    float getInTubePositionY();
     float getBallVX();
     float getBallPeriod();
     float getBallRadius();
