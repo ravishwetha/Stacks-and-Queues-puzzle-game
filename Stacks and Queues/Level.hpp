@@ -6,7 +6,7 @@
 #ifndef Level_hpp
 #define Level_hpp
 
-#include "Ball.hpp"
+#include "tStack.hpp"
 
 class Level {
 private:
@@ -23,6 +23,7 @@ public:
     //objects in level
     clock_t ballClock;
     std::vector<Ball> balls;
+    std::vector<tStack> stacks;
     
     Level(int num);
     
