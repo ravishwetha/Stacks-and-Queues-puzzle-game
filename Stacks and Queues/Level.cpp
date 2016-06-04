@@ -263,6 +263,8 @@ void Level::drawLevel() {
     }
 }
 
-void clearLevel() {
-        //TODO: clear all level items when level ends
+void Level::clearLevel() {
+    balls.clear();
+    stacks.clear();
 }
+
