@@ -107,8 +107,7 @@ void runMainMenu() {
 
 void clear() {
     for(int i=0; i<levels.size(); i++) {
-        levels.at(i).balls.clear();
-        levels.at(i).stacks.clear();
+        levels.at(i).clearLevel();
     }
 }
 
