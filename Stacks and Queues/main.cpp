@@ -3,6 +3,8 @@
 
 //main.cpp
 
+#include "SplashScreen.h"
+#include "MainMenu.h"
 #include "Level.hpp"
 
 ///Globals
@@ -19,14 +21,24 @@ std::vector<Level> levels;
 Level* level1;
 
 bool key_return; //start game
-bool key_P; //pause game
 bool key_escape; //reset game
+bool key_P; //pause game
+
+//change ball direction
+bool key_up;
+bool key_down;
+
+//change selected ball
+bool key_left;
+bool key_right;
 
 void keyDown(sf::Keyboard::Key keyCode) {
     switch(keyCode) {
         case sf::Keyboard::Return: key_return = true; break;
         case sf::Keyboard::Escape: key_escape = true; break;
         case sf::Keyboard::P: key_P = true; break;
+        case sf::Keyboard::Up: key_up = true; break;
+        case sf::Keyboard::Down: key_down = true; break;
         default: ;
     }
 }
@@ -36,6 +48,8 @@ void keyUp(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::Return: key_return = false; break;
         case sf::Keyboard::Escape: key_escape = false; break;
         case sf::Keyboard::P: key_P = false; break;
+        case sf::Keyboard::Up: key_up = false; break;
+        case sf::Keyboard::Down: key_down = false; break;
         default: ;
     }
 }
