@@ -3,7 +3,7 @@
 
 //main.cpp
 
-#include "SplashScreen.h"
+//#include "SplashScreen.h"
 #include "MainMenu.h"
 #include "Level.hpp"
 
@@ -85,15 +85,14 @@ void initialiseLevel1() {
     float vy1 = vx1;
     float radius = level1->getBallRadius();
     
-    
     //cout << "Level 1 variables initialised.\n";
     
     //create level objects accordingly
-    Ball lvl1ball1 = Ball(x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "1");
-    Ball lvl1ball3 = Ball(x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
-    Ball lvl1ball4 = Ball(x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
+    Ball lvl1ball1 = Ball(1, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "1");
+    Ball lvl1ball3 = Ball(2, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
+    Ball lvl1ball4 = Ball(3, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
-    tStack lvl1stack1 = tStack(600, 200, radius*2, radius*6);
+    tStack lvl1stack1 = tStack(600, 600, radius*2, radius*6);
     
     //cout << "Level 1 objects initialised.\n";
     
@@ -109,13 +108,34 @@ void initialiseLevel1() {
 }
 
 void initialiseGame() {
-    //cout << "about to initialise lvl 1.\n";
     initialiseLevel1();
 }
 
-void runMainMenu() {
-    //TODO: for a start, it says something like 'press enter to play'
+void backupMainMenu() {
     window->clear();
+    
+    sf::Font titleFont;
+    titleFont.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Stacks and Queues/sansation.ttf"); //insert path to ttf sansation file
+    
+    sf::Text titleText("Stacks and Queues", titleFont);
+    titleText.setCharacterSize(RES_X/25.0);
+    titleText.setStyle(sf::Text::Bold);
+    titleText.setColor(sf::Color::White);
+    titleText.setPosition(RES_X/2 - titleText.getLocalBounds().width/2.0, (RES_Y*(0.45)) - titleText.getLocalBounds().height/2.0);
+    window->draw(titleText);
+
+    
+    //Press enter to play
+    sf::Font enterFont;
+    enterFont.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Stacks and Queues/sansation.ttf"); //insert path to ttf sansation file
+
+    sf::Text enterText("Press enter to play", enterFont);
+    enterText.setCharacterSize(RES_X/50.0);
+    enterText.setStyle(sf::Text::Bold);
+    enterText.setColor(sf::Color::White);
+    enterText.setPosition(RES_X/2 - enterText.getLocalBounds().width/2.0, (RES_Y*(0.55)) - enterText.getLocalBounds().height/2.0);
+    window->draw(enterText);
+    
     window->display();
 }
 
@@ -123,12 +143,6 @@ void clear() {
     for(int i=0; i<levels.size(); i++) {
         levels.at(i).clearLevel();
     }
-}
-
-void runPauseScreen() {
-    //TODO: just says 'paused' and you can still see the level under the word
-    window->clear();
-    window->display();
 }
 
 void updateGame() {
@@ -144,36 +158,59 @@ void drawGameFrame() {
 }
 
 int main() {
-    
-    bool gameRunning = false;
     bool reinitialise = false;
+    bool gameRunning = false;
     bool gameNotPaused = true;
     
     sf::Clock clock;
     float frameTime = 1/60.0f;
     float dTime = 0;
     
-    //cout << "Main.\n";
+    //SplashScreen splashscreen;
+    MainMenu mainmenu;
     initialiseGame();
     
+    sf::Event event;
     while (window->isOpen()) {
         if(reinitialise) {
             initialiseGame();
             reinitialise = false;
         }
         
-        // Event handling
-        sf::Event event;
-        while(window->pollEvent(event)) {
-            processEvent(event);
-            if(key_return) {
-                //cout << "Return key pressed.\n";
-                gameRunning = true;
-                gameNotPaused = true;
+        if(!gameRunning) {
+            //pressed escape
+            clear();
+            window->clear();
+            switch(mainmenu.Show(*window)) {
+                case MainMenu::MenuResult::Backup: backupMainMenu(); break;
+                case MainMenu::MenuResult::Exit: window->close(); break;
+                case MainMenu::MenuResult::Play: gameRunning = true; gameNotPaused = true; break;
+                case MainMenu::MenuResult::Nothing: ;
+                default: ;
+            }
+            reinitialise = true;
+        }
+        
+        else if(gameRunning && !gameNotPaused) {
+            //cout << "Game is paused.\n";
+            
+            while(window->pollEvent(event)) {
+                processEvent(event);
+                if(key_escape) {
+                    //cout << "Escape key pressed.\n";
+                    gameRunning = false;
+                    gameNotPaused = true;
+                }
+                else if(key_return) {
+                    //cout << "Return key pressed.\n";
+                    gameRunning = true;
+                    gameNotPaused = true;
+                }
             }
         }
-    
-        if(gameRunning && gameNotPaused) {
+        
+        //PLAYING GAME
+        else if(gameRunning && gameNotPaused) {
             
             dTime += clock.getElapsedTime().asSeconds();
             clock.restart();
@@ -188,7 +225,6 @@ int main() {
             }
             
             // Draw frame
-            //window->clear();
             window->sf::RenderTarget::clear(backgroundColor);
             drawGameFrame();
             window->display();
@@ -199,28 +235,19 @@ int main() {
                 if(key_escape) {
                     //cout << "Escape key pressed.\n";
                     gameRunning = false;
+                    gameNotPaused = true;
+                    key_escape = false;
                 }
-                if(key_P) {
+                else if(key_P) {
                     //cout << "P key pressed.\n";
+                    gameRunning = true;
                     gameNotPaused = false;
                 }
             }
         }
-        
-        //'P' key to pause game by making gameRunning false
-        else if(gameRunning && !gameNotPaused) {
-            //cout << "Game is paused.\n";
-            runPauseScreen();
-        }
-        
-        //'Escape' go to main menu and reset game
-        else if(!gameRunning) {
-            clear();
-            runMainMenu();
-            reinitialise = true;
-        }
     }
     
+    clear();
     delete window;
     return 0;
 }
