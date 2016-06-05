@@ -5,19 +5,25 @@
 
 #include "Ball.hpp"
 
-Ball::Ball(float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label) {
+Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label) {
     
-        this->x = x;
-        this->y = y;
-        this->vx = vx;
-        this->vy = vy;
-        this->radius = radius;
-        this->color = color;
-        this->label = label;
-        
-        dia = radius*2;
-        isActive = true;
-        isMoving = false;
+    this->num = num;
+    this->x = x;
+    this->y = y;
+    this->vx = vx;
+    this->vy = vy;
+    this->radius = radius;
+    dia = radius*2;
+    this->color = color;
+    this->label = label;
+
+    isActive = true;
+    isMoving = false;
+    
+    if(num == 1)isSelected = true;
+    else isSelected = false;
+    currDirection = 1;
+    nextDirection = 1;
 }
     
 bool Ball::checkOnScreen() {
@@ -26,14 +32,27 @@ bool Ball::checkOnScreen() {
     }
     return true;
 }
+
+void Ball::move() {
+    //1 = left, 2 = up, 3 = down, can't go right
+    if(currDirection != nextDirection) {
+        //tryTurning(nextDirection);
+    }
     
+    switch(currDirection) {
+        case 1: x -= vx; break;
+        case 2: y -= vy; break;
+        case 3: y += vy; break;
+    }
+
+}
+
 void Ball::update(bool status) {
     isOnScreen = checkOnScreen();
         
     isMoving = status;
     if(!isMoving || !isActive) return;
-    x -= vx;
-    
+    move();
     if (x < -(dia) || y < -(dia)) isActive = false;
 }
     
