@@ -19,13 +19,21 @@ private:
     sf::String label;
     
 public:
+    int num;
+    
     bool isActive;
     bool isMoving;
     bool isOnScreen;
     
-    Ball(float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label);
+    bool isSelected;
+    //1 = left, 2 = up, 3 = down
+    int currDirection;
+    int nextDirection;
+    
+    Ball(int num, float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label);
     
     bool checkOnScreen();
+    void move();
     void update(bool status);
     void draw();
     
