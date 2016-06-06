@@ -115,7 +115,7 @@ void backupMainMenu() {
     window->clear();
     
     sf::Font titleFont;
-    titleFont.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Stacks and Queues/sansation.ttf"); //insert path to ttf sansation file
+    titleFont.loadFromFile("sansation.ttf"); //insert path to ttf sansation file
     
     sf::Text titleText("Stacks and Queues", titleFont);
     titleText.setCharacterSize(RES_X/25.0);
@@ -127,7 +127,7 @@ void backupMainMenu() {
     
     //Press enter to play
     sf::Font enterFont;
-    enterFont.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Stacks and Queues/sansation.ttf"); //insert path to ttf sansation file
+    enterFont.loadFromFile("sansation.ttf"); //insert path to ttf sansation file
 
     sf::Text enterText("Press enter to play", enterFont);
     enterText.setCharacterSize(RES_X/50.0);
