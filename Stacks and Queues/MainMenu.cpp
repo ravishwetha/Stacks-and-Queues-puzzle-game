@@ -11,7 +11,7 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
 {
     //Load menu image from file
     sf::Texture texture;
-    if(!texture.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Resources/MainMenu.png")) return Backup;
+    if(!texture.loadFromFile("MainMenu.png")) return Backup; //insert correct file path
     sf::Sprite sprite(texture);
     
     //Setup Clickable regions
