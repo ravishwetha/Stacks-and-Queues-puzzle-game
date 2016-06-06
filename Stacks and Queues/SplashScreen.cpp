@@ -7,7 +7,7 @@
 void SplashScreen::Show(sf::RenderWindow& renderWindow)
 {
 	sf::Texture texture;
-	if (texture.loadFromFile("Stacks and Queues.png") != true)
+	if (texture.loadFromFile("Stacks and Queues.png") != true) //insert correct filepath
 	{
 		return;
 	}
