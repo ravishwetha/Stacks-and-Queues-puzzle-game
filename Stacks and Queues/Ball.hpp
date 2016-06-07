@@ -31,7 +31,7 @@ public:
     int currDirection;
     int nextDirection;
     
-    Ball(int num, int currDirection, float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label);
+    Ball(int num, float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label);
     
     bool checkOnScreen();
     void changeDirection(int nextDirection);
