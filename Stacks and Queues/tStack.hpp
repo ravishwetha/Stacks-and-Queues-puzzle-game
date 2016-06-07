@@ -13,11 +13,11 @@
 class tStack {
 private:
     std::stack<Ball> toolStack;
-    float x, y;
-    float width, height;
     
 public:
     tStack(float x, float y, float width, float height);
+    float x, y;
+    float width, height;
     int size();
     
     void push(Ball ball);
