@@ -3,7 +3,7 @@
 
 //MainMenu.cpp
 
-#include <stdafx.h> //uncomment if using visual studio
+//#include <stdafx.h> //uncomment if using visual studio
 
 #include "MainMenu.h"
 
@@ -11,7 +11,7 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
 {
     //Load menu image from file
     sf::Texture texture;
-    if(!texture.loadFromFile("MainMenu.png")) return Backup; //insert correct file path
+    if(!texture.loadFromFile("MainMenu.png")) return Backup;
     sf::Sprite sprite(texture);
     
     //Setup Clickable regions
@@ -53,14 +53,12 @@ MainMenu::MenuResult MainMenu::HandleClick(int x, int y)
             return (*it).action;
         }
     }
-    
     return Nothing;
 }
 
 MainMenu::MenuResult  MainMenu::GetMenuResponse(sf::RenderWindow& window)
 {
     sf::Event menuEvent;
-    
     while (true)
     {
         while (window.pollEvent(menuEvent))
