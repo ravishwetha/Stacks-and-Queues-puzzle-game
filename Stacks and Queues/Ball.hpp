@@ -15,6 +15,7 @@ private:
     float radius;
     float dia;
     
+    sf::Color selectColor;
     sf::Color color;
     sf::String label;
     
@@ -24,19 +25,21 @@ public:
     bool isActive;
     bool isMoving;
     bool isOnScreen;
-    
     bool isSelected;
+    
     //1 = left, 2 = up, 3 = down
     int currDirection;
     int nextDirection;
     
-    Ball(int num, float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label);
+    Ball(int num, int currDirection, float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label);
     
     bool checkOnScreen();
+    void changeDirection(int nextDirection);
     void move();
+    void select();
+    void deselect();
     void update(bool status);
     void draw();
-    
 };
 
 #endif /* Ball_hpp */
