@@ -88,9 +88,9 @@ void initialiseLevel1() {
     //cout << "Level 1 variables initialised.\n";
     
     //create level objects accordingly
-    Ball lvl1ball1 = Ball(1, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "1");
-    Ball lvl1ball3 = Ball(2, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
-    Ball lvl1ball4 = Ball(3, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
+    Ball lvl1ball1 = Ball(0, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "1");
+    Ball lvl1ball3 = Ball(1, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
+    Ball lvl1ball4 = Ball(2, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
     tStack lvl1stack1 = tStack(600, 600, radius*2, radius*6);
     
@@ -104,7 +104,7 @@ void initialiseLevel1() {
     level1->stacks.push_back(lvl1stack1);
     
     //cout << "Level 1 vectors initialised.\n";
-
+    
 }
 
 void initialiseGame() {
@@ -123,12 +123,12 @@ void backupMainMenu() {
     titleText.setColor(sf::Color::White);
     titleText.setPosition(RES_X/2 - titleText.getLocalBounds().width/2.0, (RES_Y*(0.45)) - titleText.getLocalBounds().height/2.0);
     window->draw(titleText);
-
+    
     
     //Press enter to play
     sf::Font enterFont;
     enterFont.loadFromFile("sansation.ttf"); //insert path to ttf sansation file
-
+    
     sf::Text enterText("Press enter to play", enterFont);
     enterText.setCharacterSize(RES_X/50.0);
     enterText.setStyle(sf::Text::Bold);
