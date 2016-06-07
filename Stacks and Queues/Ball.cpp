@@ -16,7 +16,7 @@ Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Colo
     dia = radius*2;
     this->color = color;
     this->label = label;
-
+    
     isActive = true;
     isMoving = false;
     
@@ -25,7 +25,7 @@ Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Colo
     currDirection = 1;
     nextDirection = 1;
 }
-    
+
 bool Ball::checkOnScreen() {
     if (x < -(radius) || y < -(radius) || x > RES_X + x || y > RES_Y + y) {
         return false;
@@ -44,39 +44,5 @@ void Ball::move() {
         case 2: y -= vy; break;
         case 3: y += vy; break;
     }
-
-}
-
-void Ball::update(bool status) {
-    isOnScreen = checkOnScreen();
-        
-    isMoving = status;
-    if(!isMoving || !isActive) return;
-    move();
-    if (x < -(dia) || y < -(dia)) isActive = false;
-}
     
-void Ball::draw() {
-    if(!isOnScreen || !isActive) return;
-        
-    sf::CircleShape ballCircle;
-    ballCircle.setFillColor(color);
-    ballCircle.setRadius(radius);
-    ballCircle.setPosition(x, y);
-    ballCircle.setOrigin(radius, radius);
-        
-    //place label on ball
-    // Declare and load a font
-    sf::Font ballFont;
-    ballFont.loadFromFile("sansation.ttf"); //insert correct file path
-    // Create a text
-    sf::Text ballText(label, ballFont);
-    ballText.setCharacterSize(dia);
-    ballText.setStyle(sf::Text::Bold);
-    ballText.setColor(sf::Color::White);
-    //ballText.setOrigin(x+radius, y+radius);
-    ballText.setPosition(x-(radius/1.50), y-(radius/0.75));
-        
-    window->draw(ballCircle);
-    window->draw(ballText);
 }
