@@ -35,7 +35,7 @@ void tStack::update() {
 //need to make it better than a yellow rectangle
 void tStack::draw() {
     sf::RectangleShape stack;
-    stack.setFillColor(sf::Color::Yellow);
+    stack.setFillColor(sf::Color::Color(255, 165, 0));
     stack.setSize(sf::Vector2f(width, height));
     stack.setPosition(x, y);
     stack.setOrigin(width/2.0, height/2.0);
