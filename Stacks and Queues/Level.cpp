@@ -16,23 +16,23 @@ Level::Level(int num) {
     this->num = num;
     isActive = true;
 }
-    
+
 float Level::getInTubePositionX() {
     return inTubePositionX.at(num);
 }
-    
+
 float Level::getInTubePositionY() {
     return inTubePositionY.at(num);
 }
-    
+
 float Level::getBallVX() {
     return ballsVX.at(num);
 }
-    
+
 float Level::getBallPeriod() {
     return ballsPeriod.at(num);
 }
-    
+
 float Level::getBallRadius() {
     return ballsRadii.at(num);
 }
@@ -45,24 +45,24 @@ float Level::abs(float num) {
 void Level::startBallClock() {
     ballClock = clock();
 }
-    
+
 float Level::getInterval() {
     clock_t interval;
     interval = clock() - ballClock;
     return (((float)interval)/(CLOCKS_PER_SEC))*6;
 }
-    
+
 void Level::updateLevel() {
     
     //UPDATE BALLS//
     for( int i=0; i<balls.size(); i = i + 1 ) {
         //cout << "Ball " << i << ":";
-            
+        
         //ball went through exit tube
         if(!balls.at(i).isActive) {
             continue;
         }
-            
+        
         //before ball starts moving
         if(!(balls.at(i).isMoving)) {
             if(i == 0) {
@@ -202,7 +202,7 @@ void Level::drawPath() {
     for(int i=0; i<stacks.size(); i++) {
         inVerticalHeight = abs(inTubePositionY.at(num) - abs(stacks.at(i).y-stacks.at(i).height/2.0));
         outVerticalHeight = abs((RES_Y-inTubePositionY.at(num)) - abs(stacks.at(i).y-stacks.at(i).height/2.0));
-    
+        
         if(stacks.at(i).y >= inTubePositionY.at(num)) inVerticalY = abs(inTubePositionY.at(num)+(inVerticalHeight/2.0));
         else inVerticalY = abs(inTubePositionY.at(num)-(inVerticalHeight/2.0));
         
@@ -244,10 +244,10 @@ void Level::drawPath() {
         leftLine2.setOrigin(leftLine2Width/2.0, leftLine2Height/2.0);
         leftLine2.setPosition(abs(abs(RES_X - (inTubePositionX.at(num)-pathWidth)) - leftLine2Width/2.0), abs(stacks.at(i).height/2.0 - stacks.at(i).y));
         window->draw(leftLine2);
-
+        
     }
 }
-    
+
 void Level::drawLevel() {
     drawInTube();
     drawOutTube();
@@ -267,4 +267,3 @@ void Level::clearLevel() {
     balls.clear();
     stacks.clear();
 }
-
