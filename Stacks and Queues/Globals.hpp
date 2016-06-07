@@ -15,5 +15,4 @@ extern sf::RenderWindow* window;
 extern float RES_X;
 extern float RES_Y;
 extern float RES_Y2;
-
 #endif /* Globals_hpp */
