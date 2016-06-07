@@ -46,3 +46,37 @@ void Ball::move() {
     }
     
 }
+
+void Ball::update(bool status) {
+    isOnScreen = checkOnScreen();
+    
+    isMoving = status;
+    if(!isMoving || !isActive) return;
+    move();
+    if (x < -(dia) || y < -(dia)) isActive = false;
+}
+
+void Ball::draw() {
+    if(!isOnScreen || !isActive) return;
+    
+    sf::CircleShape ballCircle;
+    ballCircle.setFillColor(color);
+    ballCircle.setRadius(radius);
+    ballCircle.setPosition(x, y);
+    ballCircle.setOrigin(radius, radius);
+    
+    //place label on ball
+    // Declare and load a font
+    sf::Font ballFont;
+    ballFont.loadFromFile("sansation.ttf"); //insert correct file path
+    // Create a text
+    sf::Text ballText(label, ballFont);
+    ballText.setCharacterSize(dia);
+    ballText.setStyle(sf::Text::Bold);
+    ballText.setColor(sf::Color::White);
+    //ballText.setOrigin(x+radius, y+radius);
+    ballText.setPosition(x-(radius/1.50), y-(radius/0.75));
+    
+    window->draw(ballCircle);
+    window->draw(ballText);
+}
