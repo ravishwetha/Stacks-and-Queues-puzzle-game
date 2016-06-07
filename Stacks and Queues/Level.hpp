@@ -35,6 +35,7 @@ public:
     float getBallRadius();
     
     //methods
+    float abs(float num);
     void startBallClock();
     float getInterval();
     void updateLevel();
