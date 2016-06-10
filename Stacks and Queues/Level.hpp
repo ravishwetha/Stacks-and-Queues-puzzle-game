@@ -16,6 +16,9 @@ private:
     std::vector<float> ballsVX; //respective vx of balls in a level by level number
     std::vector<float> ballsRadii;
     
+    float inTubePosX;
+    float inTubePosY;
+    
 public:
     int num;
     bool isActive;
@@ -24,6 +27,8 @@ public:
     clock_t ballClock;
     std::vector<Ball> balls;
     std::vector<tStack> stacks;
+    sf::Color lineColor = sf::Color::Yellow;
+    sf::Color lineOutlineColor = sf::Color::Black;
     
     Level(int num);
     
