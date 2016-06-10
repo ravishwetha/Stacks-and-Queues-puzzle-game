@@ -17,6 +17,7 @@ sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(RES_X, RES_Y), "St
 sf::Color backgroundColor = sf::Color::White;
 
 //Game
+int ballIndex = 0;
 Level* currLevel;
 Level* level1;
 
@@ -39,6 +40,8 @@ void keyDown(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::P: key_P = true; break;
         case sf::Keyboard::Up: key_up = true; break;
         case sf::Keyboard::Down: key_down = true; break;
+        case sf::Keyboard::Left: key_left = true; break;
+        case sf::Keyboard::Right: key_right = true; break;
         default: ;
     }
 }
@@ -50,6 +53,8 @@ void keyUp(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::P: key_P = false; break;
         case sf::Keyboard::Up: key_up = false; break;
         case sf::Keyboard::Down: key_down = false; break;
+        case sf::Keyboard::Left: key_left = false; break;
+        case sf::Keyboard::Right: key_right = false; break;
         default: ;
     }
 }
@@ -104,6 +109,7 @@ void initialiseLevel1() {
     
     //cout << "Level 1 vectors initialised.\n";
     
+    ballIndex = 0;
     currLevel = level1;
 }
 
@@ -224,6 +230,7 @@ int main() {
             window->display();
             
             //cout << "Game is running.\n";
+            ballIndex = currLevel->selectedBall;
             while(window->pollEvent(event)) {
                 processEvent(event);
                 if(key_escape) {
@@ -237,6 +244,10 @@ int main() {
                     gameRunning = true;
                     gameNotPaused = false;
                 }
+                //else if(key_up) currLevel->balls.at(ballIndex).changeDirection(2);
+                //else if(key_down) currLevel->balls.at(ballIndex).changeDirection(3);
+                else if(key_left) currLevel->prevBall();
+                else if(key_right) currLevel->nextBall();
             }
         }
     }
