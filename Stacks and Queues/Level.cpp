@@ -8,6 +8,8 @@
 Level::Level(int num) {
     inTubePositionX = { RES_X, RES_X , RES_X };
     inTubePositionY = { RES_Y2, RES_Y2, RES_Y };
+    inTubePosX = inTubePositionX.at(num);
+    inTubePosY = inTubePositionY.at(num);
     
     ballsPeriod = { 1.0, 2.0, 2.0 };
     ballsVX = { 1.0, 1.0, 1.0 };
@@ -107,7 +109,7 @@ void Level::drawInTube() {
     inTube.setOutlineThickness((height/5.0));
     inTube.setSize(sf::Vector2f(width, height));
     inTube.setOrigin(width/2.0, height/2.0);
-    inTube.setPosition(inTubePositionX.at(num)-width/2.0, inTubePositionY.at(num));
+    inTube.setPosition(inTubePosX-width/2.0, inTubePosY);
     window->draw(inTube);
     
     sf::CircleShape leftEnd;
@@ -116,7 +118,7 @@ void Level::drawInTube() {
     leftEnd.setOutlineThickness((height/5.0)); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
     leftEnd.setRadius(height/2);
     leftEnd.setOrigin(width/2.0, height/2.0);
-    leftEnd.setPosition(inTubePositionX.at(num)-width*(2.0/3.0), inTubePositionY.at(num));
+    leftEnd.setPosition(inTubePosX-width*(2.0/3.0), inTubePosY);
     window->draw(leftEnd);
 }
 
@@ -134,7 +136,7 @@ void Level::drawOutTube() {
     outTube.setOutlineThickness(height/5.0);
     outTube.setSize(sf::Vector2f(width, height));
     outTube.setOrigin(width/2.0, height/2.0);
-    outTube.setPosition(RES_X-(inTubePositionX.at(num)-width/2.0), inTubePositionY.at(num));
+    outTube.setPosition(RES_X-(inTubePosX-width/2.0), inTubePosY);
     window->draw(outTube);
     
     sf::CircleShape rightEnd;
@@ -143,7 +145,7 @@ void Level::drawOutTube() {
     rightEnd.setOutlineThickness((height/5.0)); //Thickness can be negative so that the outline expands from the border towards center instead of increasing the shape's size.
     rightEnd.setRadius(height/2);
     rightEnd.setOrigin(width/2.0, height/2.0);
-    rightEnd.setPosition(RES_X-(inTubePositionX.at(num)-width*(4.0/3.0)), inTubePositionY.at(num));
+    rightEnd.setPosition(RES_X-(inTubePosX-width*(4.0/3.0)), inTubePosY);
     window->draw(rightEnd);
 }
 
@@ -154,9 +156,9 @@ void Level::drawPath() {
     //have to switch width and height to make vertical
     float inVerticalWidth = pathHeight;
     float inVerticalHeight = 0.0;
-    float inVerticalY = inTubePositionY.at(num);
+    float inVerticalY = inTubePosY;
     
-    float directLineWidth = RES_X - (pathWidth*2.0);
+    float directLineWidth = inTubePosX - (RES_X - inTubePosX) - (pathWidth*2.0);
     float directLineHeight = pathHeight;
     
     float leftLine1Width = 0.0;
@@ -168,68 +170,69 @@ void Level::drawPath() {
     float outVerticalWidth = pathHeight;
     float outVerticalHeight = 0.0;
     
-    sf::Color lineColor = sf::Color::Yellow;
-    
     sf::RectangleShape directLine;
     directLine.setFillColor(lineColor);
-    directLine.setOutlineColor(sf::Color::Black);
+    directLine.setOutlineColor(lineOutlineColor);
     directLine.setOutlineThickness(pathHeight/5.0);
     directLine.setSize(sf::Vector2f(directLineWidth, directLineHeight));
     directLine.setOrigin(directLineWidth/2.0, directLineHeight/2.0);
-    directLine.setPosition(RES_X/2.0, inTubePositionY.at(num));
+    directLine.setPosition(RES_X/2.0, inTubePosY);
     window->draw(directLine);
     
     //path coming out of inTube
     sf::RectangleShape inLine;
     inLine.setFillColor(lineColor);
-    inLine.setOutlineColor(sf::Color::Black);
+    inLine.setOutlineColor(lineOutlineColor);
     inLine.setOutlineThickness(pathHeight/5.0);
     inLine.setSize(sf::Vector2f(pathWidth, pathHeight));
     inLine.setOrigin(pathWidth/2.0, pathHeight/2.0);
-    inLine.setPosition(inTubePositionX.at(num)-pathWidth/2.0, inTubePositionY.at(num));
+    inLine.setPosition(inTubePosX-pathWidth/2.0, inTubePosY);
     window->draw(inLine);
     
     //path coming out of outTube
     sf::RectangleShape outLine;
     outLine.setFillColor(lineColor);
-    outLine.setOutlineColor(sf::Color::Black);
+    outLine.setOutlineColor(lineOutlineColor);
     outLine.setOutlineThickness(pathHeight/5.0);
     outLine.setSize(sf::Vector2f(pathWidth, pathHeight));
     outLine.setOrigin(pathWidth/2.0, pathHeight/2.0);
-    outLine.setPosition(RES_X-(inTubePositionX.at(num)-pathWidth/2.0), RES_Y-inTubePositionY.at(num));
+    outLine.setPosition(RES_X-(inTubePositionX.at(num)-pathWidth/2.0), RES_Y-inTubePosY);
     window->draw(outLine);
     
     for(int i=0; i<stacks.size(); i++) {
-        inVerticalHeight = abs(inTubePositionY.at(num) - abs(stacks.at(i).y-stacks.at(i).height/2.0));
-        outVerticalHeight = abs((RES_Y-inTubePositionY.at(num)) - abs(stacks.at(i).y-stacks.at(i).height/2.0));
+        tStack currStack = stacks.at(i);
         
-        if(stacks.at(i).y >= inTubePositionY.at(num)) inVerticalY = abs(inTubePositionY.at(num)+(inVerticalHeight/2.0));
-        else inVerticalY = abs(inTubePositionY.at(num)-(inVerticalHeight/2.0));
+        //cout << "There is something in the stack vector.\n";
+        inVerticalHeight = abs(inTubePosY - abs(currStack.y-currStack.height/2.0));
+        outVerticalHeight = abs((RES_Y-inTubePosY) - abs(currStack.y-currStack.height/2.0));
         
-        leftLine1Width = abs(stacks.at(i).x - (inTubePositionX.at(num)-pathWidth));
-        leftLine2Width = ((RES_X - (inTubePositionX.at(num)-pathWidth)) - stacks.at(i).x);
+        if(currStack.y >= inTubePosY) inVerticalY = abs(inTubePosY+(inVerticalHeight/2.0));
+        else inVerticalY = abs(inTubePosY-(inVerticalHeight/2.0));
+        
+        leftLine1Width = abs(currStack.x - (inTubePosX-pathWidth));
+        leftLine2Width = ((RES_X - (inTubePosX-pathWidth)) - currStack.x);
         
         sf::RectangleShape inVertical;
         inVertical.setFillColor(lineColor);
-        inVertical.setOutlineColor(sf::Color::Black);
+        inVertical.setOutlineColor(lineOutlineColor);
         inVertical.setOutlineThickness(pathHeight/5.0);
         inVertical.setSize(sf::Vector2f(inVerticalWidth, inVerticalHeight));
         inVertical.setOrigin(inVerticalWidth/2.0, inVerticalHeight/2.0);
-        inVertical.setPosition(inTubePositionX.at(num)-pathWidth, inVerticalY);
+        inVertical.setPosition(inTubePosX-pathWidth, inVerticalY);
         window->draw(inVertical);
         
         sf::RectangleShape leftLine1;
         leftLine1.setFillColor(lineColor);
-        leftLine1.setOutlineColor(sf::Color::Black);
+        leftLine1.setOutlineColor(lineOutlineColor);
         leftLine1.setOutlineThickness(pathHeight/5.0);
         leftLine1.setSize(sf::Vector2f(leftLine1Width, leftLine1Height));
         leftLine1.setOrigin(leftLine1Width/2.0, leftLine1Height/2.0);
-        leftLine1.setPosition(abs(abs(inTubePositionX.at(num)-pathWidth) - leftLine1Width/2.0), abs(stacks.at(i).height/2.0 - stacks.at(i).y));
+        leftLine1.setPosition(abs(abs(inTubePositionX.at(num)-pathWidth) - leftLine1Width/2.0), abs(currStack.height/2.0 - currStack.y));
         window->draw(leftLine1);
         
         sf::RectangleShape outVertical;
         outVertical.setFillColor(lineColor);
-        outVertical.setOutlineColor(sf::Color::Black);
+        outVertical.setOutlineColor(lineOutlineColor);
         outVertical.setOutlineThickness(pathHeight/5.0);
         outVertical.setSize(sf::Vector2f(outVerticalWidth, outVerticalHeight));
         outVertical.setOrigin(outVerticalWidth/2.0, outVerticalHeight/2.0);
@@ -238,14 +241,14 @@ void Level::drawPath() {
         
         sf::RectangleShape leftLine2;
         leftLine2.setFillColor(lineColor);
-        leftLine2.setOutlineColor(sf::Color::Black);
+        leftLine2.setOutlineColor(lineOutlineColor);
         leftLine2.setOutlineThickness(pathHeight/5.0);
         leftLine2.setSize(sf::Vector2f(leftLine2Width, leftLine2Height));
         leftLine2.setOrigin(leftLine2Width/2.0, leftLine2Height/2.0);
-        leftLine2.setPosition(abs(abs(RES_X - (inTubePositionX.at(num)-pathWidth)) - leftLine2Width/2.0), abs(stacks.at(i).height/2.0 - stacks.at(i).y));
+        leftLine2.setPosition(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0), abs(currStack.height/2.0 - currStack.y));
         window->draw(leftLine2);
-        
     }
+    //cout << "Stack paths drawn.\n";
 }
 
 void Level::drawLevel() {
