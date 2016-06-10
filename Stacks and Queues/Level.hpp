@@ -44,10 +44,8 @@ public:
     float abs(float num);
     void startBallClock();
     float getInterval();
-    //TODO: test
     int prevBall();
     int nextBall();
-    //TODO: test
     void updateLevel();
     void drawInTube();
     void drawOutTube();
