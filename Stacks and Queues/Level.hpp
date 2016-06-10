@@ -26,6 +26,7 @@ public:
     //objects in level
     clock_t ballClock;
     std::vector<Ball> balls;
+    int selectedBall = 0;
     std::vector<tStack> stacks;
     sf::Color lineColor = sf::Color::Yellow;
     sf::Color lineOutlineColor = sf::Color::Black;
@@ -43,6 +44,10 @@ public:
     float abs(float num);
     void startBallClock();
     float getInterval();
+    //TODO: test
+    int prevBall();
+    int nextBall();
+    //TODO: test
     void updateLevel();
     void drawInTube();
     void drawOutTube();
