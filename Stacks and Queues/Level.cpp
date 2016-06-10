@@ -17,6 +17,7 @@ Level::Level(int num) {
     
     this->num = num;
     isActive = true;
+    selectedBall = 0;
 }
 
 float Level::getInTubePositionX() {
@@ -52,6 +53,26 @@ float Level::getInterval() {
     clock_t interval;
     interval = clock() - ballClock;
     return (((float)interval)/(CLOCKS_PER_SEC))*6;
+}
+
+int Level::prevBall() {
+    balls.at(selectedBall).deselect();
+    if(selectedBall == 0) {
+        selectedBall = balls.size()-1;
+    }
+    else selectedBall--;
+    balls.at(selectedBall).select();
+    return selectedBall;
+}
+
+int Level::nextBall() {
+    balls.at(selectedBall).deselect();
+    if(selectedBall == balls.size()-1) {
+        selectedBall = 0;
+    }
+    else selectedBall++;
+    balls.at(selectedBall).select();
+    return selectedBall;
 }
 
 void Level::updateLevel() {
