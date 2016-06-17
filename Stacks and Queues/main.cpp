@@ -13,11 +13,17 @@ float RES_Y = 800;
 float RES_Y2 = RES_Y/2.0;
 sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(RES_X, RES_Y), "Stacks and Queues");
 
+std::vector<float> pathCoords;
+float leftF = 1.0;
+float upF = 2.0;
+float downF = 3.0;
+ 
 //Window
 sf::Color backgroundColor = sf::Color::White;
 
 //Game
-std::vector<Level> levels;
+int ballIndex = 0;
+Level* currLevel;
 Level* level1;
 
 bool key_return; //start game
@@ -39,6 +45,8 @@ void keyDown(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::P: key_P = true; break;
         case sf::Keyboard::Up: key_up = true; break;
         case sf::Keyboard::Down: key_down = true; break;
+        case sf::Keyboard::Left: key_left = true; break;
+        case sf::Keyboard::Right: key_right = true; break;
         default: ;
     }
 }
@@ -50,6 +58,8 @@ void keyUp(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::P: key_P = false; break;
         case sf::Keyboard::Up: key_up = false; break;
         case sf::Keyboard::Down: key_down = false; break;
+        case sf::Keyboard::Left: key_left = false; break;
+        case sf::Keyboard::Right: key_right = false; break;
         default: ;
     }
 }
@@ -74,7 +84,6 @@ void processEvent(sf::Event& event) {
 
 void initialiseLevel1() {
     level1 = new Level(0);
-    levels.push_back(*level1);
     
     //cout << "Created level object.\n";
     
@@ -105,6 +114,8 @@ void initialiseLevel1() {
     
     //cout << "Level 1 vectors initialised.\n";
     
+    ballIndex = 0;
+    currLevel = level1;
 }
 
 void initialiseGame() {
@@ -115,7 +126,7 @@ void backupMainMenu() {
     window->clear();
     
     sf::Font titleFont;
-    titleFont.loadFromFile("sansation.ttf"); //insert path to ttf sansation file
+    titleFont.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Resources/sansation.ttf"); //insert path to ttf sansation file
     
     sf::Text titleText("Stacks and Queues", titleFont);
     titleText.setCharacterSize(RES_X/25.0);
@@ -127,9 +138,9 @@ void backupMainMenu() {
     
     //Press enter to play
     sf::Font enterFont;
-    enterFont.loadFromFile("sansation.ttf"); //insert path to ttf sansation file
+    enterFont.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Resources/sansation.ttf"); //insert path to ttf sansation file
     
-    sf::Text enterText("Press enter to play", enterFont);
+    sf::Text enterText("Click Title to play", enterFont);
     enterText.setCharacterSize(RES_X/50.0);
     enterText.setStyle(sf::Text::Bold);
     enterText.setColor(sf::Color::White);
@@ -140,21 +151,15 @@ void backupMainMenu() {
 }
 
 void clear() {
-    for(int i=0; i<levels.size(); i++) {
-        levels.at(i).clearLevel();
-    }
+    currLevel->clearLevel();
 }
 
 void updateGame() {
-    if(level1->isActive) {
-        level1->updateLevel();
-    }
+    currLevel->updateLevel();
 }
 
 void drawGameFrame() {
-    if(level1->isActive) {
-        level1->drawLevel();
-    }
+    currLevel->drawLevel();
 }
 
 int main() {
@@ -230,6 +235,7 @@ int main() {
             window->display();
             
             //cout << "Game is running.\n";
+            ballIndex = currLevel->selectedBall;
             while(window->pollEvent(event)) {
                 processEvent(event);
                 if(key_escape) {
@@ -243,11 +249,16 @@ int main() {
                     gameRunning = true;
                     gameNotPaused = false;
                 }
+                else if(key_up) currLevel->balls.at(ballIndex).changeDirection(2);
+                else if(key_down) currLevel->balls.at(ballIndex).changeDirection(3);
+                else if(key_left) currLevel->prevBall();
+                else if(key_right) currLevel->nextBall();
             }
         }
     }
     
     clear();
+    delete currLevel;
     delete window;
     return 0;
 }
