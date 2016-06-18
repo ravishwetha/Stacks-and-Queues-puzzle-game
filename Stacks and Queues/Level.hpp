@@ -18,6 +18,7 @@ private:
     
     float inTubePosX;
     float inTubePosY;
+    bool pathStored;
     
 public:
     int num;
