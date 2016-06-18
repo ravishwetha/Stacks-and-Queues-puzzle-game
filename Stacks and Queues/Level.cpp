@@ -18,6 +18,7 @@ Level::Level(int num) {
     this->num = num;
     isActive = true;
     selectedBall = 0;
+    pathStored = false;
 }
 
 float Level::getInTubePositionX() {
@@ -202,11 +203,13 @@ void Level::drawPath() {
     directLine.setPosition(RES_X/2.0, inTubePosY);
     window->draw(directLine);
     
+    if(pathCoords.empty()) {
     pathCoords.push_back(RES_X/2.0 - directLineWidth/2.0);
     pathCoords.push_back(inTubePosY - directLineHeight/2.0);
     pathCoords.push_back(RES_X/2.0 + directLineWidth/2.0);
     pathCoords.push_back(inTubePosY + directLineHeight/2.0);
     pathCoords.push_back(leftF);
+    }
     
     //path coming out of inTube
     sf::RectangleShape inLine;
@@ -218,11 +221,13 @@ void Level::drawPath() {
     inLine.setPosition(inTubePosX-pathWidth/2.0, inTubePosY);
     window->draw(inLine);
     
+    if(!pathStored) {
     pathCoords.push_back(inTubePosX - pathWidth);
     pathCoords.push_back(inTubePosY - pathHeight/2.0);
     pathCoords.push_back(inTubePosX);
     pathCoords.push_back(inTubePosY + pathHeight/2.0);
     pathCoords.push_back(leftF);
+    }
     
     //path coming out of outTube
     sf::RectangleShape outLine;
@@ -234,11 +239,13 @@ void Level::drawPath() {
     outLine.setPosition(RES_X-(inTubePosX-pathWidth/2.0), RES_Y-inTubePosY);
     window->draw(outLine);
     
+    if(!pathStored) {
     pathCoords.push_back(RES_X-inTubePosX);
     pathCoords.push_back(RES_Y-inTubePosY - pathHeight/2.0);
     pathCoords.push_back((RES_X-inTubePosX) + pathWidth);
     pathCoords.push_back(RES_Y-inTubePosY + pathHeight/2.0);
     pathCoords.push_back(leftF);
+    }
     
     for(int i=0; i<stacks.size(); i++) {
         tStack currStack = stacks.at(i);
@@ -262,11 +269,13 @@ void Level::drawPath() {
         inVertical.setPosition(inTubePosX-pathWidth, inVerticalY);
         window->draw(inVertical);
         
+        if(!pathStored) {
         pathCoords.push_back(inTubePosX-pathWidth - inVerticalWidth/2.0);
         pathCoords.push_back(abs(inVerticalY - inVerticalHeight/2.0));
         pathCoords.push_back(inTubePosX-pathWidth + inVerticalWidth/2.0);
         pathCoords.push_back(abs(inVerticalY + inVerticalHeight/2.0));
         pathCoords.push_back(downF);
+        }
         
         sf::RectangleShape leftLine1;
         leftLine1.setFillColor(lineColor);
@@ -277,11 +286,13 @@ void Level::drawPath() {
         leftLine1.setPosition(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0), abs(currStack.height/2.0 - currStack.y));
         window->draw(leftLine1);
         
+        if(!pathStored) {
         pathCoords.push_back(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0) - leftLine1Width/2.0);
         pathCoords.push_back(abs(currStack.height/2.0 - currStack.y) - leftLine1Height/2.0);
         pathCoords.push_back(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0) + leftLine1Width/2.0);
         pathCoords.push_back(abs(currStack.height/2.0 - currStack.y) + leftLine1Height/2.0);
         pathCoords.push_back(leftF);
+        }
         
         sf::RectangleShape outVertical;
         outVertical.setFillColor(lineColor);
@@ -291,12 +302,14 @@ void Level::drawPath() {
         outVertical.setOrigin(outVerticalWidth/2.0, outVerticalHeight/2.0);
         outVertical.setPosition(RES_X-(inTubePosX-pathWidth), inVerticalY);
         window->draw(outVertical);
-        
+
+        if(!pathStored) {
         pathCoords.push_back(RES_X-(inTubePosX-pathWidth) - outVerticalWidth/2.0);
         pathCoords.push_back(inVerticalY - outVerticalHeight/2.0);
         pathCoords.push_back(RES_X-(inTubePosX-pathWidth) + outVerticalWidth/2.0);
         pathCoords.push_back(inVerticalY + outVerticalHeight/2.0);
         pathCoords.push_back(upF);
+        }
         
         sf::RectangleShape leftLine2;
         leftLine2.setFillColor(lineColor);
@@ -307,13 +320,16 @@ void Level::drawPath() {
         leftLine2.setPosition(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0), abs(currStack.height/2.0 - currStack.y));
         window->draw(leftLine2);
         
+        if(!pathStored) {
         pathCoords.push_back(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0));
         pathCoords.push_back(abs(currStack.height/2.0 - currStack.y) - leftLine2Height/2.0);
         pathCoords.push_back(abs(abs(RES_X - (inTubePosX-pathWidth)) + leftLine2Width));
         pathCoords.push_back(abs(currStack.height/2.0 - currStack.y) + leftLine2Height/2.0);
         pathCoords.push_back(leftF);
+        }
     }
     //cout << "Stack paths drawn.\n";
+    pathStored = true;
 }
 
 void Level::drawLevel() {
