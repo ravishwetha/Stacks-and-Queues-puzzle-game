@@ -33,16 +33,28 @@ bool key_P; //pause game
 //change ball direction
 bool key_up;
 bool key_down;
+bool key_W;
+bool key_S;
+bool key_A;
+//no key_D since balls can't go right
 
 //change selected ball
 bool key_left;
 bool key_right;
+bool key_Q;
+bool key_E;
 
 void keyDown(sf::Keyboard::Key keyCode) {
     switch(keyCode) {
         case sf::Keyboard::Return: key_return = true; break;
         case sf::Keyboard::Escape: key_escape = true; break;
         case sf::Keyboard::P: key_P = true; break;
+        case sf::Keyboard::W: key_W = true; break;
+        case sf::Keyboard::S: key_S = true; break;
+        case sf::Keyboard::A: key_A = true; break;
+        case sf::Keyboard::Q: key_Q = true; break;
+        case sf::Keyboard::E: key_E = true; break;
+
         case sf::Keyboard::Up: key_up = true; break;
         case sf::Keyboard::Down: key_down = true; break;
         case sf::Keyboard::Left: key_left = true; break;
@@ -56,6 +68,12 @@ void keyUp(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::Return: key_return = false; break;
         case sf::Keyboard::Escape: key_escape = false; break;
         case sf::Keyboard::P: key_P = false; break;
+        case sf::Keyboard::W: key_W = false; break;
+        case sf::Keyboard::S: key_S = false; break;
+        case sf::Keyboard::A: key_A = false; break;
+        case sf::Keyboard::Q: key_Q = false; break;
+        case sf::Keyboard::E: key_E = false; break;
+            
         case sf::Keyboard::Up: key_up = false; break;
         case sf::Keyboard::Down: key_down = false; break;
         case sf::Keyboard::Left: key_left = false; break;
@@ -249,10 +267,11 @@ int main() {
                     gameRunning = true;
                     gameNotPaused = false;
                 }
-                else if(key_up) currLevel->balls.at(ballIndex).changeDirection(2);
-                else if(key_down) currLevel->balls.at(ballIndex).changeDirection(3);
-                else if(key_left) currLevel->prevBall();
-                else if(key_right) currLevel->nextBall();
+                else if(key_A) currLevel->balls.at(ballIndex).changeDirection((int) leftF);
+                else if(key_W) currLevel->balls.at(ballIndex).changeDirection((int) upF);
+                else if(key_S) currLevel->balls.at(ballIndex).changeDirection((int) downF);
+                else if(key_Q) currLevel->prevBall();
+                else if(key_E) currLevel->nextBall();
             }
         }
     }
