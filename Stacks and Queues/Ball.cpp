@@ -20,9 +20,7 @@ Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Colo
     isActive = true;
     isMoving = false;
     isOnScreen = false;
-    //TODO: test
     isPushed = false;
-    //TODO: test
     
     if(num == 0) isSelected = true;
     else isSelected = false;
