@@ -48,11 +48,9 @@ public:
     int prevBall(); /* Returns index of new selected ball. */
     int nextBall(); /* Returns index of new selected ball. */
     
-    //TODO: test
     /* Checks if any ball is at the mouth of a stack or a queue. Then automtically pushes it in. It then returns the index of the stack or queue the ball has been pushed in. (Negative index-1) for stack and (Positive index+1) for queue, if nothing happened, 0 is returned. Eg. if a ball is pushed into a queue of index 3 (4th position) in the Level's queue vector, the integer 4 is returned. If it is the stack of index 2 (3rd position), then the integer -3 is returned.
      */
     int checkForPush();
-    //TODO: test
     
     void updateLevel();
     void drawInTube();
