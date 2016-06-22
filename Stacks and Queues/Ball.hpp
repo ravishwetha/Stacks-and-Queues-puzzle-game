@@ -25,6 +25,7 @@ public:
     bool isActive;
     bool isMoving;
     bool isOnScreen;
+    bool isPushed;
     bool isSelected;
     
     //1 = left, 2 = up, 3 = down
@@ -33,17 +34,24 @@ public:
     
     Ball(int num, float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label);
     
+    //getters
+    float getX();
+    float getY();
+    float getRadius();
+    
     bool checkOnScreen();
-    /* Checks if next available path junction allows the ball to move in the direction that the player wishes. */
+    /* Checks if next available path junction allows the ball to move in the direction that the player wishes. 
+     */
     bool onPath(float x, float y);
     int searchPath(float x, float y);
-    /* When the ball is about to derail off the path, this function is automatically called and returns the next the appropriate direction to move. */
+    /* When the ball is about to derail off the path, this function is automatically called and returns the next the appropriate direction to move.
+     */
     void changeDirection(int nextDirection);
     void select();
     void deselect();
-    //TODO: make more efficient
+    //TODO: make more efficient?
     void move();
-    //TODO: make more efficient
+    //TODO: make more efficient?
     void update(bool status);
     void draw();
 };

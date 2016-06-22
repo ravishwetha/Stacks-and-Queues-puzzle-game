@@ -19,12 +19,28 @@ Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Colo
     
     isActive = true;
     isMoving = false;
+    isOnScreen = false;
+    //TODO: test
+    isPushed = false;
+    //TODO: test
     
     if(num == 0) isSelected = true;
     else isSelected = false;
     selectColor = sf::Color::Green;
     currDirection = 1;
     nextDirection = 1;
+}
+
+float Ball::getX() {
+    return x;
+}
+
+float Ball::getY() {
+    return y;
+}
+
+float Ball::getRadius() {
+    return radius;
 }
 
 bool Ball::checkOnScreen() {
@@ -97,17 +113,20 @@ void Ball::move() {
 //TODO: make more efficient?
 
 void Ball::update(bool status) {
+    if(!isActive) return;
+    
     isOnScreen = checkOnScreen();
     
     isMoving = status;
-    if(!isMoving || !isActive) return;
+    if(isPushed) isMoving = false;
+    if(!isMoving) return;
     
     move();
-    if (x < -(dia) || y < -(dia)) isActive = false;
+    if (x < -(dia)) isActive = false;
 }
 
 void Ball::draw() {
-    if(!isOnScreen || !isActive) return;
+    if(!isOnScreen || !isActive || isPushed) return;
     
     sf::Color drawColor;
     
@@ -123,7 +142,7 @@ void Ball::draw() {
     //place label on ball
     // Declare and load a font
     sf::Font ballFont;
-    ballFont.loadFromFile("sansation.ttf"); //insert correct file path
+    ballFont.loadFromFile("/Users/ravi/Documents/Orbital/Stacks and Queues/Resources/sansation.ttf"); //insert correct file path
     // Create a text
     sf::Text ballText(label, ballFont);
     ballText.setCharacterSize(dia);

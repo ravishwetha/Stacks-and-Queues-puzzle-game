@@ -76,12 +76,31 @@ int Level::nextBall() {
     return selectedBall;
 }
 
+int Level::checkForPush() {
+    Ball currBall = balls.at(0);
+    tStack currStack = stacks.at(0);
+    
+    for(int i=0; i<balls.size(); i++) {
+        currBall = balls.at(i);
+        if(currBall.isPushed) continue;
+        for(int j=0; j<stacks.size(); j++) {
+            currStack = stacks.at(j);
+            if(currBall.getX() == currStack.getX()) cout << currBall.getY() << ", " << (currStack.getY() - currStack.getHeight()/2.0) << ".\n";
+            if(currBall.getX() == currStack.getX() && currBall.getY() >= (currStack.getY()-(currStack.getHeight()/2.0) - currBall.getRadius()) && currBall.getY() <= (currStack.getY()-(currStack.getHeight()/2.0))) {
+                cout << "ball pushed\n";
+                balls.at(i).isPushed = true;
+                stacks.at(j).push(currBall);
+                return j;
+            }
+        }
+    }
+}
+
 void Level::updateLevel() {
+    int recentStack = checkForPush();
     
     //UPDATE BALLS//
     for( int i=0; i<balls.size(); i = i + 1 ) {
-        //cout << "Ball " << i << ":";
-        
         //ball went through exit tube
         if(!balls.at(i).isActive) {
             continue;
@@ -90,14 +109,11 @@ void Level::updateLevel() {
         //before ball starts moving
         if(!(balls.at(i).isMoving)) {
             if(i == 0) {
-                //cout << "Ball 0 updated and moving" << ".\n";
                 balls.at(i).update(true);
                 startBallClock();
             }
             else {
-                //cout << getInterval();
                 if(getInterval() >= ballsPeriod.at(num)) {
-                    //cout << " Ball " << i << " moved after right interval" << ".\n";
                     balls.at(i).update(true);
                     startBallClock();
                 }
@@ -105,7 +121,6 @@ void Level::updateLevel() {
         }
         //after ball is moving
         else {
-            //cout << "Ball " << i << "is already moving" << ".\n";
             balls.at(i).update(true);
         }
         
@@ -251,14 +266,14 @@ void Level::drawPath() {
         tStack currStack = stacks.at(i);
         
         //cout << "There is something in the stack vector.\n";
-        inVerticalHeight = abs(inTubePosY - abs(currStack.y-currStack.height/2.0));
-        outVerticalHeight = abs((RES_Y-inTubePosY) - abs(currStack.y-currStack.height/2.0));
+        inVerticalHeight = abs(inTubePosY - abs(currStack.getY()-currStack.getHeight()/2.0));
+        outVerticalHeight = abs((RES_Y-inTubePosY) - abs(currStack.getY()-currStack.getHeight()/2.0));
         
-        if(currStack.y >= inTubePosY) inVerticalY = abs(inTubePosY+(inVerticalHeight/2.0));
+        if(currStack.getY() >= inTubePosY) inVerticalY = abs(inTubePosY+(inVerticalHeight/2.0));
         else inVerticalY = abs(inTubePosY-(inVerticalHeight/2.0));
         
-        leftLine1Width = abs(currStack.x - (inTubePosX-pathWidth));
-        leftLine2Width = ((RES_X - (inTubePosX-pathWidth)) - currStack.x);
+        leftLine1Width = abs(currStack.getX() - (inTubePosX-pathWidth));
+        leftLine2Width = ((RES_X - (inTubePosX-pathWidth)) - currStack.getX());
         
         sf::RectangleShape inVertical;
         inVertical.setFillColor(lineColor);
@@ -283,14 +298,14 @@ void Level::drawPath() {
         leftLine1.setOutlineThickness(pathHeight/5.0);
         leftLine1.setSize(sf::Vector2f(leftLine1Width, leftLine1Height));
         leftLine1.setOrigin(leftLine1Width/2.0, leftLine1Height/2.0);
-        leftLine1.setPosition(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0), abs(currStack.height/2.0 - currStack.y));
+        leftLine1.setPosition(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0), abs(currStack.getHeight()/2.0 - currStack.getY()));
         window->draw(leftLine1);
         
         if(!pathStored) {
         pathCoords.push_back(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0) - leftLine1Width/2.0);
-        pathCoords.push_back(abs(currStack.height/2.0 - currStack.y) - leftLine1Height/2.0);
+        pathCoords.push_back(abs(currStack.getHeight()/2.0 - currStack.getY()) - leftLine1Height/2.0);
         pathCoords.push_back(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0) + leftLine1Width/2.0);
-        pathCoords.push_back(abs(currStack.height/2.0 - currStack.y) + leftLine1Height/2.0);
+        pathCoords.push_back(abs(currStack.getHeight()/2.0 - currStack.getY()) + leftLine1Height/2.0);
         pathCoords.push_back(leftF);
         }
         
@@ -317,14 +332,14 @@ void Level::drawPath() {
         leftLine2.setOutlineThickness(pathHeight/5.0);
         leftLine2.setSize(sf::Vector2f(leftLine2Width, leftLine2Height));
         leftLine2.setOrigin(leftLine2Width/2.0, leftLine2Height/2.0);
-        leftLine2.setPosition(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0), abs(currStack.height/2.0 - currStack.y));
+        leftLine2.setPosition(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0), abs(currStack.getHeight()/2.0 - currStack.getY()));
         window->draw(leftLine2);
         
         if(!pathStored) {
         pathCoords.push_back(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0));
-        pathCoords.push_back(abs(currStack.height/2.0 - currStack.y) - leftLine2Height/2.0);
+        pathCoords.push_back(abs(currStack.getHeight()/2.0 - currStack.getY()) - leftLine2Height/2.0);
         pathCoords.push_back(abs(abs(RES_X - (inTubePosX-pathWidth)) + leftLine2Width));
-        pathCoords.push_back(abs(currStack.height/2.0 - currStack.y) + leftLine2Height/2.0);
+        pathCoords.push_back(abs(currStack.getHeight()/2.0 - currStack.getY()) + leftLine2Height/2.0);
         pathCoords.push_back(leftF);
         }
     }
