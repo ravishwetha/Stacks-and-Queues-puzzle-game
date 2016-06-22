@@ -20,6 +20,12 @@ public:
     float width, height;
     int size();
     
+     //getters
+    float getX();
+    float getY();
+    float getWidth();
+    float getHeight();
+    
     void push(Ball ball);
     void pop();
     Ball top();
