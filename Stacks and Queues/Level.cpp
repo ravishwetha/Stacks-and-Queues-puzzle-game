@@ -83,18 +83,17 @@ int Level::checkForPush() {
     
     for(int i=0; i<balls.size(); i++) {
         currBall = balls.at(i);
-        cout << i << ": ";
+        if(currBall.isPushed) continue;
         for(int j=0; j<stacks.size(); j++) {
             currStack = stacks.at(j);
-            cout << j << " ";
-            if(currBall.getX() == currStack.getX() && currBall.getY() == (currStack.getY()-(currStack.getHeight()/2.0))) {
-                cout << "ball is on stack.\n";
+            if(currBall.getX() == currStack.getX()) cout << currBall.getY() << ", " << (currStack.getY() - currStack.getHeight()/2.0) << ".\n";
+            if(currBall.getX() == currStack.getX() && currBall.getY() >= (currStack.getY()-(currStack.getHeight()/2.0) - 2.0)) {
+                cout << "ball pushed\n";
                 balls.at(i).isPushed = true;
                 stacks.at(j).push(currBall);
                 return j;
             }
         }
-        cout << "\n";
     }
 }
 //TODO: test
