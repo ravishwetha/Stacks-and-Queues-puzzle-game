@@ -76,7 +76,6 @@ int Level::nextBall() {
     return selectedBall;
 }
 
-//TODO: test
 int Level::checkForPush() {
     Ball currBall = balls.at(0);
     tStack currStack = stacks.at(0);
@@ -96,7 +95,6 @@ int Level::checkForPush() {
         }
     }
 }
-//TODO: test
 
 void Level::updateLevel() {
     int recentStack = checkForPush();
