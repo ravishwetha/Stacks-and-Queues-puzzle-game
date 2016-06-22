@@ -12,6 +12,22 @@ tStack::tStack(float x, float y, float width, float height) {
     this->height = height;
 }
 
+float tStack::getX() {
+    return x;
+}
+
+float tStack::getY() {
+    return y;
+}
+
+float tStack::getWidth() {
+    return width;
+}
+
+float tStack::getHeight() {
+    return height;
+}
+
 int tStack::size() {
     return toolStack.size();
 }
