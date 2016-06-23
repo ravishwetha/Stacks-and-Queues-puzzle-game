@@ -85,9 +85,9 @@ int Level::checkForPush() {
         if(currBall.isPushed) continue;
         for(int j=0; j<stacks.size(); j++) {
             currStack = stacks.at(j);
-            if(currBall.getX() == currStack.getX()) cout << currBall.getY() << ", " << (currStack.getY() - currStack.getHeight()/2.0) << ".\n";
+            //if(currBall.getX() == currStack.getX()) cout << currBall.getY() << ", " << (currStack.getY() - currStack.getHeight()/2.0) << ".\n";
             if(currBall.getX() == currStack.getX() && currBall.getY() >= (currStack.getY()-(currStack.getHeight()/2.0) - currBall.getRadius()) && currBall.getY() <= (currStack.getY()-(currStack.getHeight()/2.0))) {
-                cout << "ball pushed\n";
+                //cout << "ball pushed\n";
                 balls.at(i).isPushed = true;
                 stacks.at(j).push(currBall);
                 return j;
