@@ -38,6 +38,7 @@ void tStack::push(Ball ball) {
 
 //TODO: test
 void tStack::pop() {
+    if(size()==0) return;
     toolStack.top().isPushed = false;
     toolStack.pop();
 }
