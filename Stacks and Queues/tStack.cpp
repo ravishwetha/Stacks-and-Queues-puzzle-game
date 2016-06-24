@@ -50,7 +50,7 @@ Ball tStack::top() {
 //TODO: test
 void tStack::checkForSelect(float x, float y, string action) {
     cout << "from stack.cpp: x = " << this->x << ", " << x << " y = " << this->y << ", " << y << " action = " << action << ".\n";
-    if(x <= this->x+(width/2.0) && x >= this->y+(height/2.0) && y <= this->y+(height/2.0) && y >= this->y-(height/2.0)) {
+    if(x <= this->x+(width/2.0) && x >= this->x-(width/2.0) && y <= this->y+(height/2.0) && y >= this->y-(height/2.0)) {
         if(action.compare("pop") == 0) pop();
         else if(action.compare("top") == 0) top();
     }
