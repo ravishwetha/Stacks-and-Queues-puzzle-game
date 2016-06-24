@@ -90,7 +90,7 @@ void keyUp(sf::Keyboard::Key keyCode) {
 
 //TODO: test
 void mouseDown(sf::Mouse::Button mouseCode) {
-    cout << "mouseDown.\n";
+    //cout << "mouseDown.\n";
     switch(mouseCode) {
         case sf::Mouse::Left: mouse_left = true; break;
         case sf::Mouse::Right: mouse_right = true; break;
@@ -99,7 +99,7 @@ void mouseDown(sf::Mouse::Button mouseCode) {
 }
 
 void mouseUp(sf::Mouse::Button mouseCode) {
-    cout << "mouseUp.\n";
+    //cout << "mouseUp.\n";
     switch(mouseCode) {
         case sf::Mouse::Left: mouse_left = false; break;
         case sf::Mouse::Right: mouse_right = false; break;
@@ -129,9 +129,9 @@ void processEvent(sf::Event& event) {
             cout << "from main.cpp: x = " << mouse_X << " y = " << mouse_Y << ".\n";
             mouseDown(event.mouseButton.button);
         }
-        case sf::Event::MouseButtonReleased: {
-            mouseUp(event.mouseButton.button);
-        }
+        //case sf::Event::MouseButtonReleased: {
+        //    mouseUp(event.mouseButton.button);
+        //}
         //TODO: test
         default: ; //nothing
     }
@@ -313,6 +313,7 @@ int main() {
                 else if(mouse_left) {
                     cout << "left mouse button.\n";
                     currLevel->checkForSQSelect(mouse_X, mouse_Y, "pop");
+                    mouse_left = false;
                 }
                 else if(mouse_right) {
                     cout << "right mouse button.\n";
@@ -322,7 +323,6 @@ int main() {
             }
         }
     }
-    
     clear();
     delete currLevel;
     delete window;
