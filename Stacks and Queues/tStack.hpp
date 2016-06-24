@@ -30,7 +30,9 @@ public:
     void pop();
     Ball top();
     
-    void checkForClick();
+   //TODO: test
+    void checkForSelect(float x, float y, string action);
+    //TODO: test
     void update();
     void draw();
 };
