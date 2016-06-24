@@ -57,21 +57,25 @@ float Level::getInterval() {
 }
 
 int Level::prevBall() {
+    cout << "current: " << selectedBall << " next: ";
     balls.at(selectedBall).deselect();
     if(selectedBall == 0) {
         selectedBall = balls.size()-1;
     }
     else selectedBall--;
+    cout << selectedBall << ".\n";
     balls.at(selectedBall).select();
     return selectedBall;
 }
 
 int Level::nextBall() {
+    cout << "current: " << selectedBall << " next: ";
     balls.at(selectedBall).deselect();
     if(selectedBall == balls.size()-1) {
         selectedBall = 0;
     }
     else selectedBall++;
+    cout << selectedBall << ".\n";
     balls.at(selectedBall).select();
     return selectedBall;
 }
@@ -96,11 +100,20 @@ int Level::checkForPush() {
     }
 }
 
+//TODO: test
+void Level::checkForSQSelect(float x, float y, string action) {
+    for(int i=0; i<stacks.size(); i++) {
+        cout << "from level.cpp: stack " << i << ".\n";
+        stacks.at(i).checkForSelect(x, y, action);
+    }
+}
+//TODO: test
+
 void Level::updateLevel() {
     int recentStack = checkForPush();
     
     //UPDATE BALLS//
-    for( int i=0; i<balls.size(); i = i + 1 ) {
+    for( int i=0; i<balls.size(); i++) {
         //ball went through exit tube
         if(!balls.at(i).isActive) {
             continue;
