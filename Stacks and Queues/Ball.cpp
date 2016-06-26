@@ -105,7 +105,7 @@ void Ball::move() {
         case 1: x -= vx; break;
         case 2: y -= vy; break;
         case 3: y += vy; break;
-        default: ; //do nothingm
+        default: ; //do nothing
     }
 }
 //TODO: make more efficient?
@@ -114,11 +114,14 @@ void Ball::update(bool status) {
     if(!isActive) return;
     
     isOnScreen = checkOnScreen();
+    if(num == 1) cout << "Ball 1 isPushed: " << isPushed << " isMoving: " << isMoving << ".\n";
     
     isMoving = status;
     if(isPushed) isMoving = false;
+    else isMoving = true;
     if(!isMoving) return;
     
+    //cout << "from Ball.cpp: Ball " << num << " isPushed: " << isPushed << "isMoving" << isMoving << ".\n";
     move();
     if (x < -(dia)) isActive = false;
 }
