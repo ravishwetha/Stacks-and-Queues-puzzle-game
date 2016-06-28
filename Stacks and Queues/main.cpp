@@ -31,16 +31,12 @@ bool key_escape = false;//reset game
 bool key_P = false; //pause game
 
 //change ball direction
-bool key_up = false;
-bool key_down = false;
 bool key_W = false;
 bool key_S = false;
 bool key_A = false;
 //no key_D since balls can't go right
 
 //change selected ball
-bool key_left = false;
-bool key_right = false;
 bool key_Q = false;
 bool key_E = false;
 
@@ -60,11 +56,6 @@ void keyDown(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::A: key_A = true; break;
         case sf::Keyboard::Q: key_Q = true; break;
         case sf::Keyboard::E: key_E = true; break;
-
-        case sf::Keyboard::Up: key_up = true; break;
-        case sf::Keyboard::Down: key_down = true; break;
-        case sf::Keyboard::Left: key_left = true; break;
-        case sf::Keyboard::Right: key_right = true; break;
         default: ;
     }
 }
@@ -79,11 +70,6 @@ void keyUp(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::A: key_A = false; break;
         case sf::Keyboard::Q: key_Q = false; break;
         case sf::Keyboard::E: key_E = false; break;
-            
-        case sf::Keyboard::Up: key_up = false; break;
-        case sf::Keyboard::Down: key_down = false; break;
-        case sf::Keyboard::Left: key_left = false; break;
-        case sf::Keyboard::Right: key_right = false; break;
         default: ;
     }
 }
