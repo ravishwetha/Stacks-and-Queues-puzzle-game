@@ -38,28 +38,31 @@ void tStack::push(Ball ball) {
 
 //TODO: test
 void tStack::pop() {
-    Ball currBall = top();
-    currBall.isPushed = false;
+    if(size() == 0) {
+        cout << "stack is empty.\n";
+        return;
+    }
     cout << "top Ball: " << toolStack.top().num << " is not pushed anymore.\n";
     toolStack.pop();
 }
 
 Ball tStack::top() {
+    if(size() == 0) {
+        cout << "stack is empty.\n";
+        return;
+    }
+    cout << "draw top Ball: " << toolStack.top().num << ".\n";
     toolStack.top().draw();
     return toolStack.top();
 }
 
-void tStack::checkForSelect(float x, float y, string action) {
-    cout << "from stack.cpp: x = " << this->x << ", " << x << " y = " << this->y << ", " << y << " action = " << action << ".\n";
+bool tStack::checkForSelect(float x, float y) {
+    cout << "from stack.cpp: x = " << this->x << ", " << x << " y = " << this->y << ", " << y;
     if(x <= this->x+(width/2.0) && x >= this->x-(width/2.0) && y <= this->y+(height/2.0) && y >= this->y-(height/2.0)) {
-        cout << "selected stack.\n";
-        if(size() == 0) {
-            cout << "stack is empty";
-            return;
-        }
-        else if(action.compare("pop") == 0) pop();
-        else if(action.compare("top") == 0) top();
+        cout << " selected stack.\n";
+        return true;
     }
+    return false;
 }
 //TODO: test
 
