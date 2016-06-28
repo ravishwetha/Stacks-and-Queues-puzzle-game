@@ -29,10 +29,8 @@ public:
     void push(Ball ball);
     void pop();
     Ball top();
-    
-   //TODO: test
-    void checkForSelect(float x, float y, string action);
-    //TODO: test
+
+    bool checkForSelect(float x, float y);
     void update();
     void draw();
 };
