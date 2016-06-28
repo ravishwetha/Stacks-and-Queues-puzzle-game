@@ -21,6 +21,7 @@ Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Colo
     isMoving = false;
     isOnScreen = false;
     isPushed = false;
+    isTopped = false;
     
     if(num == 0) isSelected = true;
     else isSelected = false;
@@ -81,6 +82,12 @@ void Ball::deselect() {
     isSelected = false;
 }
 
+void Ball::ballOut() {
+    move();
+    isPushed = false;
+    isTopped = false;
+}
+
 //TODO: make more efficient?
 void Ball::move() {
     //1 = left, 2 = up, 3 = down, can't go right
@@ -114,10 +121,9 @@ void Ball::update(bool status) {
     if(!isActive) return;
     
     isOnScreen = checkOnScreen();
-    if(num == 1) cout << "Ball 1 isPushed: " << isPushed << " isMoving: " << isMoving << ".\n";
     
     isMoving = status;
-    if(isPushed) isMoving = false;
+    if(isPushed || isTopped) isMoving = false;
     else isMoving = true;
     if(!isMoving) return;
     
@@ -127,7 +133,7 @@ void Ball::update(bool status) {
 }
 
 void Ball::draw() {
-    if(!isOnScreen || !isActive || isPushed) return;
+    if(!isOnScreen || !isActive || (isPushed && !isTopped)) return;
     
     sf::Color drawColor;
     
