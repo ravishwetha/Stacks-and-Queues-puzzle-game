@@ -81,6 +81,11 @@ void Ball::deselect() {
     isSelected = false;
 }
 
+void Ball::toggleisTopped() {
+    if(isTopped) isTopped = false;
+    else isTopped = true;
+}
+
 void Ball::ballOut() {
     move();
     isPushed = false;
@@ -126,6 +131,7 @@ void Ball::update(bool status) {
     else isMoving = true;
     if(!isMoving) return;
     
+    //cout << "from Ball.cpp: Ball " << num << " isPushed: " << isPushed << "isMoving" << isMoving << ".\n";
     move();
     if (x < -(dia)) isActive = false;
 }
@@ -147,7 +153,7 @@ void Ball::draw() {
     //place label on ball
     // Declare and load a font
     sf::Font ballFont;
-    ballFont.loadFromFile("sansation.ttf"); //insert correct file path
+    ballFont.loadFromFile("/Users/ravi/Documents/Stacks and Queues Orbital/Stacks and Queues/Resources/sansation.ttf"); //insert correct file path
     // Create a text
     sf::Text ballText(label, ballFont);
     ballText.setCharacterSize(dia);
