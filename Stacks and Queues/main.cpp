@@ -115,13 +115,14 @@ void processEvent(sf::Event& event) {
 }
 
 void initialiseLevel1() {
-    level1 = new Level(0);
+    std::vector<string> winOrder = {"3", "1", "4"};
+    level1 = new Level(0, winOrder); //num is (level number - 1)
     
     //get level info
     float x = level1->getInTubePositionX();
     float y = level1->getInTubePositionY();
     float vx1 = level1->getBallVX();
-    float vy1 = vx1;
+    float vy1 = vx1*2;
     float radius = level1->getBallRadius();
     
     //create level objects accordingly
@@ -129,7 +130,7 @@ void initialiseLevel1() {
     Ball lvl1ball3 = Ball(1, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
     Ball lvl1ball4 = Ball(2, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
-    tStack lvl1stack1 = tStack(600, 600, radius*2, radius*6);
+    tStack lvl1stack1 = tStack(RES_X*(1.0/2.0), RES_Y*(3.0/4.0), radius*2, radius*6);
     
     //cout << "Level 1 objects initialised.\n";
     

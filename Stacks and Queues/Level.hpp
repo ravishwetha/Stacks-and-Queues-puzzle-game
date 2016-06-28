@@ -16,6 +16,9 @@ private:
     
 public:
     int num;
+    std::vector<string> winOrder;
+    string levelBarLabel;
+    
     bool isActive;
     bool ballsInitiated; //timed entry of balls only happen once
     
@@ -27,7 +30,7 @@ public:
     sf::Color lineColor = sf::Color::Yellow;
     sf::Color lineOutlineColor = sf::Color::Black;
     
-    Level(int num);
+    Level(int num, std::vector<string> winOrder);
     
     //getters
     float getInTubePositionX();
@@ -38,6 +41,8 @@ public:
     
     //methods
     float abs(float num);
+    float min(float a, float b);
+    int min(int a, int b);
     void startBallClock();
     float getInterval();
     int prevBall(); /* Returns index of new selected ball. */
@@ -51,6 +56,8 @@ public:
     void checkForSQSelect(float x, float y, string action);
     
     void updateLevel();
+    string makeLevelBarLabel();
+    void drawLevelBar();
     void drawInTube();
     void drawOutTube();
     void drawPath();

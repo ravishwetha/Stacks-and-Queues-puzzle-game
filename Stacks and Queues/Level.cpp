@@ -5,11 +5,14 @@
 
 #include "Level.hpp"
 
-Level::Level(int num) {
+Level::Level(int num, std::vector<string> winOrder) {
     inTubePosX = inTubePositionX.at(num);
     inTubePosY = inTubePositionY.at(num);
     
     this->num = num;
+    this->winOrder = winOrder;
+    levelBarLabel = makeLevelBarLabel();
+    
     isActive = true;
     ballsInitiated = false;
     selectedBall = 0;
@@ -39,6 +42,18 @@ float Level::getBallRadius() {
 float Level::abs(float num) {
     if(num < 0) return (-num);
     return num;
+}
+
+float Level::min(float a, float b) {
+    if(a == b) return 0;
+    else if(a < b) return a;
+    return b;
+}
+
+int Level::min(int a, int b) {
+    if(a == b) return 0;
+    else if(a < b) return a;
+    return b;
 }
 
 void Level::startBallClock() {
@@ -151,6 +166,50 @@ void Level::updateLevel() {
             stacks.at(i).update();
         }
     }
+}
+
+string Level::makeLevelBarLabel() {
+    string label;
+    for(int i=0; i<winOrder.size(); i++) {
+        label.append(winOrder.at(i));
+        if(i != winOrder.size()-1) label.append(" ,");
+    }
+    cout << label << ".\n";
+    return label;
+}
+
+void Level::drawLevelBar() {
+    float width = RES_X/4.0; //can hold three balls at a time
+    float height = RES_Y/10.0;
+    float x = RES_X/2.0;
+    float y = RES_Y - (height/2.0);
+    
+    sf::Color color = sf::Color::Color(186, 85, 211); //currently gray 128
+    
+    sf::RectangleShape levelBar;
+    levelBar.setFillColor(color);
+    levelBar.setOutlineColor(sf::Color::Black);
+    levelBar.setOutlineThickness((height/50.0));
+    levelBar.setSize(sf::Vector2f(width, height));
+    levelBar.setOrigin(width/2.0, height/2.0);
+    levelBar.setPosition(x, y);
+    window->draw(levelBar);
+    
+    if(levelBarLabel.empty()) return;
+    float size = min(width/2.0, height)/2.0;
+    cout << size << "\n";
+    
+    // Declare and load a font
+    sf::Font barFont;
+    barFont.loadFromFile(rPath + "sansation.ttf");
+    // Create a text
+    sf::Text barText(levelBarLabel, barFont);
+    barText.setCharacterSize(size);
+    barText.setStyle(sf::Text::Bold);
+    barText.setColor(sf::Color::White);
+    barText.setOrigin(levelBar.getOrigin());
+    barText.setPosition(x + width/((size/10.0)*0.75), y);
+    window->draw(barText);
 }
 
 //need to make it better than a white rectangle
@@ -372,6 +431,7 @@ void Level::drawPath() {
 void Level::drawLevel() {
     std::vector<int> toppedBallsID;
     
+    drawLevelBar();
     drawInTube();
     drawOutTube();
     drawPath();

@@ -159,8 +159,8 @@ void Ball::draw() {
     ballText.setCharacterSize(dia);
     ballText.setStyle(sf::Text::Bold);
     ballText.setColor(sf::Color::White);
-    //ballText.setOrigin(x+radius, y+radius);
-    ballText.setPosition(x-(radius/1.50), y-(radius/0.75));
+    ballText.setOrigin(ballCircle.getOrigin());
+    ballText.setPosition(x + radius/2.0, y - radius/3.0);
     
     window->draw(ballCircle);
     window->draw(ballText);
