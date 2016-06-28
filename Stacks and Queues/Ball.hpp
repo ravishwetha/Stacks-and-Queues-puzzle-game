@@ -50,7 +50,12 @@ public:
     void changeDirection(int nextDirection);
     void select();
     void deselect();
-    void ballOut(); //moves ball out and makes stack and queue related bools default
+    /* switches value of isToggled
+    */
+    void toggleisTopped();
+    /* Moves ball out and makes stack and queue related bools: isPushed and isTopped to default false values when ball is popped out of the stack or queue.
+    */
+    void ballOut();
     //TODO: make more efficient?
     void move();
     //TODO: make more efficient?
