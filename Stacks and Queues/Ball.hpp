@@ -17,7 +17,7 @@ private:
     
     sf::Color selectColor;
     sf::Color color;
-    sf::String label;
+    string label;
     
 public:
     int num;
@@ -39,6 +39,7 @@ public:
     float getX();
     float getY();
     float getRadius();
+    string getLabel();
     
     bool checkOnScreen();
     /* Checks if next available path junction allows the ball to move in the direction that the player wishes. 

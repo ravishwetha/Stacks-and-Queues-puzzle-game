@@ -114,7 +114,6 @@ void Level::checkForSQSelect(float x, float y, string action) {
     int topBallID;
 
     for(int i=0; i<stacks.size(); i++) {
-        //tStack currStack = stacks.at(i);
         if(stacks.at(i).checkForSelect(x, y) && stacks.at(i).size() != 0) {
             //cout << "from level.cpp: stack " << i << ".\n";
             topBallID = stacks.at(i).top().num;
@@ -132,7 +131,30 @@ void Level::checkForSQSelect(float x, float y, string action) {
     }
 }
 
+int Level::checkForWin() {
+    if(winOrder.empty() || balls.empty()) return 1;
+    
+    for(int i=0; i<balls.size(); i++) {
+        if(!balls.at(i).isActive) {
+            if(winOrder.size() == 1 && balls.at(i).getLabel() == winOrder.front()) {
+                return 1;
+            }
+            else if(balls.at(i).getLabel() == winOrder.front()) {
+                balls.erase(balls.begin() + i);
+                winOrder.erase(winOrder.begin());
+                continue;
+            }
+            else {
+                return -1;
+            }
+        }
+    }
+    return 0;
+}
+
 void Level::updateLevel() {
+    if(!isActive) return;
+    
     int recentStack = checkForPush();
     
     //UPDATE BALLS//
@@ -165,6 +187,14 @@ void Level::updateLevel() {
         for(int i=0; i<stacks.size(); i++) {
             stacks.at(i).update();
         }
+        
+        status = checkForWin();
+        switch(status) {
+            case 0: break; //level is ongoing
+            case -1: isActive = false; levelBarLabel = "LOSS"; break;
+            case 1: isActive = false; levelBarLabel = "WIN"; break;
+            default: isActive = false; levelBarLabel = "ERROR";
+        }
     }
 }
 
@@ -174,7 +204,6 @@ string Level::makeLevelBarLabel() {
         label.append(winOrder.at(i));
         if(i != winOrder.size()-1) label.append(" ,");
     }
-    cout << label << ".\n";
     return label;
 }
 
@@ -197,7 +226,6 @@ void Level::drawLevelBar() {
     
     if(levelBarLabel.empty()) return;
     float size = min(width/2.0, height)/2.0;
-    cout << size << "\n";
     
     // Declare and load a font
     sf::Font barFont;
@@ -346,7 +374,6 @@ void Level::drawPath() {
     for(int i=0; i<stacks.size(); i++) {
         tStack currStack = stacks.at(i);
         
-        //cout << "There is something in the stack vector.\n";
         inVerticalHeight = abs(inTubePosY - abs(currStack.getY()-currStack.getHeight()/2.0));
         outVerticalHeight = abs((RES_Y-inTubePosY) - abs(currStack.getY()-currStack.getHeight()/2.0));
         

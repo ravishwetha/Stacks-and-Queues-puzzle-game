@@ -42,6 +42,10 @@ float Ball::getRadius() {
     return radius;
 }
 
+string Ball::getLabel() {
+    return label;
+}
+
 bool Ball::checkOnScreen() {
     if (x < -(radius) || y < -(radius) || x > RES_X + x || y > RES_Y + y) {
         return false;
@@ -133,7 +137,10 @@ void Ball::update(bool status) {
     
     //cout << "from Ball.cpp: Ball " << num << " isPushed: " << isPushed << "isMoving" << isMoving << ".\n";
     move();
-    if (x < -(dia)) isActive = false;
+    
+    if (x < -(dia)) {
+       isActive = false;
+    }
 }
 
 void Ball::draw() {
