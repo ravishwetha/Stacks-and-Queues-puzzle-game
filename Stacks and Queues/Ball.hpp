@@ -26,6 +26,7 @@ public:
     bool isMoving;
     bool isOnScreen;
     bool isPushed;
+    bool isTopped;
     bool isSelected;
     
     //1 = left, 2 = up, 3 = down
@@ -49,6 +50,9 @@ public:
     void changeDirection(int nextDirection);
     void select();
     void deselect();
+    //TODO: test
+    void ballOut(); //moves ball out and makes stack and queue related bools default
+    //TODO: test
     //TODO: make more efficient?
     void move();
     //TODO: make more efficient?
