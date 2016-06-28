@@ -8,6 +8,7 @@
 #include "Level.hpp"
 
 ///Globals
+std::string rPath = resourcePath();
 float RES_X = 1200;
 float RES_Y = 800;
 float RES_Y2 = RES_Y/2.0;
@@ -155,8 +156,7 @@ void backupMainMenu() {
     window->clear();
     
     sf::Font titleFont;
-    titleFont.loadFromFile("/Users/ravi/Documents/Stacks and Queues Orbital/Stacks and Queues/Resources/sansation.ttf"); //insert path to ttf sansation file
-    
+    titleFont.loadFromFile(rPath + "sansation.ttf");
     sf::Text titleText("Stacks and Queues", titleFont);
     titleText.setCharacterSize(RES_X/25.0);
     titleText.setStyle(sf::Text::Bold);
@@ -167,8 +167,7 @@ void backupMainMenu() {
     
     //Press enter to play
     sf::Font enterFont;
-    enterFont.loadFromFile("sansation.ttf"); //insert path to ttf sansation file
-    
+    enterFont.loadFromFile(rPath + "sansation.ttf");
     sf::Text enterText("Click Title to play", enterFont);
     enterText.setCharacterSize(RES_X/50.0);
     enterText.setStyle(sf::Text::Bold);

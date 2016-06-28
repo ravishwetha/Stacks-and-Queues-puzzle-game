@@ -4,12 +4,13 @@
 //SplashScreen.cpp
 
 //#include <stdafx.h> //uncomment if using visual studio
+#include "Globals.hpp"
 #include "SplashScreen.h"
 
 void SplashScreen::Show(sf::RenderWindow& renderWindow)
 {
 	sf::Texture texture;
-	if (texture.loadFromFile("/Users/ravi/Documents/Stacks and Queues Orbital/Stacks and Queues/Resources/Stacks and Queues.png") != true) //insert correct filepath
+	if (texture.loadFromFile(rPath + "SplashScreen.cpp") != true)
 	{
 		return;
 	}

@@ -153,7 +153,7 @@ void Ball::draw() {
     //place label on ball
     // Declare and load a font
     sf::Font ballFont;
-    ballFont.loadFromFile("/Users/ravi/Documents/Stacks and Queues Orbital/Stacks and Queues/Resources/sansation.ttf"); //insert correct file path
+    ballFont.loadFromFile(rPath + "sansation.ttf");
     // Create a text
     sf::Text ballText(label, ballFont);
     ballText.setCharacterSize(dia);
