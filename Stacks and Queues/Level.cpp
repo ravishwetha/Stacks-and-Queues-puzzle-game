@@ -1,4 +1,4 @@
- //Stacks and Queues
+//Stacks and Queues
 //Copyright © 2016 TeamSQ. All rights reserved.
 
 //Level.cpp
@@ -17,6 +17,7 @@ Level::Level(int num) {
     
     this->num = num;
     isActive = true;
+    ballsInitiated = false;
     selectedBall = 0;
     pathStored = false;
 }
@@ -109,7 +110,7 @@ void Level::checkForSQSelect(float x, float y, string action) {
             //cout << "from level.cpp: stack " << i << ".\n";
             topBallID = stacks.at(i).top().num;
             if(action.compare("pop") == 0) {
-                cout << "from level.cpp: pop.\n";
+                cout << "from level.cpp: pop " << topBallID << ".\n";
                 balls.at(topBallID).ballOut();
                 stacks.at(i).pop();
             }
@@ -127,14 +128,14 @@ void Level::updateLevel() {
     int recentStack = checkForPush();
     
     //UPDATE BALLS//
-    for( int i=0; i<balls.size(); i++) {
+    for(int i=0; i<balls.size(); i++) {
         //ball went through exit tube
         if(!balls.at(i).isActive) {
             continue;
         }
         
-        //before ball starts moving
-        if(!(balls.at(i).isMoving)) {
+        //before ball enter level
+        if(!(balls.at(i).isMoving) && !ballsInitiated) {
             if(i == 0) {
                 balls.at(i).update(true);
                 startBallClock();
@@ -142,11 +143,12 @@ void Level::updateLevel() {
             else {
                 if(getInterval() >= ballsPeriod.at(num)) {
                     balls.at(i).update(true);
-                    startBallClock();
+                    if(i == balls.size()-1) ballsInitiated = true; // last ball entered level
+                    else startBallClock();
                 }
             }
         }
-        //after ball is moving
+        //after ball entered level
         else {
             balls.at(i).update(true);
         }
