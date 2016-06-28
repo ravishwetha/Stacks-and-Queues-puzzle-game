@@ -36,16 +36,38 @@ void tStack::push(Ball ball) {
     toolStack.push(ball);
 }
 
+//TODO: test
 void tStack::pop() {
+    if(size() == 0) {
+        cout << "stack is empty.\n";
+        return;
+    }
+    cout << "top Ball: " << toolStack.top().num << " is not pushed anymore.\n";
     toolStack.pop();
 }
 
 Ball tStack::top() {
+    if(size() == 0) {
+        cout << "stack is empty.\n";
+        return;
+    }
+    cout << "draw top Ball: " << toolStack.top().num << ".\n";
+    toolStack.top().draw();
     return toolStack.top();
 }
 
+bool tStack::checkForSelect(float x, float y) {
+    cout << "from stack.cpp: x = " << this->x << ", " << x << " y = " << this->y << ", " << y;
+    if(x <= this->x+(width/2.0) && x >= this->x-(width/2.0) && y <= this->y+(height/2.0) && y >= this->y-(height/2.0)) {
+        cout << " selected stack.\n";
+        return true;
+    }
+    return false;
+}
+//TODO: test
+
 void tStack::update() {
-    //TODO: it is currently stationary but planning to have an animation when it pops. Also, player can view a menu of the possible functions to use with the stack when they click on it.
+    //TODO: it is currently stationary but planning to have an animation when it pops.
 }
 
 //need to make it better than a yellow rectangle
