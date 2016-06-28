@@ -51,9 +51,9 @@ public:
     /* Checks if any ball is at the mouth of a stack or a queue. Then automtically pushes it in. It then returns the index of the stack or queue the ball has been pushed in. (Negative index-1) for stack and (Positive index+1) for queue, if nothing happened, 0 is returned. Eg. if a ball is pushed into a queue of index 3 (4th position) in the Level's queue vector, the integer 4 is returned. If it is the stack of index 2 (3rd position), then the integer -3 is returned.
      */
     int checkForPush();
-    //TODO: test
+    /* Checks if a stack or queue has been clicked on and triggers the appropriate tStack method depending on whether it was a right or left mouse button click. Left button for pop() and right button for top(). Also modifies the Ball class boolean flags, isPushed and isTopped accordingly.
+    */
     void checkForSQSelect(float x, float y, string action);
-    //TODO:test
     
     void updateLevel();
     void drawInTube();
