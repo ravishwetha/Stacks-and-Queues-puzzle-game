@@ -116,9 +116,8 @@ void Level::checkForSQSelect(float x, float y, string action) {
             }
             else if(action.compare("top") == 0) {
                 cout << "from level.cpp: top.\n";
-                balls.at(topBallID).isTopped = false;
+                balls.at(topBallID).toggleisTopped();
                 stacks.at(i).top();
-                balls.at(topBallID).isTopped = true;
             }
         }
     }
@@ -377,17 +376,25 @@ void Level::drawPath() {
 }
 
 void Level::drawLevel() {
+    std::vector<int> toppedBallsID;
+    
     drawInTube();
     drawOutTube();
     drawPath();
     
     //balls drawn after tubes makes tubes transparent
     for( int i = 0; i < balls.size(); i++ ) {
-        balls.at(i).draw();
+        if(balls.at(i).isTopped) toppedBallsID.push_back(i);
+        else balls.at(i).draw();
     }
     //stacks drawn after balls make stacks obscure
     for(int i=0; i<stacks.size(); i++) {
         stacks.at(i).draw();
+    }
+    
+    //draw topped balls on top of stacks and queues so that they are seen
+    for(int i=0; i<toppedBallsID.size(); i++) {
+        balls.at(toppedBallsID.at(i)).draw();
     }
 }
 
