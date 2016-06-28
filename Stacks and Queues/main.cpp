@@ -18,6 +18,12 @@ float leftF = 1.0;
 float upF = 2.0;
 float downF = 3.0;
 
+std::vector<float> inTubePositionX = { RES_X, RES_X , RES_X };
+std::vector<float> inTubePositionY = { RES_Y2, RES_Y2, RES_Y };
+std::vector<float> ballsPeriod = { 1.0, 2.0, 2.0 };
+std::vector<float> ballsVX = { 1.0, 1.0, 1.0 };
+std::vector<float> ballsRadii = { 10, 10, 10 };
+
 //Window
 sf::Color backgroundColor = sf::Color::White;
 
@@ -74,7 +80,6 @@ void keyUp(sf::Keyboard::Key keyCode) {
     }
 }
 
-//TODO: test
 void mouseDown(sf::Mouse::Button mouseCode) {
     //cout << "mouseDown.\n";
     switch(mouseCode) {
@@ -83,16 +88,6 @@ void mouseDown(sf::Mouse::Button mouseCode) {
         default: cout << "mouseCode error.\n";
     }
 }
-
-void mouseUp(sf::Mouse::Button mouseCode) {
-    //cout << "mouseUp.\n";
-    switch(mouseCode) {
-        case sf::Mouse::Left: mouse_left = false; break;
-        case sf::Mouse::Right: mouse_right = false; break;
-        default: cout << "mouseCode error.\n";
-    }
-}
-//TODO: test
 
 void processEvent(sf::Event& event) {
     switch(event.type) {
@@ -108,17 +103,12 @@ void processEvent(sf::Event& event) {
             keyUp(event.key.code);
             break;
         }
-        //TODO: test
         case sf::Event::MouseButtonPressed: {
             mouse_X = event.mouseButton.x;
             mouse_Y = event.mouseButton.y;
             cout << "from main.cpp: x = " << mouse_X << " y = " << mouse_Y << ".\n";
             mouseDown(event.mouseButton.button);
         }
-        //case sf::Event::MouseButtonReleased: {
-        //    mouseUp(event.mouseButton.button);
-        //}
-        //TODO: test
         default: ; //nothing
     }
 }
@@ -126,16 +116,12 @@ void processEvent(sf::Event& event) {
 void initialiseLevel1() {
     level1 = new Level(0);
     
-    //cout << "Created level object.\n";
-    
     //get level info
     float x = level1->getInTubePositionX();
     float y = level1->getInTubePositionY();
     float vx1 = level1->getBallVX();
     float vy1 = vx1;
     float radius = level1->getBallRadius();
-    
-    //cout << "Level 1 variables initialised.\n";
     
     //create level objects accordingly
     Ball lvl1ball1 = Ball(0, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "1");
@@ -157,6 +143,8 @@ void initialiseLevel1() {
     
     ballIndex = 0;
     currLevel = level1;
+    
+    cout << "Level 1 initialised.\n";
 }
 
 void initialiseGame() {
@@ -167,7 +155,7 @@ void backupMainMenu() {
     window->clear();
     
     sf::Font titleFont;
-    titleFont.loadFromFile("sansation.ttf"); //insert path to ttf sansation file
+    titleFont.loadFromFile("/Users/ravi/Documents/Stacks and Queues Orbital/Stacks and Queues/Resources/sansation.ttf"); //insert path to ttf sansation file
     
     sf::Text titleText("Stacks and Queues", titleFont);
     titleText.setCharacterSize(RES_X/25.0);
@@ -295,7 +283,6 @@ int main() {
                 else if(key_S) currLevel->balls.at(ballIndex).changeDirection((int) downF);
                 else if(key_E) ballIndex = currLevel->prevBall(); //Q and E keys are swapped here due to a bug with double counting taps.
                 else if(key_Q) ballIndex = currLevel->nextBall(); //Q and E keys are swapped here due to a bug with double counting taps.
-                //TODO: test
                 else if(mouse_left) {
                     cout << "left mouse button.\n";
                     currLevel->checkForSQSelect(mouse_X, mouse_Y, "pop");
@@ -304,8 +291,8 @@ int main() {
                 else if(mouse_right) {
                     cout << "right mouse button.\n";
                     currLevel->checkForSQSelect(mouse_X, mouse_Y, "top");
+                    mouse_right = false;
                 }
-                //TODO: test
             }
         }
     }
