@@ -23,6 +23,7 @@ private:
 public:
     int num;
     bool isActive;
+    bool ballsInitiated; //timed entry of balls only happen once
     
     //objects in level
     clock_t ballClock;
