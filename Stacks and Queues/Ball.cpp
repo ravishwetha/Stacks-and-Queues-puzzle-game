@@ -59,7 +59,6 @@ bool Ball::onPath(float x, float y) {
 int Ball::searchPath(float x, float y) {
     for(int i=0; i<pathCoords.size(); i = i+5) {
         if((int) pathCoords.at(i+4) != currDirection) {
-            //cout << "pathCoords = " << pathCoords.at(i+4) << " currDirection = " << currDirection << "\n";
             switch((int) pathCoords.at(i+4)) {
                 case 1: if((x-radius) >= pathCoords.at(i) && y >= pathCoords.at(i+1) && (x-radius) <= pathCoords.at(i+2) && y <= pathCoords.at(i+3)) return 1;
                 case 2: if(x >= pathCoords.at(i) && (y-radius) >= pathCoords.at(i+1) && x <= pathCoords.at(i+2) && (y-radius) <= pathCoords.at(i+3)) return 2;
@@ -127,7 +126,6 @@ void Ball::update(bool status) {
     else isMoving = true;
     if(!isMoving) return;
     
-    //cout << "from Ball.cpp: Ball " << num << " isPushed: " << isPushed << "isMoving" << isMoving << ".\n";
     move();
     if (x < -(dia)) isActive = false;
 }
