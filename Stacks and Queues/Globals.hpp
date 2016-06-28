@@ -28,10 +28,19 @@ extern float RES_Y2;
 extern std::vector<float> pathCoords;
 
 /*
- Universal movement index:
+ Movement index:
  */
 extern float leftF; //1.0
 extern float upF; //2.0
 extern float downF; //3.0
+
+/*
+ Level info:
+*/
+extern std::vector<float> inTubePositionX;
+extern std::vector<float> inTubePositionY;
+extern std::vector<float> ballsPeriod; /* Balls appear on screen every x seconds. */
+extern std::vector<float> ballsVX; /* Respective vx of balls in a level by level number. */
+extern std::vector<float> ballsRadii;
 
 #endif /* Globals_hpp */
