@@ -1,4 +1,4 @@
-//Stacks and Queues
+ //Stacks and Queues
 //Copyright © 2016 TeamSQ. All rights reserved.
 
 //Level.cpp
@@ -57,36 +57,40 @@ float Level::getInterval() {
 }
 
 int Level::prevBall() {
+    //cout << "current: " << selectedBall << " next: ";
     balls.at(selectedBall).deselect();
     if(selectedBall == 0) {
         selectedBall = balls.size()-1;
     }
     else selectedBall--;
+    //cout << selectedBall << ".\n";
     balls.at(selectedBall).select();
     return selectedBall;
 }
 
 int Level::nextBall() {
+    //cout << "current: " << selectedBall << " next: ";
     balls.at(selectedBall).deselect();
     if(selectedBall == balls.size()-1) {
         selectedBall = 0;
     }
     else selectedBall++;
+    //cout << selectedBall << ".\n";
     balls.at(selectedBall).select();
     return selectedBall;
 }
 
 int Level::checkForPush() {
-    Ball currBall = balls.at(0);
-    tStack currStack = stacks.at(0);
     
     for(int i=0; i<balls.size(); i++) {
-        currBall = balls.at(i);
+        Ball currBall = balls.at(i);
         if(currBall.isPushed) continue;
         for(int j=0; j<stacks.size(); j++) {
-            currStack = stacks.at(j);
+            tStack currStack = stacks.at(j);
+            
             //if(currBall.getX() == currStack.getX()) cout << currBall.getY() << ", " << (currStack.getY() - currStack.getHeight()/2.0) << ".\n";
             if(currBall.getX() == currStack.getX() && currBall.getY() >= (currStack.getY()-(currStack.getHeight()/2.0) - currBall.getRadius()) && currBall.getY() <= (currStack.getY()-(currStack.getHeight()/2.0))) {
+                
                 //cout << "ball pushed\n";
                 balls.at(i).isPushed = true;
                 stacks.at(j).push(currBall);
@@ -96,11 +100,34 @@ int Level::checkForPush() {
     }
 }
 
+void Level::checkForSQSelect(float x, float y, string action) {
+    int topBallID;
+
+    for(int i=0; i<stacks.size(); i++) {
+        //tStack currStack = stacks.at(i);
+        if(stacks.at(i).checkForSelect(x, y) && stacks.at(i).size() != 0) {
+            //cout << "from level.cpp: stack " << i << ".\n";
+            topBallID = stacks.at(i).top().num;
+            if(action.compare("pop") == 0) {
+                cout << "from level.cpp: pop.\n";
+                balls.at(topBallID).ballOut();
+                stacks.at(i).pop();
+            }
+            else if(action.compare("top") == 0) {
+                cout << "from level.cpp: top.\n";
+                balls.at(topBallID).isTopped = false;
+                stacks.at(i).top();
+                balls.at(topBallID).isTopped = true;
+            }
+        }
+    }
+}
+
 void Level::updateLevel() {
     int recentStack = checkForPush();
     
     //UPDATE BALLS//
-    for( int i=0; i<balls.size(); i = i + 1 ) {
+    for( int i=0; i<balls.size(); i++) {
         //ball went through exit tube
         if(!balls.at(i).isActive) {
             continue;

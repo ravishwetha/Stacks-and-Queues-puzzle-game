@@ -17,7 +17,7 @@ std::vector<float> pathCoords;
 float leftF = 1.0;
 float upF = 2.0;
 float downF = 3.0;
- 
+
 //Window
 sf::Color backgroundColor = sf::Color::White;
 
@@ -26,23 +26,25 @@ int ballIndex = 0;
 Level* currLevel;
 Level* level1;
 
-bool key_return; //start game
-bool key_escape; //reset game
-bool key_P; //pause game
+bool key_return = false; //start game
+bool key_escape = false;//reset game
+bool key_P = false; //pause game
 
 //change ball direction
-bool key_up;
-bool key_down;
-bool key_W;
-bool key_S;
-bool key_A;
+bool key_W = false;
+bool key_S = false;
+bool key_A = false;
 //no key_D since balls can't go right
 
 //change selected ball
-bool key_left;
-bool key_right;
-bool key_Q;
-bool key_E;
+bool key_Q = false;
+bool key_E = false;
+
+//select stack or queue
+bool mouse_left = false;
+bool mouse_right = false;
+float mouse_X = 0.0;
+float mouse_Y = 0.0;
 
 void keyDown(sf::Keyboard::Key keyCode) {
     switch(keyCode) {
@@ -54,11 +56,6 @@ void keyDown(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::A: key_A = true; break;
         case sf::Keyboard::Q: key_Q = true; break;
         case sf::Keyboard::E: key_E = true; break;
-
-        case sf::Keyboard::Up: key_up = true; break;
-        case sf::Keyboard::Down: key_down = true; break;
-        case sf::Keyboard::Left: key_left = true; break;
-        case sf::Keyboard::Right: key_right = true; break;
         default: ;
     }
 }
@@ -73,14 +70,29 @@ void keyUp(sf::Keyboard::Key keyCode) {
         case sf::Keyboard::A: key_A = false; break;
         case sf::Keyboard::Q: key_Q = false; break;
         case sf::Keyboard::E: key_E = false; break;
-            
-        case sf::Keyboard::Up: key_up = false; break;
-        case sf::Keyboard::Down: key_down = false; break;
-        case sf::Keyboard::Left: key_left = false; break;
-        case sf::Keyboard::Right: key_right = false; break;
         default: ;
     }
 }
+
+//TODO: test
+void mouseDown(sf::Mouse::Button mouseCode) {
+    //cout << "mouseDown.\n";
+    switch(mouseCode) {
+        case sf::Mouse::Left: mouse_left = true; break;
+        case sf::Mouse::Right: mouse_right = true; break;
+        default: cout << "mouseCode error.\n";
+    }
+}
+
+void mouseUp(sf::Mouse::Button mouseCode) {
+    //cout << "mouseUp.\n";
+    switch(mouseCode) {
+        case sf::Mouse::Left: mouse_left = false; break;
+        case sf::Mouse::Right: mouse_right = false; break;
+        default: cout << "mouseCode error.\n";
+    }
+}
+//TODO: test
 
 void processEvent(sf::Event& event) {
     switch(event.type) {
@@ -96,6 +108,17 @@ void processEvent(sf::Event& event) {
             keyUp(event.key.code);
             break;
         }
+        //TODO: test
+        case sf::Event::MouseButtonPressed: {
+            mouse_X = event.mouseButton.x;
+            mouse_Y = event.mouseButton.y;
+            cout << "from main.cpp: x = " << mouse_X << " y = " << mouse_Y << ".\n";
+            mouseDown(event.mouseButton.button);
+        }
+        //case sf::Event::MouseButtonReleased: {
+        //    mouseUp(event.mouseButton.button);
+        //}
+        //TODO: test
         default: ; //nothing
     }
 }
@@ -270,12 +293,22 @@ int main() {
                 else if(key_A) currLevel->balls.at(ballIndex).changeDirection((int) leftF);
                 else if(key_W) currLevel->balls.at(ballIndex).changeDirection((int) upF);
                 else if(key_S) currLevel->balls.at(ballIndex).changeDirection((int) downF);
-                else if(key_Q) currLevel->prevBall();
-                else if(key_E) currLevel->nextBall();
+                else if(key_E) ballIndex = currLevel->prevBall(); //Q and E keys are swapped here due to a bug with double counting taps.
+                else if(key_Q) ballIndex = currLevel->nextBall(); //Q and E keys are swapped here due to a bug with double counting taps.
+                //TODO: test
+                else if(mouse_left) {
+                    cout << "left mouse button.\n";
+                    currLevel->checkForSQSelect(mouse_X, mouse_Y, "pop");
+                    mouse_left = false;
+                }
+                else if(mouse_right) {
+                    cout << "right mouse button.\n";
+                    currLevel->checkForSQSelect(mouse_X, mouse_Y, "top");
+                }
+                //TODO: test
             }
         }
     }
-    
     clear();
     delete currLevel;
     delete window;

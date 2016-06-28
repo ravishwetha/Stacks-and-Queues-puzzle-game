@@ -13,22 +13,24 @@
 class tStack {
 private:
     std::stack<Ball> toolStack;
+    float x, y;
+    float width, height;
     
 public:
     tStack(float x, float y, float width, float height);
-    float x, y;
-    float width, height;
-    int size();
     
-     //getters
+    //getters
     float getX();
     float getY();
     float getWidth();
     float getHeight();
     
+    int size();
     void push(Ball ball);
     void pop();
     Ball top();
+
+    bool checkForSelect(float x, float y);
     void update();
     void draw();
 };

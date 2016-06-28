@@ -21,6 +21,7 @@ Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Colo
     isMoving = false;
     isOnScreen = false;
     isPushed = false;
+    isTopped = false;
     
     if(num == 0) isSelected = true;
     else isSelected = false;
@@ -58,7 +59,6 @@ bool Ball::onPath(float x, float y) {
 int Ball::searchPath(float x, float y) {
     for(int i=0; i<pathCoords.size(); i = i+5) {
         if((int) pathCoords.at(i+4) != currDirection) {
-            //cout << "pathCoords = " << pathCoords.at(i+4) << " currDirection = " << currDirection << "\n";
             switch((int) pathCoords.at(i+4)) {
                 case 1: if((x-radius) >= pathCoords.at(i) && y >= pathCoords.at(i+1) && (x-radius) <= pathCoords.at(i+2) && y <= pathCoords.at(i+3)) return 1;
                 case 2: if(x >= pathCoords.at(i) && (y-radius) >= pathCoords.at(i+1) && x <= pathCoords.at(i+2) && (y-radius) <= pathCoords.at(i+3)) return 2;
@@ -79,6 +79,12 @@ void Ball::select() {
 
 void Ball::deselect() {
     isSelected = false;
+}
+
+void Ball::ballOut() {
+    move();
+    isPushed = false;
+    isTopped = false;
 }
 
 //TODO: make more efficient?
@@ -105,7 +111,7 @@ void Ball::move() {
         case 1: x -= vx; break;
         case 2: y -= vy; break;
         case 3: y += vy; break;
-        default: ; //do nothingm
+        default: ; //do nothing
     }
 }
 //TODO: make more efficient?
@@ -116,7 +122,8 @@ void Ball::update(bool status) {
     isOnScreen = checkOnScreen();
     
     isMoving = status;
-    if(isPushed) isMoving = false;
+    if(isPushed || isTopped) isMoving = false;
+    else isMoving = true;
     if(!isMoving) return;
     
     move();
@@ -124,7 +131,7 @@ void Ball::update(bool status) {
 }
 
 void Ball::draw() {
-    if(!isOnScreen || !isActive || isPushed) return;
+    if(!isOnScreen || !isActive || (isPushed && !isTopped)) return;
     
     sf::Color drawColor;
     
