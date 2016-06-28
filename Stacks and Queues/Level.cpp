@@ -6,14 +6,8 @@
 #include "Level.hpp"
 
 Level::Level(int num) {
-    inTubePositionX = { RES_X, RES_X , RES_X };
-    inTubePositionY = { RES_Y2, RES_Y2, RES_Y };
     inTubePosX = inTubePositionX.at(num);
     inTubePosY = inTubePositionY.at(num);
-    
-    ballsPeriod = { 1.0, 2.0, 2.0 };
-    ballsVX = { 1.0, 1.0, 1.0 };
-    ballsRadii = { 10, 10, 10 };
     
     this->num = num;
     isActive = true;
@@ -23,11 +17,11 @@ Level::Level(int num) {
 }
 
 float Level::getInTubePositionX() {
-    return inTubePositionX.at(num);
+    return inTubePosX;
 }
 
 float Level::getInTubePositionY() {
-    return inTubePositionY.at(num);
+    return inTubePosY;
 }
 
 float Level::getBallVX() {
