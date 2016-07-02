@@ -27,11 +27,11 @@ Gameplay keys:
 <br>+ = according to original order.
 <br>* = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
 
-<br>Mouse buttons:
+Mouse buttons:
 <br>Left mouse - Pops the stack.
 <br>Right mouse - Dequeues the queue.
 
-<br>Other:
+Other:
 <br>Esc - Exits the level without saving.
 <br>P - Pauses the level.
 <br>Enter - Resumes the level if paused. Starts the game if MainMenu screen fails to load and backup Menu is shown.
@@ -55,7 +55,7 @@ This game was written mainly in C++ and using SFML, a multimedia API. Bugs and i
 <br>d) Level status bar to show the correct order to win the game. Let's the player know if he won, lost or there was an error with the game.
 
 2. Main menu design and functionality
-3. Game can be paused and resumed, as well as exitted and restarted.
+3. Game can be paused and resumed, as well as exited and restarted.
 
 #### Future planned features ####
 
