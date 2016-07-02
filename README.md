@@ -24,7 +24,7 @@ Gameplay keys:
 <br>A - Makes the selected ball move left *.
 <br>S - Makes the selected ball move down *.
 
-<br>+ = according to original order.
+"+" = according to original order.
 <br>* = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
 
 Mouse buttons:
