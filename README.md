@@ -18,15 +18,15 @@ When a ball encouters a stack by coming close to the point where the stack touch
 #### Controls ####
 
 Keyboard keys: 
-Q - Selects and highlights green, the ball on the left+.
-E - Selects and highlights green,  the ball on the right+.
-W - Makes the selected ball move up*.
-A - Makes the selected ball move left*.
-S - Makes the selected ball move down*.
+<br>Q - Selects and highlights green, the ball on the left+.
+<br>E - Selects and highlights green,  the ball on the right+.
+<br>W - Makes the selected ball move up*.
+<br>A - Makes the selected ball move left*.
+<br>S - Makes the selected ball move down*.
 
-+ = according to original order.
-* = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
+<br>+ = according to original order.
+<br>* = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
 
-Mouse button:
-Left mouse - Pops the stack.
-Right mouse - Dequeues the queue.
+<br>Mouse button:
+<br>Left mouse - Pops the stack.
+<br>Right mouse - Dequeues the queue.
