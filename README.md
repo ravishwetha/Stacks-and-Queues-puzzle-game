@@ -25,7 +25,7 @@ Gameplay keys:
 <br>S - Makes the selected ball move down *.
 
 "+" = according to original order.
-<br>* = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
+<br>"*" = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
 
 Mouse buttons:
 <br>Left mouse - Pops the stack.
