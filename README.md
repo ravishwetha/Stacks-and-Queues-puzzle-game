@@ -35,3 +35,13 @@ Gameplay keys:
 <br>Esc - Exits the level without saving.
 <br>P - Pauses the level.
 <br>Enter - Resumes the level if paused. Starts the game if MainMenu screen fails to load and backup Menu is shown.
+
+### Development ###
+
+This game was written mainly in C++ and using SFML, a multimedia API. Bugs and issues are reported on this repository's issues page.
+
+### Download ###
+
+OSX Xcode: Follow installaton procedure for sfml on Xcode. Set up a .xcodeproj with sfml and add the files from this repository's master branch to the project. Compile and Build.
+
+Windows Visual Studio: Follow installation procedure for sfml on Visual Studio. Set up new project and add files from this repository's. Compile and Run.
