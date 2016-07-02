@@ -160,7 +160,7 @@ void Ball::draw() {
     //place label on ball
     // Declare and load a font
     sf::Font ballFont;
-    ballFont.loadFromFile(rPath + "sansation.ttf");
+    ballFont.loadFromFile("sansation.ttf");
     // Create a text
     sf::Text ballText(label, ballFont);
     ballText.setCharacterSize(dia);
