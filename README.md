@@ -42,6 +42,7 @@ This game was written mainly in C++ and using SFML, a multimedia API. Bugs and i
 
 ### Download ###
 
-OSX Xcode: Follow installaton procedure for sfml on Xcode. Set up a .xcodeproj with sfml and add the files from this repository's Stacks and Queues folder to the project. Compile and Build.
+OSX Xcode: Follow installaton procedure for sfml on Xcode: 
+http://www.sfml-dev.org/tutorials/2.0/start-osx.php Set up a .xcodeproj with sfml and add the files from this repository's Stacks and Queues folder to the project. Compile and Build.
 
 Windows Visual Studio: Follow installation procedure for sfml on Visual Studio: http://www.sfml-dev.org/tutorials/2.3/start-vc.php. Set up new project and add files from this repository's Stacks and Queues VS folder. Compile and Run.
