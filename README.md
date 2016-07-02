@@ -1,7 +1,7 @@
 # Stacks and Queues
 A puzzle game based on the mechanics of the abstract data structures Stacks and Queues.
 
-### The Game: version 0.1 ###
+### Current Game: version 0.1 ###
 
 #### Concepts ####
 
@@ -38,7 +38,19 @@ Gameplay keys:
 
 ### Development ###
 
+#### Motivation ####
+
+To make a fun and entertaining puzzle game. Originally intended to provide a more significant educational experience but we have found that it can only currently serve as exposure to these data structures based on user feedback.
+
+#### Techical ####
+
 This game was written mainly in C++ and using SFML, a multimedia API. Bugs and issues are reported on this repository's issues page.
+
+#### Future features ####
+
+1. Queues, we had not been able to implement queues in the previous sprint, but the foundation for the integration of a Queue class and objects have been setup in the other class methods.
+2. Level 1 has been completed with only one stack (refer to video). Ateast 2 more levels with increasing difficulty are planned with both stacks and queues included.
+3. Music and sound effects.
 
 ### Download ###
 
