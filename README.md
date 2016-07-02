@@ -5,7 +5,9 @@ A puzzle game based on the mechanics of the abstract data structures Stacks and 
 
 #### Concepts ####
 
-Stack: 
+Stack: A stack or LIFO (last in, first out) is an abstract data type that serves as a collection of elements, with two principal operations: push adds an element to the collection; pop removes the last element that was added. This game uses another operation of a stack: peek, which shows the last element that was added without removing it.
+
+Queue: In a queue or a FIFO data structure, the first element added to the queue will be the first one to be removed. Enqueue is used to add an element to the collection and dequeue is used to remove. Peek or front is used to show the first element to be added without removin it.
 
 #### Description ####
 
@@ -26,4 +28,5 @@ S - Makes the selected ball move down*.
 * = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
 
 Mouse button:
-Left mouse - Pops the top most ball on the stack
+Left mouse - Pops the stack.
+Right mouse - Dequeues the queue.
