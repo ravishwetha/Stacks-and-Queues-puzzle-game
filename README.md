@@ -20,9 +20,9 @@ When a ball encouters a stack by coming close to the point where the stack touch
 Keyboard keys: 
 <br>Q - Selects and highlights green, the ball on the left+.
 <br>E - Selects and highlights green,  the ball on the right+.
-<br>W - Makes the selected ball move up*.
-<br>A - Makes the selected ball move left*.
-<br>S - Makes the selected ball move down*.
+<br>W - Makes the selected ball move up *.
+<br>A - Makes the selected ball move left *.
+<br>S - Makes the selected ball move down *.
 
 <br>+ = according to original order.
 <br>* = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
