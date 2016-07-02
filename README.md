@@ -17,7 +17,7 @@ When a ball encouters a stack by coming close to the point where the stack touch
 
 #### Controls ####
 
-Keyboard keys: 
+Gameplay keys: 
 <br>Q - Selects and highlights green, the ball on the left+.
 <br>E - Selects and highlights green,  the ball on the right+.
 <br>W - Makes the selected ball move up *.
@@ -27,6 +27,11 @@ Keyboard keys:
 <br>+ = according to original order.
 <br>* = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
 
-<br>Mouse button:
+<br>Mouse buttons:
 <br>Left mouse - Pops the stack.
 <br>Right mouse - Dequeues the queue.
+
+<br>Other:
+<br>Esc - Exits the level without saving.
+<br>P - Pauses the level.
+<br>Enter - Resumes the level if paused. Starts the game if MainMenu screen fails to load and backup Menu is shown.
