@@ -7,7 +7,7 @@ A puzzle game based on the mechanics of the abstract data structures Stacks and 
 
 Stack: A stack or LIFO (last in, first out) is an abstract data type that serves as a collection of elements, with two principal operations: push adds an element to the collection; pop removes the last element that was added. This game uses another operation of a stack: peek, which shows the last element that was added without removing it.
 
-Queue: In a queue or a FIFO data structure, the first element added to the queue will be the first one to be removed. Enqueue is used to add an element to the collection and dequeue is used to remove. Peek or front is used to show the first element to be added without removin it.
+Queue: In a queue or a FIFO data structure, the first element added to the queue will be the first one to be removed. Enqueue is used to add an element to the collection and dequeue is used to remove. Peek or front is used to show the first element to be added without removing it.
 
 #### Description ####
 
@@ -28,8 +28,8 @@ Gameplay keys:
 <br>"*" = when a path is available. Balls are not allowed to move outside the path, the take the next available turn. This can be overridden by another key press, balls only store one turn direction at a time.
 
 Mouse buttons:
-<br>Left mouse - Pops the stack.
-<br>Right mouse - Dequeues the queue.
+<br>Left mouse - Pops the stack/ Dequeues the queue.
+<br>Right mouse - Peek at the stack/ Fronts the queue.
 
 Other:
 <br>Esc - Exits the level without saving.
@@ -60,7 +60,7 @@ This game was written mainly in C++ and using SFML, a multimedia API. Bugs and i
 #### Future planned features ####
 
 1. Queues, we had not been able to implement queues in the previous sprint, but the foundation for the integration of a Queue class and objects have been setup in the other class methods.
-2. Level 1 has been completed with only one stack (refer to video). Ateast 2 more levels with increasing difficulty are planned with both stacks and queues included.
+2. Level 1 has been completed with only one stack (refer to video). Atleast 2 more levels with increasing difficulty are planned with both stacks and queues included.
 3. Help page for player.
 4. Music and sound effects. To make the game more engaging.
 
