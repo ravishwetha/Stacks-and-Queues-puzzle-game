@@ -5,6 +5,7 @@
 
 //#include <stdafx.h> //uncomment if using visual studio
 
+#include "stdafx.h"
 #include "MainMenu.h"
 
 MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)

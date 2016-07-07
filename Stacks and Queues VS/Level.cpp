@@ -3,6 +3,7 @@
 
 //Level.cpp
 
+#include "stdafx.h"
 #include "Level.hpp"
 
 Level::Level(int num, std::vector<string> winOrder) {

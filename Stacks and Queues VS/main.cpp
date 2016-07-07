@@ -4,6 +4,8 @@
 //main.cpp
 
 //#include "SplashScreen.h"
+
+#include "stdafx.h"
 #include "MainMenu.h"
 #include "Level.hpp"
 
