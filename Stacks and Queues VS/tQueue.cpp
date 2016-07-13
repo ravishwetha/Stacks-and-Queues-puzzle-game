@@ -1,71 +1,71 @@
 //Stacks and Queues
 //Copyright © 2016 TeamSQ. All rights reserved.
 
-//tStack.cpp
+//tQueue.cpp
 
-#include "tStack.hpp"
+#include "stdafx.h"
+#include "tQueue.hpp"
 
-tStack::tStack(float x, float y, float width, float height) {
+tQueue::tQueue(float x, float y, float width, float height) {
     this->x = x;
     this->y = y;
     this->width = width;
     this->height = height;
 }
 
-float tStack::getX() {
+float tQueue::getX() {
     return x;
 }
 
-float tStack::getY() {
+float tQueue::getY() {
     return y;
 }
 
-float tStack::getWidth() {
+float tQueue::getWidth() {
     return width;
 }
 
-float tStack::getHeight() {
+float tQueue::getHeight() {
     return height;
 }
 
-int tStack::size() {
-    return toolStack.size();
+int tQueue::size() {
+    return toolQueue.size();
 }
 
-void tStack::push(Ball ball) {
-    toolStack.push(ball);
+void tQueue::push(Ball ball) {
+    toolQueue.push(ball);
 }
 
-void tStack::pop() {
+void tQueue::pop() {
     if(size() == 0) {
         return;
     }
-    cout << "top Ball: " << toolStack.top().num << " is not pushed anymore.\n";
-    toolStack.pop();
+    cout << "front Ball: " << toolQueue.front().num << " is not pushed anymore.\n";
+    toolQueue.pop();
 }
 
-Ball tStack::top() {
+Ball tQueue::front() {
     if(size() == 0) {
         return;
     }
-    cout << "draw top Ball: " << toolStack.top().num << ".\n";
-    toolStack.top().draw();
-    return toolStack.top();
+    cout << "draw top Ball: " << toolQueue.front().num << ".\n";
+    toolQueue.front().draw();
+    return toolQueue.front();
 }
-
-bool tStack::checkForSelect(float x, float y) {
+bool tQueue::checkForSelect(float x, float y) {
     if(x <= this->x+(width/2.0) && x >= this->x-(width/2.0) && y <= this->y+(height/2.0) && y >= this->y-(height/2.0)) {
         return true;
     }
     return false;
 }
 
-void tStack::update() {
+void tQueue::update() {
     //TODO: it is currently stationary but planning to have an animation when it pops.
 }
 
 //TODO: need to make it better than a orange rectangle
-void tStack::draw() {
+void tQueue::draw() {
     sf::RectangleShape stack;
     stack.setFillColor(sf::Color::Color(255, 165, 0));
     stack.setSize(sf::Vector2f(width, height));

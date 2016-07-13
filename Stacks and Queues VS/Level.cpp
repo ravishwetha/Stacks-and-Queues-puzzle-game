@@ -17,7 +17,10 @@ Level::Level(int num, std::vector<string> winOrder) {
     isActive = true;
     ballsInitiated = false;
     selectedBall = 0;
+    
     pathStored = false;
+    float inVerticalXdot = 0;
+    float inVerticalYdot = 0;
 }
 
 float Level::getInTubePositionX() {
@@ -119,12 +122,12 @@ void Level::checkForSQSelect(float x, float y, string action) {
             //cout << "from level.cpp: stack " << i << ".\n";
             topBallID = stacks.at(i).top().num;
             if(action.compare("pop") == 0) {
-                cout << "from level.cpp: pop " << topBallID << ".\n";
+                //cout << "from level.cpp: pop " << topBallID << ".\n";
                 balls.at(topBallID).ballOut();
                 stacks.at(i).pop();
             }
             else if(action.compare("top") == 0) {
-                cout << "from level.cpp: top.\n";
+                //cout << "from level.cpp: top.\n";
                 balls.at(topBallID).toggleisTopped();
                 stacks.at(i).top();
             }
@@ -184,7 +187,10 @@ void Level::updateLevel() {
             balls.at(i).update(true);
         }
         
-        //UPDATE STACKS//
+        //UPDATE STACKS AND QUEUES//
+        for(int i=0; i<queues.size(); i++) {
+            queues.at(i).update();
+        }
         for(int i=0; i<stacks.size(); i++) {
             stacks.at(i).update();
         }
@@ -296,26 +302,12 @@ void Level::drawOutTube() {
     window->draw(rightEnd);
 }
 
-void Level::drawPath() {
+void Level::drawStandardPath() {
     float pathWidth = (ballsRadii.at(num)*25.0);
     float pathHeight = (ballsRadii.at(num)*2.0)/5.0; //inTube height/5.0
     
-    //have to switch width and height to make vertical
-    float inVerticalWidth = pathHeight;
-    float inVerticalHeight = 0.0;
-    float inVerticalY = inTubePosY;
-    
     float directLineWidth = inTubePosX - (RES_X - inTubePosX) - (pathWidth*2.0);
     float directLineHeight = pathHeight;
-    
-    float leftLine1Width = 0.0;
-    float leftLine1Height = pathHeight;
-    
-    float leftLine2Width = 0.0;
-    float leftLine2Height = pathHeight;
-    
-    float outVerticalWidth = pathHeight;
-    float outVerticalHeight = 0.0;
     
     //movement index:
     
@@ -371,6 +363,167 @@ void Level::drawPath() {
     pathCoords.push_back(RES_Y-inTubePosY + pathHeight/2.0);
     pathCoords.push_back(leftF);
     }
+}
+
+void Level::drawQueuePath() {
+    float pathWidth = (ballsRadii.at(num)*25.0); //strictly horizontal measure
+    float pathHeight = (ballsRadii.at(num)*2.0)/5.0; //inTube height/5.0, strictly vertical measure
+    
+    //have to switch width and height to make vertical
+    float inVerticalWidth = pathHeight;
+    float inVerticalHeight = 0.0;
+    float inVerticalY = inTubePosY;
+    
+    float leftLine1Width = 0.0;
+    float leftLine1Height = pathHeight;
+    
+    float leftLine2Width = 0.0;
+    float leftLine2Height = pathHeight;
+    
+    float outVerticalWidth = pathHeight;
+    float outVerticalHeight = 0.0;
+    
+    for(int i=0; i<queues.size(); i++) {
+        tQueue currQueue = queues.at(i);
+        
+        inVerticalHeight = abs(inTubePosY - currQueue.getY());
+        outVerticalHeight = abs((RES_Y-inTubePosY) - currQueue.getY());
+        
+        if(currQueue.getY() >= inTubePosY) inVerticalY = (inTubePosY+(inVerticalHeight/2.0));
+        else inVerticalY = abs(inTubePosY-(inVerticalHeight/2.0));
+        
+        leftLine1Width = abs(currQueue.getX() - (inTubePosX-pathWidth));
+        leftLine2Width = ((RES_X - (inTubePosX-pathWidth)) - currQueue.getX());
+        
+        sf::RectangleShape inVertical;
+        inVertical.setFillColor(lineColor);
+        inVertical.setOutlineColor(lineOutlineColor);
+        inVertical.setOutlineThickness(pathHeight/5.0);
+        inVertical.setSize(sf::Vector2f(inVerticalWidth, inVerticalHeight));
+        inVertical.setOrigin(inVerticalWidth/2.0, inVerticalHeight/2.0);
+        inVertical.setPosition(inTubePosX-pathWidth, inVerticalY);
+        window->draw(inVertical);
+        
+        if(!pathStored) {
+            pathCoords.push_back(inTubePosX-pathWidth - inVerticalWidth/2.0);
+            if(currQueue.getY() > inTubePosY) { //queue is below center
+                pathCoords.push_back(abs(inVerticalY - inVerticalHeight/2.0) + pathHeight);
+                pathCoords.push_back(inTubePosX-pathWidth + inVerticalWidth/2.0);
+                pathCoords.push_back(inVerticalY + inVerticalHeight/2.0);
+                
+                pathCoords.push_back(downF);
+                
+                /*
+                inVerticalXdot = inTubePosX-pathWidth - inVerticalWidth/2.0;
+                inVerticalYdot = abs(inVerticalY - inVerticalHeight/2.0) + pathHeight;
+                
+                cout << "queue below center\n";
+                 */
+            }
+            else if(currQueue.getY() < inTubePosY) { //queue is above center
+                pathCoords.push_back(abs(inVerticalY - inVerticalHeight/2.0));
+                pathCoords.push_back(inTubePosX-pathWidth + inVerticalWidth/2.0);
+                pathCoords.push_back((inVerticalY + inVerticalHeight/2.0) - pathHeight);
+            
+                pathCoords.push_back(upF);
+                
+                /*
+                inVerticalXdot = inTubePosX-pathWidth + inVerticalWidth/2.0;
+                inVerticalYdot = ((inVerticalY + inVerticalHeight/2.0) - pathHeight);
+                
+                cout << "queue above center\n";
+                 */
+            }
+            else {
+                //Precondition of x, y in queue not satisfied.
+                //cout << "queue x, y precond not satisfied\n";
+            }
+        }
+        
+        /* For debugging errors related to pathCoordinates
+        sf::CircleShape dot;
+        dot.setFillColor(sf::Color::Blue);
+        dot.setOutlineColor(lineOutlineColor);
+        dot.setOutlineThickness(pathHeight/5.0);
+        dot.setRadius(pathHeight);
+        dot.setOrigin(pathHeight, pathHeight);
+        dot.setPosition(inVerticalXdot, inVerticalYdot);
+        cout << "X = " << inVerticalXdot << " Y = " << inVerticalYdot << ".\n";
+        window->draw(dot);
+         */
+        
+        sf::RectangleShape leftLine1;
+        leftLine1.setFillColor(lineColor);
+        leftLine1.setOutlineColor(lineOutlineColor);
+        leftLine1.setOutlineThickness(pathHeight/5.0);
+        leftLine1.setSize(sf::Vector2f(leftLine1Width, leftLine1Height));
+        leftLine1.setOrigin(leftLine1Width/2.0, leftLine1Height/2.0);
+        leftLine1.setPosition(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0), abs(currQueue.getY()));
+        window->draw(leftLine1);
+        
+        if(!pathStored) {
+            pathCoords.push_back(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0) - leftLine1Width/2.0);
+            pathCoords.push_back(abs(currQueue.getY()) - leftLine1Height/2.0);
+            pathCoords.push_back((abs(inTubePosX-pathWidth) - leftLine1Width/2.0) + leftLine1Width/2.0);
+            pathCoords.push_back(abs(currQueue.getY()) + leftLine1Height/2.0);
+            pathCoords.push_back(leftF);
+        }
+        
+        sf::RectangleShape outVertical;
+        outVertical.setFillColor(lineColor);
+        outVertical.setOutlineColor(lineOutlineColor);
+        outVertical.setOutlineThickness(pathHeight/5.0);
+        outVertical.setSize(sf::Vector2f(outVerticalWidth, outVerticalHeight));
+        outVertical.setOrigin(outVerticalWidth/2.0, outVerticalHeight/2.0);
+        outVertical.setPosition(RES_X-(inTubePosX-pathWidth), inVerticalY);
+        window->draw(outVertical);
+        
+        if(!pathStored) {
+            pathCoords.push_back(RES_X-(inTubePosX-pathWidth) - outVerticalWidth/2.0);
+            pathCoords.push_back(inVerticalY - outVerticalHeight/2.0);
+            pathCoords.push_back(RES_X-(inTubePosX-pathWidth) + outVerticalWidth/2.0);
+            pathCoords.push_back(inVerticalY + outVerticalHeight/2.0);
+            if(currQueue.getY() >= RES_Y2) pathCoords.push_back(upF);
+            else pathCoords.push_back(downF);
+        }
+        
+        sf::RectangleShape leftLine2;
+        leftLine2.setFillColor(lineColor);
+        leftLine2.setOutlineColor(lineOutlineColor);
+        leftLine2.setOutlineThickness(pathHeight/5.0);
+        leftLine2.setSize(sf::Vector2f(leftLine2Width, leftLine2Height));
+        leftLine2.setOrigin(leftLine2Width/2.0, leftLine2Height/2.0);
+        leftLine2.setPosition(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0), abs(currQueue.getY()));
+        window->draw(leftLine2);
+        
+        if(!pathStored) {
+            pathCoords.push_back(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0));
+            pathCoords.push_back(abs(currQueue.getHeight()/2.0 - currQueue.getY()) - leftLine2Height/2.0);
+            pathCoords.push_back(abs(RES_X - (inTubePosX-pathWidth)) + leftLine2Width);
+            pathCoords.push_back(abs(currQueue.getHeight()/2.0 - currQueue.getY()) + leftLine2Height/2.0);
+            pathCoords.push_back(leftF);
+        }
+    }
+    //cout << "Queue paths drawn.\n";
+}
+
+void Level::drawStackPath() {
+    float pathWidth = (ballsRadii.at(num)*25.0);
+    float pathHeight = (ballsRadii.at(num)*2.0)/5.0; //inTube height/5.0
+    
+    //have to switch width and height to make vertical
+    float inVerticalWidth = pathHeight;
+    float inVerticalHeight = 0.0;
+    float inVerticalY = inTubePosY;
+    
+    float leftLine1Width = 0.0;
+    float leftLine1Height = pathHeight;
+    
+    float leftLine2Width = 0.0;
+    float leftLine2Height = pathHeight;
+    
+    float outVerticalWidth = pathHeight;
+    float outVerticalHeight = 0.0;
     
     for(int i=0; i<stacks.size(); i++) {
         tStack currStack = stacks.at(i);
@@ -394,12 +547,46 @@ void Level::drawPath() {
         window->draw(inVertical);
         
         if(!pathStored) {
-        pathCoords.push_back(inTubePosX-pathWidth - inVerticalWidth/2.0);
-        pathCoords.push_back(abs(inVerticalY - inVerticalHeight/2.0));
-        pathCoords.push_back(inTubePosX-pathWidth + inVerticalWidth/2.0);
-        pathCoords.push_back(abs(inVerticalY + inVerticalHeight/2.0));
-        pathCoords.push_back(downF);
+            pathCoords.push_back(inTubePosX-pathWidth - inVerticalWidth/2.0);
+            if(currStack.getY() > inTubePosY) { //stack is below center
+                pathCoords.push_back(abs(inVerticalY - inVerticalHeight/2.0) + pathHeight);
+                pathCoords.push_back(inTubePosX-pathWidth + inVerticalWidth/2.0);
+                pathCoords.push_back(inVerticalY + inVerticalHeight/2.0);
+                
+                pathCoords.push_back(downF);
+                
+                /*
+                inVerticalXdot = inTubePosX-pathWidth - inVerticalWidth/2.0;
+                inVerticalYdot = (inVerticalY - inVerticalHeight/2.0) + pathHeight;
+                 */
+            }
+            else if(currStack.getY() < inTubePosY) { //stack is above center
+                pathCoords.push_back(abs(inVerticalY - inVerticalHeight/2.0));
+                pathCoords.push_back(inTubePosX-pathWidth + inVerticalWidth/2.0);
+                pathCoords.push_back((inVerticalY + inVerticalHeight/2.0) - pathHeight);
+            
+                pathCoords.push_back(upF);
+                
+                /*
+                inVerticalXdot = inTubePosX-pathWidth + inVerticalWidth/2.0;
+                inVerticalYdot = (inVerticalY + inVerticalHeight/2.0) - pathHeight;
+                 */
+            }
+            else {
+                //Precondition of x, y in queue not satisfied.
+            }
         }
+        
+        /* For debugging errors related to pathCoordinates
+        sf::CircleShape dot;
+        dot.setFillColor(sf::Color::Red);
+        dot.setOutlineColor(lineOutlineColor);
+        dot.setOutlineThickness(pathHeight/5.0);
+        dot.setRadius(pathHeight);
+        dot.setOrigin(pathHeight, pathHeight);
+        dot.setPosition(inTubePosX-pathWidth - inVerticalWidth/2.0, abs(inVerticalY - inVerticalHeight/2.0) + pathHeight);
+        window->draw(dot);
+        */
         
         sf::RectangleShape leftLine1;
         leftLine1.setFillColor(lineColor);
@@ -432,7 +619,8 @@ void Level::drawPath() {
         pathCoords.push_back(inVerticalY - outVerticalHeight/2.0);
         pathCoords.push_back(RES_X-(inTubePosX-pathWidth) + outVerticalWidth/2.0);
         pathCoords.push_back(inVerticalY + outVerticalHeight/2.0);
-        pathCoords.push_back(upF);
+        if(currStack.getY() >= RES_Y2) pathCoords.push_back(upF);
+        else pathCoords.push_back(downF);
         }
         
         sf::RectangleShape leftLine2;
@@ -453,7 +641,6 @@ void Level::drawPath() {
         }
     }
     //cout << "Stack paths drawn.\n";
-    pathStored = true;
 }
 
 void Level::drawLevel() {
@@ -462,19 +649,27 @@ void Level::drawLevel() {
     drawLevelBar();
     drawInTube();
     drawOutTube();
-    drawPath();
+    
+    drawStandardPath();
+    //drawQueuePath();
+    drawStackPath();
+    drawQueuePath();
+    pathStored = true;
     
     //balls drawn after tubes makes tubes transparent
-    for( int i = 0; i < balls.size(); i++ ) {
+    for(int i=0; i<balls.size(); i++) {
         if(balls.at(i).isTopped) toppedBallsID.push_back(i);
         else balls.at(i).draw();
     }
-    //stacks drawn after balls make stacks obscure
+    
+    for(int i=0; i<queues.size(); i++) {
+        queues.at(i).draw();
+    }
     for(int i=0; i<stacks.size(); i++) {
         stacks.at(i).draw();
     }
     
-    //draw topped balls on top of stacks and queues so that they are seen
+    //draw topped or fronted balls on top of stacks and queues so that they are seen
     for(int i=0; i<toppedBallsID.size(); i++) {
         balls.at(toppedBallsID.at(i)).draw();
     }
@@ -482,5 +677,6 @@ void Level::drawLevel() {
 
 void Level::clearLevel() {
     balls.clear();
+    queues.clear();
     stacks.clear();
 }

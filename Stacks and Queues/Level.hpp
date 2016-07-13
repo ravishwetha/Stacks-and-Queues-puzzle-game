@@ -7,12 +7,15 @@
 #define Level_hpp
 
 #include "tStack.hpp"
+#include "tQueue.hpp"
 
 class Level {
 private:
     float inTubePosX;
     float inTubePosY;
     bool pathStored;
+    float inVerticalXdot;
+    float inVerticalYdot;
     
 public:
     int num;
@@ -28,6 +31,8 @@ public:
     std::vector<Ball> balls;
     int selectedBall = 0;
     std::vector<tStack> stacks;
+    std::vector<tQueue> queues;
+    
     sf::Color lineColor = sf::Color::Yellow;
     sf::Color lineOutlineColor = sf::Color::Black;
     
@@ -66,7 +71,9 @@ public:
     void drawLevelBar();
     void drawInTube();
     void drawOutTube();
-    void drawPath();
+    void drawStandardPath();
+    void drawQueuePath();
+    void drawStackPath();
     void drawLevel();
     void clearLevel();
 };

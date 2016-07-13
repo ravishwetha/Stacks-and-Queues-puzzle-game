@@ -1,23 +1,23 @@
 //Stacks and Queues
 //Copyright © 2016 TeamSQ. All rights reserved.
 
-//tStack.hpp
+//tQueue.hpp
 
-#ifndef tStack_hpp
-#define tStack_hpp
+#ifndef tQueue_hpp
+#define tQueue_hpp
 
-#include <stack> //for std::stack
+#include <queue>
 
 #include "Ball.hpp"
 
-class tStack {
+class tQueue {
 private:
-    std::stack<Ball> toolStack;
+    std::queue<Ball> toolQueue;
     float x, y; /* Precondition: can't be RES_X or RES_Y2 */
     float width, height;
     
 public:
-    tStack(float x, float y, float width, float height);
+    tQueue(float x, float y, float width, float height);
     
     //getters
     float getX();
@@ -28,11 +28,11 @@ public:
     int size();
     void push(Ball ball);
     void pop();
-    Ball top();
-
+    Ball front();
+    
     bool checkForSelect(float x, float y);
     void update();
     void draw();
 };
 
-#endif /* tStack_hpp */
+#endif /* tQueue_hpp */
