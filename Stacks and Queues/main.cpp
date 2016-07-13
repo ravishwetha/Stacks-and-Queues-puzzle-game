@@ -21,7 +21,7 @@ float downF = 3.0;
 
 std::vector<float> inTubePositionX = { RES_X, RES_X , RES_X };
 std::vector<float> inTubePositionY = { RES_Y2, RES_Y2, RES_Y };
-std::vector<float> ballsPeriod = { 1.0, 2.0, 2.0 };
+std::vector<float> ballsPeriod = { 5.0, 2.0, 2.0 };
 std::vector<float> ballsVX = { 1.0, 1.0, 1.0 };
 std::vector<float> ballsRadii = { 10, 10, 10 };
 
@@ -122,7 +122,7 @@ void initialiseLevel1() {
     float x = level1->getInTubePositionX();
     float y = level1->getInTubePositionY();
     float vx1 = level1->getBallVX();
-    float vy1 = vx1*2;
+    float vy1 = vx1*3;
     float radius = level1->getBallRadius();
     
     //create level objects accordingly
@@ -130,7 +130,8 @@ void initialiseLevel1() {
     Ball lvl1ball3 = Ball(1, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
     Ball lvl1ball4 = Ball(2, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
-    tStack lvl1stack1 = tStack(RES_X*(1.0/2.0), RES_Y*(3.0/4.0), radius*2, radius*6);
+    tStack lvl1stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
+    //tQueue lvl1queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
     
     //cout << "Level 1 objects initialised.\n";
     
@@ -140,6 +141,7 @@ void initialiseLevel1() {
     level1->balls.push_back(lvl1ball4);
     
     level1->stacks.push_back(lvl1stack1);
+    //level1->queues.push_back(lvl1queue1);
     
     //cout << "Level 1 vectors initialised.\n";
     
@@ -279,8 +281,8 @@ int main() {
                     gameNotPaused = false;
                 }
                 else if(key_A) currLevel->balls.at(ballIndex).changeDirection((int) leftF);
-                else if(key_W) currLevel->balls.at(ballIndex).changeDirection((int) upF);
-                else if(key_S) currLevel->balls.at(ballIndex).changeDirection((int) downF);
+                else if(key_W) {currLevel->balls.at(ballIndex).changeDirection((int) upF); key_W = false;}
+                else if(key_S) {currLevel->balls.at(ballIndex).changeDirection((int) downF); key_S = false;}
                 else if(key_E) ballIndex = currLevel->prevBall(); //Q and E keys are swapped here due to a bug with double counting taps.
                 else if(key_Q) ballIndex = currLevel->nextBall(); //Q and E keys are swapped here due to a bug with double counting taps.
                 else if(mouse_left) {
