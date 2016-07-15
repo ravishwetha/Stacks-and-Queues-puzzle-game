@@ -131,7 +131,7 @@ void initialiseLevel1() {
     Ball lvl1ball4 = Ball(2, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
     tStack lvl1stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
-    //tQueue lvl1queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
+    tQueue lvl1queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
     
     //cout << "Level 1 objects initialised.\n";
     
@@ -141,7 +141,7 @@ void initialiseLevel1() {
     level1->balls.push_back(lvl1ball4);
     
     level1->stacks.push_back(lvl1stack1);
-    //level1->queues.push_back(lvl1queue1);
+    level1->queues.push_back(lvl1queue1);
     
     //cout << "Level 1 vectors initialised.\n";
     
@@ -292,7 +292,7 @@ int main() {
                 }
                 else if(mouse_right) {
                     cout << "right mouse button.\n";
-                    currLevel->checkForSQSelect(mouse_X, mouse_Y, "top");
+                    currLevel->checkForSQSelect(mouse_X, mouse_Y, "peek");
                     mouse_right = false;
                 }
             }

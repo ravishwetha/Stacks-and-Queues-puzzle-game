@@ -15,6 +15,8 @@ private:
     std::queue<Ball> toolQueue;
     float x, y; /* Precondition: can't be RES_X or RES_Y2 */
     float width, height;
+    float topLeftX, topLeftY;
+    float bottomRightX, bottomRightY;
     
 public:
     tQueue(float x, float y, float width, float height);
@@ -24,6 +26,10 @@ public:
     float getY();
     float getWidth();
     float getHeight();
+    float gettopLeftX();
+    float gettopLeftY();
+    float getbottomRightX();
+    float getbottomRightY();
     
     int size();
     void push(Ball ball);

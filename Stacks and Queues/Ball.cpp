@@ -34,6 +34,10 @@ float Ball::getX() {
     return x;
 }
 
+void Ball::setX(float x) {
+    this->x = x;
+}
+
 float Ball::getY() {
     return y;
 }

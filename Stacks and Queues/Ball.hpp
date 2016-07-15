@@ -37,6 +37,7 @@ public:
     
     //getters
     float getX();
+    void setX(float x);
     float getY();
     float getRadius();
     string getLabel();
