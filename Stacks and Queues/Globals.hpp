@@ -39,6 +39,7 @@ extern float downF; //3.0
 /*
  Level info:
 */
+extern std::vector<int> lockedLevels;
 extern std::vector<float> inTubePositionX;
 extern std::vector<float> inTubePositionY;
 extern std::vector<float> ballsPeriod; /* Balls appear on screen every x seconds. */

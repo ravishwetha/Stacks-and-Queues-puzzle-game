@@ -45,6 +45,9 @@ public:
     float getBallPeriod();
     float getBallRadius();
     
+    //setters
+    bool toggleUnlocked();
+    
     //methods
     float abs(float num);
     float min(float a, float b);
@@ -67,7 +70,7 @@ public:
     */
     int checkForWin();
     
-    void updateLevel();
+    int updateLevel();
     string makeLevelBarLabel();
     void drawLevelBar();
     void drawInTube();
