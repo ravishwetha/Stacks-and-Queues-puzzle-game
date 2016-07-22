@@ -136,7 +136,7 @@ int Level::checkForQPush() {
             
             //if(currBall.getX() >= currQueue.gettopLeftX() && currBall.getY() >= currQueue.gettopLeftY() && currBall.getX() <= currQueue.getbottomRightX() && currBall.getY() <=currQueue.getbottomRightY()); { //alternative solution: checks if center of ball is in queue
                 
-                cout << "ball pushed\n";
+                //cout << "ball pushed\n";
                 balls.at(i).isPushed = true;
                 float currBallNewX = currBall.getX() - currQueue.getWidth();
                 balls.at(i).setX(currBallNewX);
@@ -155,12 +155,12 @@ void Level::checkForSQSelect(float x, float y, string action) {
             //cout << "from level.cpp: stack " << i << ".\n";
             topBallID = stacks.at(i).top().num;
             if(action.compare("pop") == 0) {
-                cout << "from level.cpp: pop " << topBallID << ".\n";
+                //cout << "from level.cpp: pop " << topBallID << ".\n";
                 balls.at(topBallID).ballOut();
                 stacks.at(i).pop();
             }
             else if(action.compare("peek") == 0) {
-                cout << "from level.cpp: top.\n";
+                //cout << "from level.cpp: top.\n";
                 balls.at(topBallID).toggleisTopped();
                 stacks.at(i).top();
             }
@@ -171,15 +171,15 @@ void Level::checkForSQSelect(float x, float y, string action) {
     
     for(int i=0; i<queues.size(); i++) {
         if(queues.at(i).checkForSelect(x, y) && queues.at(i).size() != 0) {
-            cout << "from level.cpp: queue " << i << ".\n";
+            //cout << "from level.cpp: queue " << i << ".\n";
             frontBallID = queues.at(i).front().num;
             if(action.compare("pop") == 0) {
-                cout << "from level.cpp: pop " << frontBallID << ".\n";
+                //cout << "from level.cpp: pop " << frontBallID << ".\n";
                 balls.at(frontBallID).ballOut();
                 queues.at(i).pop();
             }
             else if(action.compare("peek") == 0) {
-                cout << "from level.cpp: front.\n";
+                //cout << "from level.cpp: front.\n";
                 balls.at(frontBallID).toggleisTopped();
                 queues.at(i).front();
             }
@@ -188,7 +188,12 @@ void Level::checkForSQSelect(float x, float y, string action) {
 }
 
 int Level::checkForWin() {
-    if(winOrder.empty() || balls.empty()) return 1;
+    if(winOrder.empty() || balls.empty()) {
+        if(winOrder.empty() && balls.empty()) cout << "Everythang empty.\n";
+        else if(winOrder.empty()) cout << "winOrder empty.\n";
+        else if(balls.empty()) cout << "balls empty.\n";
+        return 1;
+    }
     
     for(int i=0; i<balls.size(); i++) {
         if(!balls.at(i).isActive) {
@@ -214,12 +219,12 @@ int Level::updateLevel() {
     int recentStack = checkForSPush();
     int recentQueue = checkForQPush();
     
+    //cout << "From updateLevel(), Level " << num+1 << " has " << balls.size() << " balls.\n";
     //UPDATE BALLS//
     for(int i=0; i<balls.size(); i++) {
-        //cout << "From Level.cpp (being called when level selected) : Level " << num << " has " << balls.size() << " balls.\n";
         //ball went through exit tube
         if(!balls.at(i).isActive) {
-            //cout << "Ball " << balls.at(i).getLabel() << " i = " << i << " at(" << balls.at(i).getX() << ", " << balls.at(i).getY() << ") is active\n";
+            //cout << "Ball " << balls.at(i).getLabel() << " i = " << i << " at(" << balls.at(i).getX() << ", " << balls.at(i).getY() << ") is not active\n";
             continue;
         }
         //else cout << "Ball " << balls.at(i).getLabel() << " i = " << i << " at(" << balls.at(i).getX() << ", " << balls.at(i).getY() << ") is active\n";
@@ -497,7 +502,7 @@ void Level::drawQueuePath() {
             }
             else {
                 //Precondition of x, y in queue not satisfied.
-                //cout << "queue x, y precond not satisfied\n";
+                cout << "Error queue x, y precond not satisfied\n";
             }
         }
         

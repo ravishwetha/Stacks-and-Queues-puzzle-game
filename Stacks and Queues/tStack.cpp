@@ -40,7 +40,7 @@ void tStack::pop() {
     if(size() == 0) {
         return;
     }
-    cout << "top Ball: " << toolStack.top().num << " is not pushed anymore.\n";
+    //cout << "top Ball: " << toolStack.top().num << " is not pushed anymore.\n";
     toolStack.pop();
 }
 
@@ -48,7 +48,7 @@ Ball tStack::top() {
     if(size() == 0) {
         return;
     }
-    cout << "draw top Ball: " << toolStack.top().num << ".\n";
+    //cout << "draw top Ball: " << toolStack.top().num << ".\n";
     toolStack.top().draw();
     return toolStack.top();
 }

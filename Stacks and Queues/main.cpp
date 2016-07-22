@@ -20,7 +20,7 @@ float leftF = 1.0;
 float upF = 2.0;
 float downF = 3.0;
 
-std::vector<int> lockedLevels = {2, 3};
+std::vector<int> lockedLevels = {3};
 std::vector<float> inTubePositionX = { RES_X, RES_X , RES_X };
 std::vector<float> inTubePositionY = { RES_Y2, RES_Y2, RES_Y };
 std::vector<float> ballsPeriod = { 5.0, 2.0, 2.0 };
@@ -111,7 +111,7 @@ void processEvent(sf::Event& event) {
         case sf::Event::MouseButtonPressed: {
             mouse_X = event.mouseButton.x;
             mouse_Y = event.mouseButton.y;
-            cout << "from main.cpp: x = " << mouse_X << " y = " << mouse_Y << ".\n";
+            //cout << "from main.cpp: x = " << mouse_X << " y = " << mouse_Y << ".\n";
             mouseDown(event.mouseButton.button);
         }
         default: ; //nothing
@@ -135,7 +135,6 @@ void initialiseLevel1() {
     Ball lvl1ball4 = Ball(2, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
     tStack lvl1stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
-    //tQueue lvl1queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
     
     //cout << "Level 1 objects initialised.\n";
     
@@ -146,12 +145,10 @@ void initialiseLevel1() {
     //cout << "From main.cpp (just created) Level 1 has " << level1->balls.size() << " balls.\n";
     
     level1->stacks.push_back(lvl1stack1);
-    //level1->queues.push_back(lvl1queue1);
-    
+
     //cout << "Level 1 vectors initialised.\n";
     
     ballIndex = 0;
-    currLevel = level1;
     
     cout << "Level 1 initialised.\n";
 }
@@ -236,11 +233,8 @@ void initialiseLevel3() {
 
 void initialiseGame() {
     initialiseLevel1();
-    //cout << level1->winOrder.at(0);
     initialiseLevel2();
-    //cout << level2->winOrder.at(0);
     initialiseLevel3();
-    //cout << level3->winOrder.at(0);
 }
 
 void backupMainMenu() {
@@ -269,18 +263,31 @@ void backupMainMenu() {
     window->display();
 }
 
-void unlockNextLevel(int num) {
-    switch(num) {
-        case 1: level2->toggleUnlocked(); cout << "Level 2 unlocked.\n"; break;
-        case 2: level3->toggleUnlocked(); cout << "Level 3 unlocked.\n"; break;
-        default: return;
+void printINTVector(std::vector<int> vec) {
+    cout << "{";
+    for(int i=0; i<vec.size(); i++) {
+        if(i!=vec.size()-1) cout << vec.at(i) << ", ";
     }
-    lockedLevels.erase(lockedLevels.begin());
+    cout << "}\n";
+}
+
+bool isLocked(int num) {
+    for(int i=0; i<lockedLevels.size(); i++) {
+        if(i == num) return true; //num is locked
+    }
+    return false; //num is unlocked
+}
+
+void unlockNextLevel(int num) {
+    cout << "Current Level is " << num << " Next Level is " << num + 1 << " at index " << num - 1 <<".\n";
+    cout << "Level " << num + 1 << " unlocked.\n";
+    lockedLevels.erase(lockedLevels.begin() + num - 1);
+    printINTVector(lockedLevels);
 }
 
 void updateGame() {
     int status;
-    cout << "Update current level: " << currLevel->winOrder.at(0) << "\n";
+    //cout << "  Update current level: " << currLevel->num+1 << " starting number: " << currLevel->winOrder.at(0) << " no. of balls: " << currLevel->balls.size() << "\n";
     status = currLevel->updateLevel();
     switch(status) {
         case 1: cout << "Won Level " << currLevel->num+1 << ", unlocking next level... \n"; unlockNextLevel(currLevel->num+1); break; //level won
@@ -315,6 +322,8 @@ int main() {
     LevelScreen levelscreen;
     MainMenu mainmenu;
     initialiseGame();
+    currLevel = level1;
+    //cout << "Iniitialised all levels " << currLevel->num+1 << " no. of balls: " << currLevel->balls.size() << " " << level1->balls.size() << "\n";
     
     sf::Event event;
     while (window->isOpen()) {
@@ -328,7 +337,6 @@ int main() {
         if(!gameRunning) {
             //pressed escape
             bool play = false; //exited choose level or the game
-            clear();
             if(!window->isOpen()) break;
             else {
                 window->clear();
@@ -340,8 +348,8 @@ int main() {
                         window->clear();
                         switch(levelscreen.Show(*window)) {
                             case LevelScreen::LevelSelect::lvl1: cout << "selected lvl1.\n"; currLevel = level1; play = true; break;
-                            case LevelScreen::LevelSelect::lvl2: cout << "selected lvl2.\n"; if(level2->unlocked) { currLevel = level2; play = true; } break;
-                            case LevelScreen::LevelSelect::lvl3: cout << "selected lvl3.\n"; if(level3->unlocked) { currLevel = level3; play = true; } break;
+                            case LevelScreen::LevelSelect::lvl2: cout << "selected lvl2.\n"; if(!isLocked(2)) { currLevel = level2; play = true; } else cout << "Sorry lvl2 is locked"; break;
+                            case LevelScreen::LevelSelect::lvl3: cout << "selected lvl3.\n"; if(!isLocked(3)) { currLevel = level3; play = true; } else cout << "Sorry lvl2 is locked"; break;
                             case LevelScreen::LevelSelect::Exit: exitGame(); break;
                             case LevelScreen::LevelSelect::Nothing: ; break;
                         }
@@ -362,18 +370,18 @@ int main() {
         
         //GAME RUNNING BUT PAUSED
         else if(gameRunning && !gameNotPaused) {
-            //cout << "Game is paused.\n";
+            cout << "Game is paused.\n";
             
             while(window->pollEvent(event)) {
                 processEvent(event);
                 if(key_escape) {
-                    //cout << "Escape key pressed.\n";
+                    cout << "Level exited.\n";
                     gameRunning = false;
                     gameNotPaused = true;
                     reinitialise = true;
                 }
                 else if(key_return) {
-                    //cout << "Return key pressed.\n";
+                    cout << "Game resumed.\n";
                     gameRunning = true;
                     gameNotPaused = true;
                 }
@@ -406,29 +414,30 @@ int main() {
             while(window->pollEvent(event)) {
                 processEvent(event);
                 if(key_escape) {
-                    //cout << "Escape key pressed.\n";
+                    cout << "Level exited.\n";
+                    cout << "\n";
                     gameRunning = false;
                     gameNotPaused = true;
                     reinitialise = true;
                     key_escape = false;
                 }
                 else if(key_P) {
-                    //cout << "P key pressed.\n";
+                    cout << "Game is paused.\n";
                     gameRunning = true;
                     gameNotPaused = false;
                 }
                 else if(key_A) currLevel->balls.at(ballIndex).changeDirection((int) leftF);
                 else if(key_W) {currLevel->balls.at(ballIndex).changeDirection((int) upF); key_W = false;}
                 else if(key_S) {currLevel->balls.at(ballIndex).changeDirection((int) downF); key_S = false;}
-                else if(key_E) ballIndex = currLevel->prevBall(); //Q and E keys are swapped here due to a bug with double counting taps.
-                else if(key_Q) ballIndex = currLevel->nextBall(); //Q and E keys are swapped here due to a bug with double counting taps.
+                else if(key_Q) {ballIndex = currLevel->prevBall(); key_Q = false;}//cout << "Q\n";}
+                else if(key_E) {ballIndex = currLevel->nextBall(); key_E = false;}//cout << "E\n";}
                 else if(mouse_left) {
-                    cout << "left mouse button.\n";
+                    //cout << "left mouse button.\n";
                     currLevel->checkForSQSelect(mouse_X, mouse_Y, "pop");
                     mouse_left = false;
                 }
                 else if(mouse_right) {
-                    cout << "right mouse button.\n";
+                    //cout << "right mouse button.\n";
                     currLevel->checkForSQSelect(mouse_X, mouse_Y, "peek");
                     mouse_right = false;
                 }
