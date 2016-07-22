@@ -1,7 +1,7 @@
 # Stacks and Queues
 A puzzle game based on the mechanics of the abstract data structures Stacks and Queues.
 
-### Current Game: version 1.0 ###
+### Current Game: version 0.2 ###
 
 #### Concepts ####
 
