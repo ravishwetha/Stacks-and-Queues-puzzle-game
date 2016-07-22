@@ -62,10 +62,11 @@ This game was written mainly in C++ and using SFML, a multimedia API. Bugs and i
 2. Main menu design and functionality.
 3. Game can be paused and resumed, as well as exited and restarted.
 4. (NEW) Level Select screen and unlock levels by winning previous levels.
+5. (NEW) 2 Levels of increasing difficulty.
 
 #### Planned features for NUS Orbital 2016 Sprint 3 ####
 
-1. Queues, we had not been able to implement queues in the previous sprint, but the foundation for the integration of a Queue class and objects have been setup in the other class methods.
+1. Queues, we had not been able to implement queues in the previous sprint, but the foundation for the integration of a Queue class and objects have been setup in the other class methods. ✅
 2. Level 1 has been completed with only one stack (refer to video). Atleast 2 more levels with increasing difficulty are planned with both stacks and queues included.
 3. Help page for player.
 4. Music and sound effects. To make the game more engaging.
