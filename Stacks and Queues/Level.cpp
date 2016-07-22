@@ -10,6 +10,8 @@ Level::Level(int num, std::vector<string> winOrder) {
     inTubePosY = inTubePositionY.at(num);
     
     this->num = num;
+    if(num == 0) unlocked = true;
+    else unlocked = false;
     this->winOrder = winOrder;
     levelBarLabel = makeLevelBarLabel();
     
@@ -40,6 +42,12 @@ float Level::getBallPeriod() {
 
 float Level::getBallRadius() {
     return ballsRadii.at(num);
+}
+
+bool Level::toggleUnlocked() {
+    if(unlocked) unlocked = false;
+    else unlocked = true;
+    return unlocked;
 }
 
 float Level::abs(float num) {
@@ -200,7 +208,7 @@ int Level::checkForWin() {
     return 0;
 }
 
-void Level::updateLevel() {
+int Level::updateLevel() {
     if(!isActive) return;
     
     int recentStack = checkForSPush();
@@ -208,10 +216,13 @@ void Level::updateLevel() {
     
     //UPDATE BALLS//
     for(int i=0; i<balls.size(); i++) {
+        //cout << "From Level.cpp (being called when level selected) : Level " << num << " has " << balls.size() << " balls.\n";
         //ball went through exit tube
         if(!balls.at(i).isActive) {
+            //cout << "Ball " << balls.at(i).getLabel() << " i = " << i << " at(" << balls.at(i).getX() << ", " << balls.at(i).getY() << ") is active\n";
             continue;
         }
+        //else cout << "Ball " << balls.at(i).getLabel() << " i = " << i << " at(" << balls.at(i).getX() << ", " << balls.at(i).getY() << ") is active\n";
         
         //before ball enter level
         if(!(balls.at(i).isMoving) && !ballsInitiated) {
@@ -231,23 +242,24 @@ void Level::updateLevel() {
         else {
             balls.at(i).update(true);
         }
-        
-        //UPDATE STACKS AND QUEUES//
-        for(int i=0; i<queues.size(); i++) {
-            queues.at(i).update();
-        }
-        for(int i=0; i<stacks.size(); i++) {
-            stacks.at(i).update();
-        }
-        
-        status = checkForWin();
-        switch(status) {
-            case 0: break; //level is ongoing
-            case -1: isActive = false; levelBarLabel = "LOSS"; break;
-            case 1: isActive = false; levelBarLabel = "WIN"; break;
-            default: isActive = false; levelBarLabel = "ERROR";
-        }
     }
+    
+    //UPDATE STACKS AND QUEUES//
+    for(int i=0; i<queues.size(); i++) {
+        queues.at(i).update();
+    }
+    for(int i=0; i<stacks.size(); i++) {
+        stacks.at(i).update();
+    }
+        
+    status = checkForWin();
+    switch(status) {
+        case 0: break; //level is ongoing
+        case -1: isActive = false; levelBarLabel = "LOSS"; break;
+        case 1: isActive = false; levelBarLabel = "WIN"; break;
+        default: isActive = false; levelBarLabel = "ERROR"; break;
+    }
+    return status;
 }
 
 string Level::makeLevelBarLabel() {

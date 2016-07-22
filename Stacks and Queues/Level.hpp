@@ -19,6 +19,7 @@ private:
     
 public:
     int num;
+    bool unlocked;
     int status; // -1 for loss, 0 for ongoing, 1 for win
     std::vector<string> winOrder;
     string levelBarLabel;
@@ -45,6 +46,9 @@ public:
     float getBallPeriod();
     float getBallRadius();
     
+    //setters
+    bool toggleUnlocked();
+    
     //methods
     float abs(float num);
     float min(float a, float b);
@@ -67,7 +71,7 @@ public:
     */
     int checkForWin();
     
-    void updateLevel();
+    int updateLevel();
     string makeLevelBarLabel();
     void drawLevelBar();
     void drawInTube();

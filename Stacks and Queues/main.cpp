@@ -4,6 +4,7 @@
 //main.cpp
 
 //#include "SplashScreen.h"
+#include "LevelScreen.hpp"
 #include "MainMenu.h"
 #include "Level.hpp"
 
@@ -19,6 +20,7 @@ float leftF = 1.0;
 float upF = 2.0;
 float downF = 3.0;
 
+std::vector<int> lockedLevels = {2, 3};
 std::vector<float> inTubePositionX = { RES_X, RES_X , RES_X };
 std::vector<float> inTubePositionY = { RES_Y2, RES_Y2, RES_Y };
 std::vector<float> ballsPeriod = { 5.0, 2.0, 2.0 };
@@ -32,6 +34,8 @@ sf::Color backgroundColor = sf::Color::White;
 int ballIndex = 0;
 Level* currLevel;
 Level* level1;
+Level* level2;
+Level* level3;
 
 bool key_return = false; //start game
 bool key_escape = false;//reset game
@@ -131,7 +135,7 @@ void initialiseLevel1() {
     Ball lvl1ball4 = Ball(2, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
     tStack lvl1stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
-    tQueue lvl1queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
+    //tQueue lvl1queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
     
     //cout << "Level 1 objects initialised.\n";
     
@@ -139,9 +143,10 @@ void initialiseLevel1() {
     level1->balls.push_back(lvl1ball1);
     level1->balls.push_back(lvl1ball3);
     level1->balls.push_back(lvl1ball4);
+    //cout << "From main.cpp (just created) Level 1 has " << level1->balls.size() << " balls.\n";
     
     level1->stacks.push_back(lvl1stack1);
-    level1->queues.push_back(lvl1queue1);
+    //level1->queues.push_back(lvl1queue1);
     
     //cout << "Level 1 vectors initialised.\n";
     
@@ -151,8 +156,91 @@ void initialiseLevel1() {
     cout << "Level 1 initialised.\n";
 }
 
+void initialiseLevel2() {
+    std::vector<string> winOrder = {"m", "a", "g", "e"};
+    level2 = new Level(1, winOrder); //num is (level number - 1)
+    
+    //get level info
+    float x = level2->getInTubePositionX();
+    float y = level2->getInTubePositionY();
+    float vx1 = level2->getBallVX();
+    float vy1 = vx1*3;
+    float radius = level2->getBallRadius();
+    
+    //create level objects accordingly
+    Ball lvl2ballm = Ball(0, x - (radius*7), y, vx1, vy1, radius, sf::Color::Red, "m");
+    Ball lvl2balla = Ball(1, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "a");
+    Ball lvl2ballg = Ball(2, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "g");
+    Ball lvl2balle = Ball(3, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "e");
+    
+    tStack lvl2stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
+    tQueue lvl2queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
+    
+    //cout << "Level 2 objects initialised.\n";
+    
+    //store objects in level
+    level2->balls.push_back(lvl2ballm);
+    level2->balls.push_back(lvl2balla);
+    level2->balls.push_back(lvl2ballg);
+    level2->balls.push_back(lvl2balle);
+    
+    level2->stacks.push_back(lvl2stack1);
+    level2->queues.push_back(lvl2queue1);
+    
+    //cout << "Level 2 vectors initialised.\n";
+    
+    ballIndex = 0;
+    
+    cout << "Level 2 initialised.\n";
+}
+
+void initialiseLevel3() {
+    std::vector<string> winOrder = {"s", "t", "a", "c", "k"};
+    level3 = new Level(2, winOrder); //num is (level number - 1)
+    
+    //get level info
+    float x = level3->getInTubePositionX();
+    float y = level3->getInTubePositionY();
+    float vx1 = level3->getBallVX();
+    float vy1 = vx1*3;
+    float radius = level3->getBallRadius();
+    
+    //create level objects accordingly
+    Ball lvl3balls = Ball(0, x - (radius*9), y, vx1, vy1, radius, sf::Color::Red, "s");
+    Ball lvl3ballt = Ball(1, x - (radius*7), y, vx1, vy1, radius, sf::Color::Red, "t");
+    Ball lvl3balla = Ball(2, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "a");
+    Ball lvl3ballc = Ball(3, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "c");
+    Ball lvl3ballk = Ball(4, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "k");
+    
+    tStack lvl3stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
+    tQueue lvl3queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
+    
+    //cout << "Level 3 objects initialised.\n";
+    
+    //store objects in level
+    level3->balls.push_back(lvl3balls);
+    level3->balls.push_back(lvl3ballt);
+    level3->balls.push_back(lvl3balla);
+    level3->balls.push_back(lvl3ballc);
+    level3->balls.push_back(lvl3ballk);
+    
+    level3->stacks.push_back(lvl3stack1);
+    level3->queues.push_back(lvl3queue1);
+    
+    //cout << "Level 3 vectors initialised.\n";
+    
+    ballIndex = 0;
+    
+    cout << "Level 3 initialised.\n";
+}
+
 void initialiseGame() {
     initialiseLevel1();
+    //cout << level1->winOrder.at(0);
+    initialiseLevel2();
+    //cout << level2->winOrder.at(0);
+    initialiseLevel3();
+    //cout << level3->winOrder.at(0);
 }
 
 void backupMainMenu() {
@@ -181,16 +269,37 @@ void backupMainMenu() {
     window->display();
 }
 
-void clear() {
-    currLevel->clearLevel();
+void unlockNextLevel(int num) {
+    switch(num) {
+        case 1: level2->toggleUnlocked(); cout << "Level 2 unlocked.\n"; break;
+        case 2: level3->toggleUnlocked(); cout << "Level 3 unlocked.\n"; break;
+        default: return;
+    }
+    lockedLevels.erase(lockedLevels.begin());
 }
 
 void updateGame() {
-    currLevel->updateLevel();
+    int status;
+    cout << "Update current level: " << currLevel->winOrder.at(0) << "\n";
+    status = currLevel->updateLevel();
+    switch(status) {
+        case 1: cout << "Won Level " << currLevel->num+1 << ", unlocking next level... \n"; unlockNextLevel(currLevel->num+1); break; //level won
+        case -1: cout << "Lost level " << currLevel->num+1 << ", did not unlock any level\n"; break;
+        default: ; //do nothing
+    }
 }
 
 void drawGameFrame() {
     currLevel->drawLevel();
+}
+
+void clear() {
+    currLevel->clearLevel();
+}
+
+void exitGame() {
+    clear();
+    window->close();
 }
 
 int main() {
@@ -203,30 +312,55 @@ int main() {
     float dTime = 0;
     
     //SplashScreen splashscreen;
+    LevelScreen levelscreen;
     MainMenu mainmenu;
     initialiseGame();
     
     sf::Event event;
     while (window->isOpen()) {
         if(reinitialise) {
+            clear();
             initialiseGame();
             reinitialise = false;
         }
         
+        //MAIN MENU AND LEVEL SELECT
         if(!gameRunning) {
             //pressed escape
+            bool play = false; //exited choose level or the game
             clear();
-            window->clear();
-            switch(mainmenu.Show(*window)) {
-                case MainMenu::MenuResult::Backup: backupMainMenu(); break;
-                case MainMenu::MenuResult::Exit: window->close(); break;
-                case MainMenu::MenuResult::Play: gameRunning = true; gameNotPaused = true; break;
-                case MainMenu::MenuResult::Nothing: ;
-                default: ;
+            if(!window->isOpen()) break;
+            else {
+                window->clear();
+                switch(mainmenu.Show(*window)) {
+                    case MainMenu::MenuResult::Backup: backupMainMenu(); break;
+                    case MainMenu::MenuResult::Exit: exitGame(); break;
+                    case MainMenu::MenuResult::Play: {
+                        if(!window->isOpen()) break;
+                        window->clear();
+                        switch(levelscreen.Show(*window)) {
+                            case LevelScreen::LevelSelect::lvl1: cout << "selected lvl1.\n"; currLevel = level1; play = true; break;
+                            case LevelScreen::LevelSelect::lvl2: cout << "selected lvl2.\n"; if(level2->unlocked) { currLevel = level2; play = true; } break;
+                            case LevelScreen::LevelSelect::lvl3: cout << "selected lvl3.\n"; if(level3->unlocked) { currLevel = level3; play = true; } break;
+                            case LevelScreen::LevelSelect::Exit: exitGame(); break;
+                            case LevelScreen::LevelSelect::Nothing: ; break;
+                        }
+                        if(play) {
+                            //cout << "Level 1 isActive: " << level1->isActive << ".\n";
+                            //cout << "Level 2 isActive: " << level2->isActive << ".\n";
+                            //cout << "Level 3 isActive: " << level3->isActive << ".\n";
+                            cout << "Loading Level " << currLevel->num+1 << "...\n";
+                            gameRunning = true;
+                            gameNotPaused = true; break;
+                        }
+                    }
+                    case MainMenu::MenuResult::Nothing: ;
+                    default: ;
+                }
             }
-            reinitialise = true;
         }
         
+        //GAME RUNNING BUT PAUSED
         else if(gameRunning && !gameNotPaused) {
             //cout << "Game is paused.\n";
             
@@ -236,6 +370,7 @@ int main() {
                     //cout << "Escape key pressed.\n";
                     gameRunning = false;
                     gameNotPaused = true;
+                    reinitialise = true;
                 }
                 else if(key_return) {
                     //cout << "Return key pressed.\n";
@@ -258,6 +393,7 @@ int main() {
             while (dTime > frameTime) {
                 dTime -= frameTime;
                 updateGame();
+                //cout << "Playing Level " << currLevel->num+1 << "\n";
             }
             
             // Draw frame
@@ -273,6 +409,7 @@ int main() {
                     //cout << "Escape key pressed.\n";
                     gameRunning = false;
                     gameNotPaused = true;
+                    reinitialise = true;
                     key_escape = false;
                 }
                 else if(key_P) {
@@ -298,7 +435,6 @@ int main() {
             }
         }
     }
-    clear();
     delete currLevel;
     delete window;
     return 0;

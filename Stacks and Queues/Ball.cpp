@@ -177,6 +177,8 @@ void Ball::draw() {
     ballText.setOrigin(ballCircle.getOrigin());
     ballText.setPosition(x + radius/2.0, y - radius/3.0);
     
+    //cout << "Ball " << label << " at(" << x << ", " << y << ")\n";
+    
     window->draw(ballCircle);
     window->draw(ballText);
 }
