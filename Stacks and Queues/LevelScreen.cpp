@@ -9,7 +9,8 @@ LevelScreen::LevelSelect LevelScreen::Show(sf::RenderWindow& window)
 {
     //Load menu image from file
     sf::Texture texture;
-    if(!texture.loadFromFile(rPath + "LevelScreen.png")) cout << "Error loading LevelScreen.png";
+    if(!texture.loadFromFile(rPath + "LevelScreen.png")) cout << "Error loading LevelScreen.png\n";
+    //else cout << "Successfully loaded LevelScreen.png.\n";
     sf::Sprite sprite(texture);
     
     //Setup Clickable regions
@@ -48,6 +49,8 @@ LevelScreen::LevelSelect LevelScreen::Show(sf::RenderWindow& window)
     ScreenItems.push_back(lvl2Button);
     ScreenItems.push_back(lvl3Button);
     ScreenItems.push_back(exitButton);
+    
+    //cout << "Configured LevelScreen buttons.\n";
     
     window.draw(sprite);
     drawLocks(window);
@@ -96,7 +99,8 @@ void LevelScreen::drawLocks(sf::RenderWindow& window) {
     float lockX = 0;
     float lockY = 0;
     for(int i=0; i<lockedLevels.size(); i++) {
-        lvlButtonID = lockedLevels.at(i)-1;
+        if(lockedLevels.at(i) != 0) lvlButtonID = lockedLevels.at(i)-1;
+        else continue;
         sf::Rect<float> buttonRect = ScreenItems.at(lvlButtonID).rect;
         lockX = buttonRect.left+(buttonRect.width/2.0);
         lockY = buttonRect.top+(buttonRect.height/2.0);

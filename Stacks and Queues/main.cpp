@@ -20,7 +20,7 @@ float leftF = 1.0;
 float upF = 2.0;
 float downF = 3.0;
 
-std::vector<int> lockedLevels = {3};
+std::vector<int> lockedLevels = {2, 3};
 std::vector<float> inTubePositionX = { RES_X, RES_X , RES_X };
 std::vector<float> inTubePositionY = { RES_Y2, RES_Y2, RES_Y };
 std::vector<float> ballsPeriod = { 5.0, 2.0, 2.0 };
@@ -130,21 +130,21 @@ void initialiseLevel1() {
     float radius = level1->getBallRadius();
     
     //create level objects accordingly
-    Ball lvl1ball1 = Ball(0, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "1");
-    Ball lvl1ball3 = Ball(1, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
-    Ball lvl1ball4 = Ball(2, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
+    Ball ball0 = Ball(0, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "1");
+    Ball ball1 = Ball(1, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "3");
+    Ball ball2 = Ball(2, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "4");
     
-    tStack lvl1stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
+    tStack stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
     
     //cout << "Level 1 objects initialised.\n";
     
     //store objects in level
-    level1->balls.push_back(lvl1ball1);
-    level1->balls.push_back(lvl1ball3);
-    level1->balls.push_back(lvl1ball4);
+    level1->balls.push_back(ball0);
+    level1->balls.push_back(ball1);
+    level1->balls.push_back(ball2);
     //cout << "From main.cpp (just created) Level 1 has " << level1->balls.size() << " balls.\n";
     
-    level1->stacks.push_back(lvl1stack1);
+    level1->stacks.push_back(stack1);
 
     //cout << "Level 1 vectors initialised.\n";
     
@@ -154,7 +154,7 @@ void initialiseLevel1() {
 }
 
 void initialiseLevel2() {
-    std::vector<string> winOrder = {"m", "a", "g", "e"};
+    std::vector<string> winOrder = {"g", "a", "m", "e"};
     level2 = new Level(1, winOrder); //num is (level number - 1)
     
     //get level info
@@ -165,24 +165,24 @@ void initialiseLevel2() {
     float radius = level2->getBallRadius();
     
     //create level objects accordingly
-    Ball lvl2ballm = Ball(0, x - (radius*7), y, vx1, vy1, radius, sf::Color::Red, "m");
-    Ball lvl2balla = Ball(1, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "a");
-    Ball lvl2ballg = Ball(2, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "g");
-    Ball lvl2balle = Ball(3, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "e");
+    Ball ball0 = Ball(0, x - (radius*7), y, vx1, vy1, radius, sf::Color::Red, "m");
+    Ball ball1 = Ball(1, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "a");
+    Ball ball2 = Ball(2, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "g");
+    Ball ball3 = Ball(3, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "e");
     
-    tStack lvl2stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
-    tQueue lvl2queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
+    tStack stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
+    tQueue queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
     
     //cout << "Level 2 objects initialised.\n";
     
     //store objects in level
-    level2->balls.push_back(lvl2ballm);
-    level2->balls.push_back(lvl2balla);
-    level2->balls.push_back(lvl2ballg);
-    level2->balls.push_back(lvl2balle);
+    level2->balls.push_back(ball0);
+    level2->balls.push_back(ball1);
+    level2->balls.push_back(ball2);
+    level2->balls.push_back(ball3);
     
-    level2->stacks.push_back(lvl2stack1);
-    level2->queues.push_back(lvl2queue1);
+    level2->stacks.push_back(stack1);
+    level2->queues.push_back(queue1);
     
     //cout << "Level 2 vectors initialised.\n";
     
@@ -192,8 +192,8 @@ void initialiseLevel2() {
 }
 
 void initialiseLevel3() {
-    std::vector<string> winOrder = {"s", "t", "a", "c", "k"};
-    level3 = new Level(2, winOrder); //num is (level number - 1)
+    std::vector<string> winOrder = {"g", "a", "m", "e"};
+    level3 = new Level(1, winOrder); //num is (level number - 1)
     
     //get level info
     float x = level3->getInTubePositionX();
@@ -203,26 +203,24 @@ void initialiseLevel3() {
     float radius = level3->getBallRadius();
     
     //create level objects accordingly
-    Ball lvl3balls = Ball(0, x - (radius*9), y, vx1, vy1, radius, sf::Color::Red, "s");
-    Ball lvl3ballt = Ball(1, x - (radius*7), y, vx1, vy1, radius, sf::Color::Red, "t");
-    Ball lvl3balla = Ball(2, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "a");
-    Ball lvl3ballc = Ball(3, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "c");
-    Ball lvl3ballk = Ball(4, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "k");
+    Ball ball0 = Ball(0, x - (radius*7), y, vx1, vy1, radius, sf::Color::Red, "m");
+    Ball ball1 = Ball(1, x - (radius*5), y, vx1, vy1, radius, sf::Color::Red, "a");
+    Ball ball2 = Ball(2, x - (radius*3), y, vx1, vy1, radius, sf::Color::Red, "g");
+    Ball ball3 = Ball(3, x - (radius), y, vx1, vy1, radius, sf::Color::Red, "e");
     
-    tStack lvl3stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
-    tQueue lvl3queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
+    tStack stack1 = tStack(RES_X*(0.50), RES_Y*(0.60), radius*2, radius*6);
+    tQueue queue1 = tQueue(RES_X*(0.50), RES_Y*(0.40), radius*6, radius*2);
     
     //cout << "Level 3 objects initialised.\n";
     
     //store objects in level
-    level3->balls.push_back(lvl3balls);
-    level3->balls.push_back(lvl3ballt);
-    level3->balls.push_back(lvl3balla);
-    level3->balls.push_back(lvl3ballc);
-    level3->balls.push_back(lvl3ballk);
+    level3->balls.push_back(ball0);
+    level3->balls.push_back(ball1);
+    level3->balls.push_back(ball2);
+    level3->balls.push_back(ball3);
     
-    level3->stacks.push_back(lvl3stack1);
-    level3->queues.push_back(lvl3queue1);
+    level3->stacks.push_back(stack1);
+    level3->queues.push_back(queue1);
     
     //cout << "Level 3 vectors initialised.\n";
     
@@ -266,22 +264,24 @@ void backupMainMenu() {
 void printINTVector(std::vector<int> vec) {
     cout << "{";
     for(int i=0; i<vec.size(); i++) {
-        if(i!=vec.size()-1) cout << vec.at(i) << ", ";
+        if(i != vec.size()-1) cout << vec.at(i) << ", ";
+        else cout << vec.at(i);
     }
     cout << "}\n";
 }
 
 bool isLocked(int num) {
     for(int i=0; i<lockedLevels.size(); i++) {
-        if(i == num) return true; //num is locked
+        if(lockedLevels.at(i) == num) return true; //num is locked
     }
     return false; //num is unlocked
 }
 
 void unlockNextLevel(int num) {
-    cout << "Current Level is " << num << " Next Level is " << num + 1 << " at index " << num - 1 <<".\n";
+    //cout << "Current Level is " << num << " Next Level is " << num + 1 << " at index " << num - 1 <<".\n";
+    lockedLevels.at(num - 1) = 0;
     cout << "Level " << num + 1 << " unlocked.\n";
-    lockedLevels.erase(lockedLevels.begin() + num - 1);
+    cout << "Locked levels: ";
     printINTVector(lockedLevels);
 }
 
@@ -323,6 +323,7 @@ int main() {
     MainMenu mainmenu;
     initialiseGame();
     currLevel = level1;
+    printINTVector(lockedLevels);
     //cout << "Iniitialised all levels " << currLevel->num+1 << " no. of balls: " << currLevel->balls.size() << " " << level1->balls.size() << "\n";
     
     sf::Event event;
@@ -330,6 +331,8 @@ int main() {
         if(reinitialise) {
             clear();
             initialiseGame();
+            cout << "Locked levels: ";
+            printINTVector(lockedLevels);
             reinitialise = false;
         }
         
@@ -345,18 +348,16 @@ int main() {
                     case MainMenu::MenuResult::Exit: exitGame(); break;
                     case MainMenu::MenuResult::Play: {
                         if(!window->isOpen()) break;
+                        cout << "selected Play.\n";
                         window->clear();
                         switch(levelscreen.Show(*window)) {
                             case LevelScreen::LevelSelect::lvl1: cout << "selected lvl1.\n"; currLevel = level1; play = true; break;
                             case LevelScreen::LevelSelect::lvl2: cout << "selected lvl2.\n"; if(!isLocked(2)) { currLevel = level2; play = true; } else cout << "Sorry lvl2 is locked"; break;
-                            case LevelScreen::LevelSelect::lvl3: cout << "selected lvl3.\n"; if(!isLocked(3)) { currLevel = level3; play = true; } else cout << "Sorry lvl2 is locked"; break;
+                            case LevelScreen::LevelSelect::lvl3: cout << "selected lvl3.\n"; if(!isLocked(3)) { currLevel = level3; play = true; } else cout << "Sorry lvl3 is locked"; break;
                             case LevelScreen::LevelSelect::Exit: exitGame(); break;
                             case LevelScreen::LevelSelect::Nothing: ; break;
                         }
                         if(play) {
-                            //cout << "Level 1 isActive: " << level1->isActive << ".\n";
-                            //cout << "Level 2 isActive: " << level2->isActive << ".\n";
-                            //cout << "Level 3 isActive: " << level3->isActive << ".\n";
                             cout << "Loading Level " << currLevel->num+1 << "...\n";
                             gameRunning = true;
                             gameNotPaused = true; break;

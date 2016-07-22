@@ -146,7 +146,7 @@ void Ball::update(bool status) {
     //cout << "from Ball.cpp: Ball " << num << " isPushed: " << isPushed << "isMoving" << isMoving << ".\n";
     move();
     
-    if (x < -(dia)) {
+    if (x <= -(radius)) {
        isActive = false;
     }
 }

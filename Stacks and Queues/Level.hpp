@@ -19,7 +19,6 @@ private:
     
 public:
     int num;
-    bool unlocked;
     int status; // -1 for loss, 0 for ongoing, 1 for win
     std::vector<string> winOrder;
     string levelBarLabel;

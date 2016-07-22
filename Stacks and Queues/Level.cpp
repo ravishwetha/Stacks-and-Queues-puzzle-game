@@ -10,8 +10,6 @@ Level::Level(int num, std::vector<string> winOrder) {
     inTubePosY = inTubePositionY.at(num);
     
     this->num = num;
-    if(num == 0) unlocked = true;
-    else unlocked = false;
     this->winOrder = winOrder;
     levelBarLabel = makeLevelBarLabel();
     
@@ -42,12 +40,6 @@ float Level::getBallPeriod() {
 
 float Level::getBallRadius() {
     return ballsRadii.at(num);
-}
-
-bool Level::toggleUnlocked() {
-    if(unlocked) unlocked = false;
-    else unlocked = true;
-    return unlocked;
 }
 
 float Level::abs(float num) {
