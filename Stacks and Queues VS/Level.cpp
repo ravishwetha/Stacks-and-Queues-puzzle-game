@@ -2,7 +2,6 @@
 //Copyright © 2016 TeamSQ. All rights reserved.
 
 //Level.cpp
-
 #include "stdafx.h"
 #include "Level.hpp"
 
@@ -94,11 +93,12 @@ int Level::nextBall() {
     return selectedBall;
 }
 
-int Level::checkForPush() {
+int Level::checkForSPush() {
     
     for(int i=0; i<balls.size(); i++) {
         Ball currBall = balls.at(i);
         if(currBall.isPushed) continue;
+        
         for(int j=0; j<stacks.size(); j++) {
             tStack currStack = stacks.at(j);
             
@@ -108,6 +108,31 @@ int Level::checkForPush() {
                 //cout << "ball pushed\n";
                 balls.at(i).isPushed = true;
                 stacks.at(j).push(currBall);
+                return j;
+            }
+        }
+    }
+}
+
+int Level::checkForQPush() {
+    
+    for(int i=0; i<balls.size(); i++) {
+        Ball currBall = balls.at(i);
+        if(currBall.isPushed) continue;
+        
+        for(int j=0; j<queues.size(); j++) {
+            tQueue currQueue = queues.at(j);
+            
+            //cout << currBall.getY() << ", " << currQueue.getY() << ", " << currBall.getX() << ", " << (currQueue.getX() + currQueue.getWidth()/2.0) << ".\n";
+            if(currBall.getX() <= (currQueue.getX()+(currQueue.getWidth()/2.0) + currBall.getRadius()) && currBall.getX() >= (currQueue.getX()+(currQueue.getWidth()/2.0)) && (currBall.getY() + 1 == currQueue.getY() || currBall.getY() - 2 == currQueue.getY())) {
+            
+            //if(currBall.getX() >= currQueue.gettopLeftX() && currBall.getY() >= currQueue.gettopLeftY() && currBall.getX() <= currQueue.getbottomRightX() && currBall.getY() <=currQueue.getbottomRightY()); { //alternative solution: checks if center of ball is in queue
+                
+                //cout << "ball pushed\n";
+                balls.at(i).isPushed = true;
+                float currBallNewX = currBall.getX() - currQueue.getWidth();
+                balls.at(i).setX(currBallNewX);
+                queues.at(j).push(currBall);
                 return j;
             }
         }
@@ -126,17 +151,41 @@ void Level::checkForSQSelect(float x, float y, string action) {
                 balls.at(topBallID).ballOut();
                 stacks.at(i).pop();
             }
-            else if(action.compare("top") == 0) {
+            else if(action.compare("peek") == 0) {
                 //cout << "from level.cpp: top.\n";
                 balls.at(topBallID).toggleisTopped();
                 stacks.at(i).top();
             }
         }
     }
+    
+    int frontBallID;
+    
+    for(int i=0; i<queues.size(); i++) {
+        if(queues.at(i).checkForSelect(x, y) && queues.at(i).size() != 0) {
+            //cout << "from level.cpp: queue " << i << ".\n";
+            frontBallID = queues.at(i).front().num;
+            if(action.compare("pop") == 0) {
+                //cout << "from level.cpp: pop " << frontBallID << ".\n";
+                balls.at(frontBallID).ballOut();
+                queues.at(i).pop();
+            }
+            else if(action.compare("peek") == 0) {
+                //cout << "from level.cpp: front.\n";
+                balls.at(frontBallID).toggleisTopped();
+                queues.at(i).front();
+            }
+        }
+    }
 }
 
 int Level::checkForWin() {
-    if(winOrder.empty() || balls.empty()) return 1;
+    if(winOrder.empty() || balls.empty()) {
+        if(winOrder.empty() && balls.empty()) cout << "Everythang empty.\n";
+        else if(winOrder.empty()) cout << "winOrder empty.\n";
+        else if(balls.empty()) cout << "balls empty.\n";
+        return 1;
+    }
     
     for(int i=0; i<balls.size(); i++) {
         if(!balls.at(i).isActive) {
@@ -156,17 +205,21 @@ int Level::checkForWin() {
     return 0;
 }
 
-void Level::updateLevel() {
+int Level::updateLevel() {
     if(!isActive) return;
     
-    int recentStack = checkForPush();
+    int recentStack = checkForSPush();
+    int recentQueue = checkForQPush();
     
+    //cout << "From updateLevel(), Level " << num+1 << " has " << balls.size() << " balls.\n";
     //UPDATE BALLS//
     for(int i=0; i<balls.size(); i++) {
         //ball went through exit tube
         if(!balls.at(i).isActive) {
+            //cout << "Ball " << balls.at(i).getLabel() << " i = " << i << " at(" << balls.at(i).getX() << ", " << balls.at(i).getY() << ") is not active\n";
             continue;
         }
+        //else cout << "Ball " << balls.at(i).getLabel() << " i = " << i << " at(" << balls.at(i).getX() << ", " << balls.at(i).getY() << ") is active\n";
         
         //before ball enter level
         if(!(balls.at(i).isMoving) && !ballsInitiated) {
@@ -186,23 +239,24 @@ void Level::updateLevel() {
         else {
             balls.at(i).update(true);
         }
-        
-        //UPDATE STACKS AND QUEUES//
-        for(int i=0; i<queues.size(); i++) {
-            queues.at(i).update();
-        }
-        for(int i=0; i<stacks.size(); i++) {
-            stacks.at(i).update();
-        }
-        
-        status = checkForWin();
-        switch(status) {
-            case 0: break; //level is ongoing
-            case -1: isActive = false; levelBarLabel = "LOSS"; break;
-            case 1: isActive = false; levelBarLabel = "WIN"; break;
-            default: isActive = false; levelBarLabel = "ERROR";
-        }
     }
+    
+    //UPDATE STACKS AND QUEUES//
+    for(int i=0; i<queues.size(); i++) {
+        queues.at(i).update();
+    }
+    for(int i=0; i<stacks.size(); i++) {
+        stacks.at(i).update();
+    }
+        
+    status = checkForWin();
+    switch(status) {
+        case 0: break; //level is ongoing
+        case -1: isActive = false; levelBarLabel = "LOSS"; break;
+        case 1: isActive = false; levelBarLabel = "WIN"; break;
+        default: isActive = false; levelBarLabel = "ERROR"; break;
+    }
+    return status;
 }
 
 string Level::makeLevelBarLabel() {
@@ -370,6 +424,9 @@ void Level::drawQueuePath() {
     float pathHeight = (ballsRadii.at(num)*2.0)/5.0; //inTube height/5.0, strictly vertical measure
     
     //have to switch width and height to make vertical
+    float VerticalAdjustmentY = -1.0;
+    float leftLinePosY = 0;
+    
     float inVerticalWidth = pathHeight;
     float inVerticalHeight = 0.0;
     float inVerticalY = inTubePosY;
@@ -389,9 +446,10 @@ void Level::drawQueuePath() {
         inVerticalHeight = abs(inTubePosY - currQueue.getY());
         outVerticalHeight = abs((RES_Y-inTubePosY) - currQueue.getY());
         
-        if(currQueue.getY() >= inTubePosY) inVerticalY = (inTubePosY+(inVerticalHeight/2.0));
+        if(currQueue.getY() > inTubePosY) inVerticalY = (inTubePosY+(inVerticalHeight/2.0));
         else inVerticalY = abs(inTubePosY-(inVerticalHeight/2.0));
         
+        leftLinePosY = currQueue.getY();
         leftLine1Width = abs(currQueue.getX() - (inTubePosX-pathWidth));
         leftLine2Width = ((RES_X - (inTubePosX-pathWidth)) - currQueue.getX());
         
@@ -436,7 +494,7 @@ void Level::drawQueuePath() {
             }
             else {
                 //Precondition of x, y in queue not satisfied.
-                //cout << "queue x, y precond not satisfied\n";
+                cout << "Error queue x, y precond not satisfied\n";
             }
         }
         
@@ -452,20 +510,27 @@ void Level::drawQueuePath() {
         window->draw(dot);
          */
         
+        if(currQueue.getY() > inTubePosY) { //queue is below center
+            leftLinePosY -= VerticalAdjustmentY;
+        }
+        else if(currQueue.getY() < inTubePosY) { //queue is above center
+            leftLinePosY += VerticalAdjustmentY;
+        }
+        
         sf::RectangleShape leftLine1;
         leftLine1.setFillColor(lineColor);
         leftLine1.setOutlineColor(lineOutlineColor);
         leftLine1.setOutlineThickness(pathHeight/5.0);
         leftLine1.setSize(sf::Vector2f(leftLine1Width, leftLine1Height));
         leftLine1.setOrigin(leftLine1Width/2.0, leftLine1Height/2.0);
-        leftLine1.setPosition(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0), abs(currQueue.getY()));
+        leftLine1.setPosition(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0), leftLinePosY);
         window->draw(leftLine1);
         
         if(!pathStored) {
             pathCoords.push_back(abs(abs(inTubePosX-pathWidth) - leftLine1Width/2.0) - leftLine1Width/2.0);
-            pathCoords.push_back(abs(currQueue.getY()) - leftLine1Height/2.0);
+            pathCoords.push_back(abs(leftLinePosY) - leftLine1Height/2.0);
             pathCoords.push_back((abs(inTubePosX-pathWidth) - leftLine1Width/2.0) + leftLine1Width/2.0);
-            pathCoords.push_back(abs(currQueue.getY()) + leftLine1Height/2.0);
+            pathCoords.push_back(leftLinePosY + leftLine1Height/2.0);
             pathCoords.push_back(leftF);
         }
         
@@ -493,14 +558,14 @@ void Level::drawQueuePath() {
         leftLine2.setOutlineThickness(pathHeight/5.0);
         leftLine2.setSize(sf::Vector2f(leftLine2Width, leftLine2Height));
         leftLine2.setOrigin(leftLine2Width/2.0, leftLine2Height/2.0);
-        leftLine2.setPosition(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0), abs(currQueue.getY()));
+        leftLine2.setPosition(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0), leftLinePosY);
         window->draw(leftLine2);
         
         if(!pathStored) {
             pathCoords.push_back(abs(abs(RES_X - (inTubePosX-pathWidth)) - leftLine2Width/2.0));
             pathCoords.push_back(abs(currQueue.getHeight()/2.0 - currQueue.getY()) - leftLine2Height/2.0);
             pathCoords.push_back(abs(RES_X - (inTubePosX-pathWidth)) + leftLine2Width);
-            pathCoords.push_back(abs(currQueue.getHeight()/2.0 - currQueue.getY()) + leftLine2Height/2.0);
+            pathCoords.push_back(abs(currQueue.getHeight()/2.0 - leftLinePosY) + leftLine2Height/2.0);
             pathCoords.push_back(leftF);
         }
     }
@@ -531,7 +596,7 @@ void Level::drawStackPath() {
         inVerticalHeight = abs(inTubePosY - abs(currStack.getY()-currStack.getHeight()/2.0));
         outVerticalHeight = abs((RES_Y-inTubePosY) - abs(currStack.getY()-currStack.getHeight()/2.0));
         
-        if(currStack.getY() >= inTubePosY) inVerticalY = abs(inTubePosY+(inVerticalHeight/2.0));
+        if(currStack.getY() > inTubePosY) inVerticalY = abs(inTubePosY+(inVerticalHeight/2.0));
         else inVerticalY = abs(inTubePosY-(inVerticalHeight/2.0));
         
         leftLine1Width = abs(currStack.getX() - (inTubePosX-pathWidth));
@@ -651,9 +716,8 @@ void Level::drawLevel() {
     drawOutTube();
     
     drawStandardPath();
-    //drawQueuePath();
-    drawStackPath();
     drawQueuePath();
+    drawStackPath();
     pathStored = true;
     
     //balls drawn after tubes makes tubes transparent
@@ -676,6 +740,7 @@ void Level::drawLevel() {
 }
 
 void Level::clearLevel() {
+    pathCoords.clear();
     balls.clear();
     queues.clear();
     stacks.clear();

@@ -3,8 +3,6 @@
 
 //MainMenu.cpp
 
-//#include <stdafx.h> //uncomment if using visual studio
-
 #include "stdafx.h"
 #include "MainMenu.h"
 
@@ -12,7 +10,7 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
 {
     //Load menu image from file
     sf::Texture texture;
-    if(!texture.loadFromFile(rPath + "MainMenu.png")) return Backup;
+    if(!texture.loadFromFile("MainMenu.png")) return Backup;
     sf::Sprite sprite(texture);
     
     //Setup Clickable regions

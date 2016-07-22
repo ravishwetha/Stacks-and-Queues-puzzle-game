@@ -3,14 +3,14 @@
 
 //SplashScreen.cpp
 
-#include "stdafx.h"
+#include <stdafx.h>
 #include "Globals.hpp"
 #include "SplashScreen.h"
 
 void SplashScreen::Show(sf::RenderWindow& renderWindow)
 {
 	sf::Texture texture;
-	if (texture.loadFromFile(rPath + "SplashScreen.cpp") != true)
+	if (texture.loadFromFile("SplashScreen.cpp") != true)
 	{
 		return;
 	}

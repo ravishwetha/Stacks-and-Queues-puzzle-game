@@ -13,7 +13,7 @@
 class tStack {
 private:
     std::stack<Ball> toolStack;
-    float x, y;
+    float x, y; /* Precondition: can't be RES_X or RES_Y2 */
     float width, height;
     
 public:

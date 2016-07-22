@@ -41,7 +41,7 @@ void tStack::pop() {
     if(size() == 0) {
         return;
     }
-    cout << "top Ball: " << toolStack.top().num << " is not pushed anymore.\n";
+    //cout << "top Ball: " << toolStack.top().num << " is not pushed anymore.\n";
     toolStack.pop();
 }
 
@@ -49,7 +49,7 @@ Ball tStack::top() {
     if(size() == 0) {
         return;
     }
-    cout << "draw top Ball: " << toolStack.top().num << ".\n";
+    //cout << "draw top Ball: " << toolStack.top().num << ".\n";
     toolStack.top().draw();
     return toolStack.top();
 }
@@ -65,7 +65,7 @@ void tStack::update() {
     //TODO: it is currently stationary but planning to have an animation when it pops.
 }
 
-//need to make it better than a yellow rectangle
+//TODO: need to make it better than a orange rectangle
 void tStack::draw() {
     sf::RectangleShape stack;
     stack.setFillColor(sf::Color::Color(255, 165, 0));

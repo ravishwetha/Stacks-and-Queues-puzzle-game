@@ -2,7 +2,6 @@
 //Copyright © 2016 TeamSQ. All rights reserved.
 
 //Ball.cpp
-
 #include "stdafx.h"
 #include "Ball.hpp"
 
@@ -33,6 +32,10 @@ Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Colo
 
 float Ball::getX() {
     return x;
+}
+
+void Ball::setX(float x) {
+    this->x = x;
 }
 
 float Ball::getY() {
@@ -143,7 +146,7 @@ void Ball::update(bool status) {
     //cout << "from Ball.cpp: Ball " << num << " isPushed: " << isPushed << "isMoving" << isMoving << ".\n";
     move();
     
-    if (x < -(dia)) {
+    if (x <= -(radius)) {
        isActive = false;
     }
 }
@@ -173,6 +176,8 @@ void Ball::draw() {
     ballText.setColor(sf::Color::White);
     ballText.setOrigin(ballCircle.getOrigin());
     ballText.setPosition(x + radius/2.0, y - radius/3.0);
+    
+    //cout << "Ball " << label << " at(" << x << ", " << y << ")\n";
     
     window->draw(ballCircle);
     window->draw(ballText);

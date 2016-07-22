@@ -11,6 +11,11 @@ tQueue::tQueue(float x, float y, float width, float height) {
     this->y = y;
     this->width = width;
     this->height = height;
+    
+    this->topLeftX = x-width/2.0;
+    this->topLeftY = y-height/2.0;
+    this->bottomRightX = x+width/2.0;
+    this->bottomRightY = y-height/2.0;
 }
 
 float tQueue::getX() {
@@ -29,6 +34,22 @@ float tQueue::getHeight() {
     return height;
 }
 
+float tQueue::gettopLeftX() {
+    return topLeftX;
+}
+
+float tQueue::gettopLeftY() {
+    return topLeftY;
+}
+
+float tQueue::getbottomRightX() {
+    return bottomRightX;
+}
+
+float tQueue::getbottomRightY() {
+    return bottomRightY;
+}
+
 int tQueue::size() {
     return toolQueue.size();
 }
@@ -41,7 +62,7 @@ void tQueue::pop() {
     if(size() == 0) {
         return;
     }
-    cout << "front Ball: " << toolQueue.front().num << " is not pushed anymore.\n";
+    //cout << "front Ball: " << toolQueue.front().num << " is not pushed anymore.\n";
     toolQueue.pop();
 }
 
@@ -49,10 +70,11 @@ Ball tQueue::front() {
     if(size() == 0) {
         return;
     }
-    cout << "draw top Ball: " << toolQueue.front().num << ".\n";
+    //cout << "draw top Ball: " << toolQueue.front().num << ".\n";
     toolQueue.front().draw();
     return toolQueue.front();
 }
+
 bool tQueue::checkForSelect(float x, float y) {
     if(x <= this->x+(width/2.0) && x >= this->x-(width/2.0) && y <= this->y+(height/2.0) && y >= this->y-(height/2.0)) {
         return true;
