@@ -281,8 +281,8 @@ void unlockNextLevel(int num) {
     //cout << "Current Level is " << num << " Next Level is " << num + 1 << " at index " << num - 1 <<".\n";
     lockedLevels.at(num - 1) = 0;
     cout << "Level " << num + 1 << " unlocked.\n";
-    cout << "Locked levels: ";
-    printINTVector(lockedLevels);
+    //cout << "Locked levels: ";
+    //printINTVector(lockedLevels);
 }
 
 void updateGame() {
@@ -323,7 +323,7 @@ int main() {
     MainMenu mainmenu;
     initialiseGame();
     currLevel = level1;
-    printINTVector(lockedLevels);
+    //printINTVector(lockedLevels);
     //cout << "Iniitialised all levels " << currLevel->num+1 << " no. of balls: " << currLevel->balls.size() << " " << level1->balls.size() << "\n";
     
     sf::Event event;
@@ -350,18 +350,29 @@ int main() {
                         if(!window->isOpen()) break;
                         cout << "selected Play.\n";
                         window->clear();
-                        switch(levelscreen.Show(*window)) {
+                        switch(levelscreen.Show(*window, 2)) {
                             case LevelScreen::LevelSelect::lvl1: cout << "selected lvl1.\n"; currLevel = level1; play = true; break;
-                            case LevelScreen::LevelSelect::lvl2: cout << "selected lvl2.\n"; if(!isLocked(2)) { currLevel = level2; play = true; } else cout << "Sorry lvl2 is locked"; break;
-                            case LevelScreen::LevelSelect::lvl3: cout << "selected lvl3.\n"; if(!isLocked(3)) { currLevel = level3; play = true; } else cout << "Sorry lvl3 is locked"; break;
+                            case LevelScreen::LevelSelect::lvl2: cout << "selected lvl2.\n"; if(!isLocked(2)) { currLevel = level2; play = true; } else cout << "Sorry lvl2 is locked.\n"; break;
+                            case LevelScreen::LevelSelect::lvl3: cout << "selected lvl3.\n"; if(!isLocked(3)) { currLevel = level3; play = true; } else cout << "Sorry lvl3 is locked.\n"; break;
                             case LevelScreen::LevelSelect::Exit: exitGame(); break;
                             case LevelScreen::LevelSelect::Nothing: ; break;
+                            default: ;
                         }
                         if(play) {
                             cout << "Loading Level " << currLevel->num+1 << "...\n";
                             gameRunning = true;
                             gameNotPaused = true; break;
                         }
+                        break;
+                    }
+                    case MainMenu::MenuResult::Help: {
+                        cout << "Clicked on help.\n";
+                        window->clear();
+                        switch(levelscreen.Show(*window, 3)) {
+                            case LevelScreen::Exitpage: cout << "Back to main menu.\n"; break;
+                            default: ;
+                        }
+                        break;
                     }
                     case MainMenu::MenuResult::Nothing: ;
                     default: ;

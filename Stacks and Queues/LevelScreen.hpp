@@ -17,7 +17,7 @@
 class LevelScreen
 {
 public:
-    enum LevelSelect{Nothing, Exit, lvl1, lvl2, lvl3};
+    enum LevelSelect{Nothing, Exit, lvl1, lvl2, lvl3, Exitpage};
     
     struct ScreenItem
     {
@@ -25,10 +25,11 @@ public:
         sf::Rect<float> rect;
         LevelSelect action;
     };
-    
-    LevelSelect Show(sf::RenderWindow& window);
+    //Types: 2 is level select screen, 3 is help page
+    LevelSelect Show(sf::RenderWindow& window, int type);
     
 private:
+    int type;
     LevelSelect GetResponse(sf::RenderWindow& window);
     LevelSelect HandleClick(int x, int y);
     std::vector<ScreenItem> ScreenItems;

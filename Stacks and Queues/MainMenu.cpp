@@ -14,6 +14,18 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
     if(!texture.loadFromFile(rPath + "MainMenu.png")) return Backup;
     sf::Sprite sprite(texture);
     
+    float qmX = RES_X*0.92;
+    float qmY = RES_Y*0.90;
+    float qxSize = 600; //image is 600x600
+    float qmScale = 0.1;
+    //Question mark image
+    sf::Texture lockTexture;
+    if(!lockTexture.loadFromFile(rPath + "questionmark.png")) cout << "Error loading questiomark.png";
+    else cout << "Drew question mark at (" << qmX << ", " << qmY << ")" << "\n";
+    sf::Sprite lockSprite(lockTexture);
+    lockSprite.setPosition(qmX, qmY);
+    lockSprite.setScale(qmScale, qmScale);
+    
     //Setup Clickable regions
     
     //Play menu item coordinates
@@ -32,10 +44,21 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
     exitButton.rect.width = RES_X*(408/1200.0);
     exitButton.action = Exit;
     
+    //Help page item coordinates
+    MenuItem helpButton;
+    helpButton.rect.top = qmY;
+    helpButton.rect.height = qxSize*qmScale;
+    helpButton.rect.left = qmX;
+    helpButton.rect.width = qxSize*qmScale;
+    helpButton.action = Help;
+    
     menuItems.push_back(playButton);
     menuItems.push_back(exitButton);
+    menuItems.push_back(helpButton);
     
+    //Draw Sprites
     window.draw(sprite);
+    window.draw(lockSprite);
     window.display();
     
     return GetMenuResponse(window);

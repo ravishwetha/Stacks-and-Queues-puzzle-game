@@ -17,7 +17,7 @@
 class MainMenu
 {
 public:
-    enum MenuResult{Nothing, Backup, Exit, Play};
+    enum MenuResult{Nothing, Backup, Exit, Play, Help};
     
     struct MenuItem
     {

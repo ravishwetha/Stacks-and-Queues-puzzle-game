@@ -5,58 +5,86 @@
 
 #include "LevelScreen.hpp"
 
-LevelScreen::LevelSelect LevelScreen::Show(sf::RenderWindow& window)
-{
-    //Load menu image from file
-    sf::Texture texture;
-    if(!texture.loadFromFile(rPath + "LevelScreen.png")) cout << "Error loading LevelScreen.png\n";
-    //else cout << "Successfully loaded LevelScreen.png.\n";
-    sf::Sprite sprite(texture);
+LevelScreen::LevelSelect LevelScreen::Show(sf::RenderWindow& window, int type) {
     
-    //Setup Clickable regions
-    
-    //Level buttons coordinates
-    ScreenItem lvl1Button;
-    lvl1Button.rect.top = RES_Y*(290/800.0);
-    lvl1Button.rect.height = RES_Y*(134/800.0);
-    lvl1Button.rect.left = RES_X*(400/1200.0);
-    lvl1Button.rect.width = RES_X*(130/1200.0);
-    lvl1Button.action = lvl1;
-    
-    ScreenItem lvl2Button;
-    lvl2Button.rect.top = RES_Y*(290/800.0);
-    lvl2Button.rect.height = RES_Y*(134/800.0);
-    lvl2Button.rect.left = RES_X*(530/1200.0);
-    lvl2Button.rect.width = RES_X*(130/1200.0);
-    lvl2Button.action = lvl2;
-
-    ScreenItem lvl3Button;
-    lvl3Button.rect.top = RES_Y*(290/800.0);
-    lvl3Button.rect.height = RES_Y*(134/800.0);
-    lvl3Button.rect.left = RES_X*(660/1200.0);
-    lvl3Button.rect.width = RES_X*(130/1200.0);
-    lvl3Button.action = lvl3;
-    
-    //Exit menu item coordinates
-    ScreenItem exitButton;
-    exitButton.rect.top = RES_Y*(500/800.0);
-    exitButton.rect.height = RES_Y*(134/800.0);
-    exitButton.rect.left = RES_X*(400/1200.0);
-    exitButton.rect.width = RES_X*(408/1200.0);
-    exitButton.action = Exit;
-    
-    ScreenItems.push_back(lvl1Button);
-    ScreenItems.push_back(lvl2Button);
-    ScreenItems.push_back(lvl3Button);
-    ScreenItems.push_back(exitButton);
-    
-    //cout << "Configured LevelScreen buttons.\n";
-    
-    window.draw(sprite);
-    drawLocks(window);
-    window.display();
-    
-    return GetResponse(window);
+    ScreenItems.clear();
+    this->type = type;
+    if(type == 2) {
+        //Load menu image from file
+        sf::Texture texture;
+        if(!texture.loadFromFile(rPath + "LevelScreen.png")) cout << "Error loading LevelScreen.png\n";
+        //else cout << "Successfully loaded LevelScreen.png.\n";
+        sf::Sprite sprite(texture);
+        
+        //Setup Clickable regions
+        
+        //Level buttons coordinates
+        ScreenItem lvl1Button;
+        lvl1Button.rect.top = RES_Y*(290/800.0);
+        lvl1Button.rect.height = RES_Y*(134/800.0);
+        lvl1Button.rect.left = RES_X*(400/1200.0);
+        lvl1Button.rect.width = RES_X*(130/1200.0);
+        lvl1Button.action = lvl1;
+        
+        ScreenItem lvl2Button;
+        lvl2Button.rect.top = RES_Y*(290/800.0);
+        lvl2Button.rect.height = RES_Y*(134/800.0);
+        lvl2Button.rect.left = RES_X*(530/1200.0);
+        lvl2Button.rect.width = RES_X*(130/1200.0);
+        lvl2Button.action = lvl2;
+        
+        ScreenItem lvl3Button;
+        lvl3Button.rect.top = RES_Y*(290/800.0);
+        lvl3Button.rect.height = RES_Y*(134/800.0);
+        lvl3Button.rect.left = RES_X*(660/1200.0);
+        lvl3Button.rect.width = RES_X*(130/1200.0);
+        lvl3Button.action = lvl3;
+        
+        //Exit menu item coordinates
+        ScreenItem exitButton;
+        exitButton.rect.top = RES_Y*(500/800.0);
+        exitButton.rect.height = RES_Y*(134/800.0);
+        exitButton.rect.left = RES_X*(400/1200.0);
+        exitButton.rect.width = RES_X*(408/1200.0);
+        exitButton.action = Exit;
+        
+        ScreenItems.push_back(lvl1Button);
+        ScreenItems.push_back(lvl2Button);
+        ScreenItems.push_back(lvl3Button);
+        ScreenItems.push_back(exitButton);
+        
+        //cout << "Configured LevelScreen buttons.\n";
+        
+        window.draw(sprite);
+        drawLocks(window);
+        window.display();
+        
+        return GetResponse(window);
+    }
+    else if(type == 3) {
+        //Load menu image from file
+        sf::Texture texture;
+        if(!texture.loadFromFile(rPath + "help.png"));
+        sf::Sprite sprite(texture);
+        
+        //Exit menu item coordinates
+        ScreenItem exitButton;
+        exitButton.rect.top = 0;
+        exitButton.rect.height = RES_Y;
+        exitButton.rect.left = 0;
+        exitButton.rect.width = RES_X;
+        exitButton.action = Exitpage;
+        
+        ScreenItems.push_back(exitButton);
+        float helpSizeX = 782;
+        float helpSizeY = 750;
+        sprite.setOrigin(helpSizeX/2.0, helpSizeY/2.0);
+        sprite.setPosition(RES_X/2.0, RES_Y2);
+        window.draw(sprite);
+        window.display();
+        
+        return GetResponse(window);
+    }
 }
 
 LevelScreen::LevelSelect LevelScreen::HandleClick(int x, int y)
@@ -111,7 +139,6 @@ void LevelScreen::drawLocks(sf::RenderWindow& window) {
         sf::Sprite lockSprite(lockTexture);
         lockSprite.setPosition(lockX, lockY);
         lockSprite.setScale(0.2, 0.2);
-        lockSprite.setColor(sf::Color::Yellow);
         window.draw(lockSprite);
     }
 }
