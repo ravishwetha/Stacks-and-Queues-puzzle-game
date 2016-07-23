@@ -4,8 +4,7 @@
 //main.cpp
 
 //#include "SplashScreen.h"
-#include "LevelScreen.hpp"
-#include "MainMenu.h"
+#include "Menu.hpp"
 #include "Level.hpp"
 
 ///Globals
@@ -319,8 +318,9 @@ int main() {
     float dTime = 0;
     
     //SplashScreen splashscreen;
-    LevelScreen levelscreen;
-    MainMenu mainmenu;
+    Menu menu;
+    //LevelScreen levelscreen;
+    //MainMenu mainmenu;
     initialiseGame();
     currLevel = level1;
     //printINTVector(lockedLevels);
@@ -343,19 +343,19 @@ int main() {
             if(!window->isOpen()) break;
             else {
                 window->clear();
-                switch(mainmenu.Show(*window)) {
-                    case MainMenu::MenuResult::Backup: backupMainMenu(); break;
-                    case MainMenu::MenuResult::Exit: exitGame(); break;
-                    case MainMenu::MenuResult::Play: {
+                switch(menu.Show(*window, 1)) {
+                    case Menu::MenuResult::Backup: backupMainMenu(); break;
+                    case Menu::MenuResult::Exit: exitGame(); break;
+                    case Menu::MenuResult::Play: {
                         if(!window->isOpen()) break;
                         cout << "selected Play.\n";
                         window->clear();
-                        switch(levelscreen.Show(*window, 2)) {
-                            case LevelScreen::LevelSelect::lvl1: cout << "selected lvl1.\n"; currLevel = level1; play = true; break;
-                            case LevelScreen::LevelSelect::lvl2: cout << "selected lvl2.\n"; if(!isLocked(2)) { currLevel = level2; play = true; } else cout << "Sorry lvl2 is locked.\n"; break;
-                            case LevelScreen::LevelSelect::lvl3: cout << "selected lvl3.\n"; if(!isLocked(3)) { currLevel = level3; play = true; } else cout << "Sorry lvl3 is locked.\n"; break;
-                            case LevelScreen::LevelSelect::Exit: exitGame(); break;
-                            case LevelScreen::LevelSelect::Nothing: ; break;
+                        switch(menu.Show(*window, 2)) {
+                            case Menu::MenuResult::lvl1: cout << "selected lvl1.\n"; currLevel = level1; play = true; break;
+                            case Menu::MenuResult::lvl2: cout << "selected lvl2.\n"; if(!isLocked(2)) { currLevel = level2; play = true; } else cout << "Sorry lvl2 is locked.\n"; break;
+                            case Menu::MenuResult::lvl3: cout << "selected lvl3.\n"; if(!isLocked(3)) { currLevel = level3; play = true; } else cout << "Sorry lvl3 is locked.\n"; break;
+                            case Menu::MenuResult::Exit: exitGame(); break;
+                            case Menu::MenuResult::Nothing: ; break;
                             default: ;
                         }
                         if(play) {
@@ -365,16 +365,16 @@ int main() {
                         }
                         break;
                     }
-                    case MainMenu::MenuResult::Help: {
+                    case Menu::MenuResult::Help: {
                         cout << "Clicked on help.\n";
                         window->clear();
-                        switch(levelscreen.Show(*window, 3)) {
-                            case LevelScreen::Exitpage: cout << "Back to main menu.\n"; break;
+                        switch(menu.Show(*window, 3)) {
+                            case Menu::MenuResult::Exitpage: cout << "Back to main menu.\n"; break;
                             default: ;
                         }
                         break;
                     }
-                    case MainMenu::MenuResult::Nothing: ;
+                    case Menu::MenuResult::Nothing: ;
                     default: ;
                 }
             }
