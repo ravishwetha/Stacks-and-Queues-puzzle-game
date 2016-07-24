@@ -105,7 +105,7 @@ int Level::checkForSPush() {
             //if(currBall.getX() == currStack.getX()) cout << currBall.getY() << ", " << (currStack.getY() - currStack.getHeight()/2.0) << ".\n";
             if(currBall.getX() == currStack.getX() && currBall.getY() >= (currStack.getY()-(currStack.getHeight()/2.0) - currBall.getRadius()) && currBall.getY() <= (currStack.getY()-(currStack.getHeight()/2.0))) {
                 
-                //cout << "ball pushed\n";
+                cout << "ball " << i << " pushed into queue " << j << ".\n";
                 balls.at(i).isPushed = true;
                 stacks.at(j).push(currBall);
                 return j;
@@ -124,15 +124,13 @@ int Level::checkForQPush() {
             tQueue currQueue = queues.at(j);
             
             //cout << currBall.getY() << ", " << currQueue.getY() << ", " << currBall.getX() << ", " << (currQueue.getX() + currQueue.getWidth()/2.0) << ".\n";
-            if(currBall.getX() <= (currQueue.getX()+(currQueue.getWidth()/2.0) + currBall.getRadius()) && currBall.getX() >= (currQueue.getX()+(currQueue.getWidth()/2.0)) && (currBall.getY() + 1 == currQueue.getY() || currBall.getY() - 2 == currQueue.getY())) {
-            
-            //if(currBall.getX() >= currQueue.gettopLeftX() && currBall.getY() >= currQueue.gettopLeftY() && currBall.getX() <= currQueue.getbottomRightX() && currBall.getY() <=currQueue.getbottomRightY()); { //alternative solution: checks if center of ball is in queue
+            if(currBall.getX() <= (currQueue.getX()+(currQueue.getWidth()/2.0) + currBall.getRadius()) && currBall.getX() >= (currQueue.getX()+(currQueue.getWidth()/2.0)) && (currBall.getY() + 5 >= currQueue.getY() && currBall.getY() - 5 <= currQueue.getY())) {
                 
-                //cout << "ball pushed\n";
                 balls.at(i).isPushed = true;
                 float currBallNewX = currBall.getX() - currQueue.getWidth();
                 balls.at(i).setX(currBallNewX);
                 queues.at(j).push(currBall);
+                cout << "ball " << i << " pushed into queue " << j << ".\n";
                 return j;
             }
         }
@@ -163,7 +161,7 @@ void Level::checkForSQSelect(float x, float y, string action) {
     
     for(int i=0; i<queues.size(); i++) {
         if(queues.at(i).checkForSelect(x, y) && queues.at(i).size() != 0) {
-            //cout << "from level.cpp: queue " << i << ".\n";
+            cout << "from level.cpp: queue " << i << ".\n";
             frontBallID = queues.at(i).front().num;
             if(action.compare("pop") == 0) {
                 //cout << "from level.cpp: pop " << frontBallID << ".\n";
@@ -171,7 +169,7 @@ void Level::checkForSQSelect(float x, float y, string action) {
                 queues.at(i).pop();
             }
             else if(action.compare("peek") == 0) {
-                //cout << "from level.cpp: front.\n";
+                cout << "from level.cpp: front.\n";
                 balls.at(frontBallID).toggleisTopped();
                 queues.at(i).front();
             }
