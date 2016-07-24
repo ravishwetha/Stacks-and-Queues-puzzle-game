@@ -1,7 +1,7 @@
 # Stacks and Queues
 A puzzle game based on the mechanics of the abstract data structures Stacks and Queues.
 
-### Current Game: version 0.2 ###
+### Current Game: version 1.0 ###
 
 #### Concepts ####
 
@@ -48,12 +48,12 @@ To make a fun and entertaining puzzle game. Originally intended to provide a mor
 
 #### Technical ####
 
-This game was written mainly in C++ and using SFML, a multimedia API. Bugs and issues are reported on this repository's issues page.
+This game was written mainly in C++ and uses SFML, a multimedia API. Bugs and issues are reported on this repository's issues page.
 
 #### Features implemented ####
 
 1. Gameplay and level creation: 
-<br>a) Basic AI of the numbered balls. They are able to detect and navigate the yellow path from one tube to another without player input regardless either of the paths they are sent to. They can check if player input for direction change is valid, stores up to one request for direction change and takes the next valid turn.
+<br>a) Basic AI of the numbered balls. They are able to detect and navigate the yellow path from one tube to another without player input regardless of the path they are sent to. They can check if player input for direction change is valid, stores up to one request for direction change and takes the next valid turn.
 <br>b) Player controls: keyboard and mouse.
 <br>c) Level status bar to show the correct order to win the game. Let's the player know if he won, lost or there was an error with the game.
 <br>d) Stacks can be used to store and reverse the order of the balls pushed into it. Peek and pop functions included.
@@ -62,13 +62,13 @@ This game was written mainly in C++ and using SFML, a multimedia API. Bugs and i
 2. Main menu design and functionality.
 3. Game can be paused and resumed, as well as exited and restarted.
 4. (NEW) Level Select screen and unlock levels by winning previous levels.
-5. (NEW) 2 Levels of increasing difficulty.
-6. (NEW) Help page for player.
+5. (NEW) Help page for player.
+6. (NEW) 3 Levels of increasing difficulty.
 
 #### Planned features for NUS Orbital 2016 Sprint 3 ####
 
 1. Queues, we had not been able to implement queues in the previous sprint, but the foundation for the integration of a Queue class and objects have been setup in the other class methods. ✅
-2. 3 Levels of increasing difficulty.
+2. 3 Levels of increasing difficulty. ✅
 3. Help page for player. ✅
 4. Music and sound effects. To make the game more engaging.
 
