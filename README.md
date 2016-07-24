@@ -72,7 +72,7 @@ This game was written mainly in C++ and uses SFML, a multimedia API. Bugs and is
 4. Music and sound effects. To make the game more engaging.
 
 ### Download ###
-Disclaimer: This game is best suited for screens that can accomodate 1200x800
+Disclaimer: This game is best suited for screens that can accomodate 1200x800 windows.
 
 Direct Download available for Mac OSX El Capitan 10.11.3 (not yet tested on other versions): Click on "Stacks and Queues 1.0.app.zip" on the repository's <> Code page then the Download button.
 
