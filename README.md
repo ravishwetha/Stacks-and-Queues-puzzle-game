@@ -58,7 +58,6 @@ This game was written mainly in C++ and uses SFML, a multimedia API. Bugs and is
 <br>c) Level status bar to show the correct order to win the game. Let's the player know if he won, lost or there was an error with the game.
 <br>d) Stacks can be used to store and reverse the order of the balls pushed into it. Peek and pop functions included.
 <br>e) (NEW) Queues can be used to store the balls pused into it. Front and dequeue functions included.
-
 2. Main menu design and functionality.
 3. Game can be paused and resumed, as well as exited and restarted.
 4. (NEW) Level Select screen and unlock levels by winning previous levels.
