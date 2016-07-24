@@ -52,7 +52,7 @@ This game was written mainly in C++ and uses SFML, a multimedia API. Bugs and is
 
 #### Features implemented ####
 
-1. Gameplay and level creation: 
+1. Gameplay: 
 <br>a) Basic AI of the numbered balls. They are able to detect and navigate the yellow path from one tube to another without player input regardless of the path they are sent to. They can check if player input for direction change is valid, stores up to one request for direction change and takes the next valid turn.
 <br>b) Player controls: keyboard and mouse.
 <br>c) Level status bar to show the correct order to win the game. Lets the player know if he won, lost or there was an error with the game.
