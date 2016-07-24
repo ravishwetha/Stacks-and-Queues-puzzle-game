@@ -3,7 +3,6 @@
 
 //tStack.cpp
 
-#include "stdafx.h"
 #include "tStack.hpp"
 
 tStack::tStack(float x, float y, float width, float height) {

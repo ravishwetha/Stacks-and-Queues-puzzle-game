@@ -3,7 +3,6 @@
 
 //tQueue.cpp
 
-#include "stdafx.h"
 #include "tQueue.hpp"
 
 tQueue::tQueue(float x, float y, float width, float height) {
@@ -62,7 +61,7 @@ void tQueue::pop() {
     if(size() == 0) {
         return;
     }
-    //cout << "front Ball: " << toolQueue.front().num << " is not pushed anymore.\n";
+    cout << "front Ball: " << toolQueue.front().num << " is not pushed anymore.\n";
     toolQueue.pop();
 }
 

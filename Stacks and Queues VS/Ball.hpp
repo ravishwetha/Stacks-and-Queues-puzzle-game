@@ -19,6 +19,17 @@ private:
     sf::Color color;
     string label;
     
+    //Private methods
+    /* Checks if next available path junction allows the ball to move in the direction that the player wishes.
+     */
+    bool onPath(float x, float y);
+    
+    /* When the ball is about to derail off the path, this function is automatically called and returns the next the appropriate direction to move.
+     */
+    int searchPath(float x, float y);
+    //TODO: make more efficient?
+    void move();
+    
 public:
     int num;
     
@@ -56,16 +67,6 @@ public:
     */
     void ballOut();
     
-    /* Checks if next available path junction allows the ball to move in the direction that the player wishes.
-     */
-    bool onPath(float x, float y);
-    
-    /* When the ball is about to derail off the path, this function is automatically called and returns the next the appropriate direction to move.
-     */
-    int searchPath(float x, float y);
-    //TODO: make more efficient?
-    void move();
-    //TODO: make more efficient?
     void update(bool status);
     void draw();
 };

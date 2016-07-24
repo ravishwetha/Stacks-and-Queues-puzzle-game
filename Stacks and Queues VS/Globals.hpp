@@ -5,15 +5,13 @@
 
 #ifndef Globals_hpp
 #define Globals_hpp
-
+#include "stdafx.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-#include "ResourcePath.hpp"
 
 using namespace std;
 
-extern std::string rPath;
 extern sf::RenderWindow* window;
 extern float RES_X;
 extern float RES_Y;

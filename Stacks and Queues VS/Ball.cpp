@@ -2,7 +2,7 @@
 //Copyright © 2016 TeamSQ. All rights reserved.
 
 //Ball.cpp
-#include "stdafx.h"
+
 #include "Ball.hpp"
 
 Ball::Ball(int num, float x, float y, float vx, float vy, float radius, sf::Color color, sf::String label) {

@@ -3,7 +3,7 @@
 
 //SplashScreen.cpp
 
-#include <stdafx.h>
+//#include <stdafx.h> //uncomment if using visual studio
 #include "Globals.hpp"
 #include "SplashScreen.h"
 
