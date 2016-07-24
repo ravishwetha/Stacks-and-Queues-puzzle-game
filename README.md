@@ -71,7 +71,11 @@ This game was written mainly in C++ and uses SFML, a multimedia API. Bugs and is
 3. Help page for player. ✅
 4. Music and sound effects. To make the game more engaging.
 
-### Install from source ###
+### Download ###
+
+Direct Download available for Mac OSX El Capitan 10.11.3 (not yet tested on other versions): Click on "Stacks and Queues 1.0.app.zip" on the repository's <> Code page then the Download button.
+
+#### Install from source ####
 
 Dependencies : SFML
 
