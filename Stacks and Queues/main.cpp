@@ -19,7 +19,7 @@ float leftF = 1.0;
 float upF = 2.0;
 float downF = 3.0;
 
-std::vector<int> lockedLevels = {0, 2, 3};
+std::vector<int> lockedLevels = {2, 3};
 std::vector<float> inTubePositionX = { RES_X, RES_X , RES_X };
 std::vector<float> inTubePositionY = { RES_Y2, RES_Y2, RES_Y2 };
 std::vector<float> ballsPeriod = { 5.0, 2.0, 2.0 };
@@ -282,16 +282,18 @@ bool isLocked(int num) {
 
 void unlockNextLevel(int num) {
     //cout << "Current Level is " << num << " Next Level is " << num + 1 << " at index " << num - 1 <<".\n";
-    lockedLevels.at(num - 1) = 0;
-    if(num != lockedLevels.size()) cout << "Level " << num + 1 << " unlocked.\n";
-    else cout << "Congratualtions! You have unlocked all levels! Thank you for playing version Stacks and Queues version 1.0.\n";
+    if(num - 1 < lockedLevels.size()) {
+        lockedLevels.at(num - 1) = 0;
+        cout << "Level " << num + 1 << " unlocked.\n";
+    }
+    else cout << "Unlocked all levels! Thank you for playing Stacks and Queues version 1.0.\n";
+    
     //cout << "Locked levels: ";
     //printINTVector(lockedLevels);
 }
 
 void updateGame() {
     int status;
-    //cout << "  Update current level: " << currLevel->num+1 << " starting number: " << currLevel->winOrder.at(0) << " no. of balls: " << currLevel->balls.size() << "\n";
     status = currLevel->updateLevel();
     switch(status) {
         case 1: cout << "Won Level " << currLevel->num+1 << ", unlocking next level... \n"; unlockNextLevel(currLevel->num+1); break; //level won
