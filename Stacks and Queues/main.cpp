@@ -4,6 +4,7 @@
 //main.cpp
 
 //#include "SplashScreen.h"
+#include <SFML/Audio.hpp>
 #include "Menu.hpp"
 #include "Level.hpp"
 
@@ -374,7 +375,7 @@ int main() {
                     }
                     case Menu::MenuResult::Help: {
                         cout << "Clicked on help.\n";
-                        window->clear();
+                        window->clear(sf::Color::White);
                         switch(menu.Show(*window, 3)) {
                             case Menu::MenuResult::Exitpage: cout << "Back to main menu.\n"; break;
                             default: ;
