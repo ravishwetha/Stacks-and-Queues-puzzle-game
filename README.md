@@ -48,7 +48,7 @@ To make a fun and entertaining puzzle game. Originally intended to provide a mor
 
 #### Technical ####
 
-This game was written mainly in C++ and uses SFML, a multimedia API. Bugs and issues are reported on this repository's issues page.
+This game was written mainly in C++ and uses SFML, a multimedia API. Bugs and issues are reported on this repository's issues page. Icons lock.ong and questionmark.png are royalty free clipart. 
 
 #### Features implemented ####
 
