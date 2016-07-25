@@ -84,3 +84,7 @@ OSX Xcode: Follow installaton procedure for sfml on Xcode:
 http://www.sfml-dev.org/tutorials/2.0/start-osx.php Set up a .xcodeproj with sfml and add the files from this repository's Stacks and Queues folder to the project. Add Resource files from this repository to the Resource folder. Compile and Build.
 
 Windows Visual Studio: Follow installation procedure for sfml on Visual Studio: http://www.sfml-dev.org/tutorials/2.3/start-vc.php. Set up new project and add files from this repository's Stacks and Queues VS folder. Add Resource folder to project. Compile and Run.
+
+### Demos ###
+Version 1.0.2: https://www.youtube.com/watch?v=k6PHwyAVn8Q&ab_channel=ShwethaRavi
+Version 0.1: https://www.youtube.com/watch?v=JgGBw237Mik&ab_channel=ShwethaRavi
