@@ -88,25 +88,8 @@ Windows Visual Studio: Follow installation procedure for sfml on Visual Studio: 
 Version 1.0.2: https://www.youtube.com/watch?v=k6PHwyAVn8Q&ab_channel=ShwethaRavi
 <br>Version 0.1: https://www.youtube.com/watch?v=JgGBw237Mik&ab_channel=ShwethaRavi
 
-<style>
-    .table {
-        width: 70%;
-        text-align: center;
-    }
-    .table th {
-        background: grey;
-        word-wrap: break-word;
-        text-align: center;
-    }
-    .table tr:nth-child(1) { background: red; }
-    .table tr:nth-child(2) { background: orange; }
-    .table tr:nth-child(3) { background: green; }
-</style>
-
-
 ### Development ###
 
-<div class="table">
 |Remarks Color|Meaning                                   |FIELD3|FIELD4                                                                                                        |
 |-------------|------------------------------------------|------|--------------------------------------------------------------------------------------------------------------|
 |             |Progress made                             |      |                                                                                                              |
@@ -173,4 +156,3 @@ Version 1.0.2: https://www.youtube.com/watch?v=k6PHwyAVn8Q&ab_channel=ShwethaRav
 |24/07/2016   |SQ version 1.0.1                          |1.00  |Redid the help page and released the mac OSX app bundle for version 1.0.1                                     |
 |             |Sprint Total:                             |30.50 |                                                                                                              |
 |             |Grand Total:                              |132.00|                                                                                                              |
-</div>
