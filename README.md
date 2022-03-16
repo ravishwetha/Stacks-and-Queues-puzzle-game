@@ -90,69 +90,69 @@ Version 1.0.2: https://www.youtube.com/watch?v=k6PHwyAVn8Q&ab_channel=ShwethaRav
 
 ### Development ###
 
-|Remarks Color|Meaning                                   |FIELD3|FIELD4                                                                                                        |
-|-------------|------------------------------------------|------|--------------------------------------------------------------------------------------------------------------|
-|             |Progress made                             |      |                                                                                                              |
-|             |Minor task complete                       |      |                                                                                                              |
-|             |Milestone reached                         |      |                                                                                                              |
-|             |Minor setback                             |      |                                                                                                              |
-|             |Major setback                             |      |                                                                                                              |
-|             |                                          |      |                                                                                                              |
-|Date         |Task                                      |Hours |Remarks                                                                                                       |
-|10/05/2016   |Liftoff                                   |6.00  |Project Ideation                                                                                              |
-|             |                                          |      |Was overseas                                                                                                  |
-|17/05/2016   |Mission Control 1                         |6.00  |Bootstrap tutorial. Java and C++ tutorials during break                                                       |
-|24/05/2016   |Mission Control 2                         |6.00  |Game Development class and environment setup                                                                  |
-|25/05/2016   |Experimenting with game development       |6.00  |Made small two player game to learn: Game loops, Frames, Controls, etc                                        |
-|27/05/2016   |More tutorials, using custom header files |5.00  |                                                                                                              |
-|29/05/2016   |Issue #1: Drawing inTube                  |1.00  |Opened and worked on it.                                                                                      |
-|             |Sprint Total:                             |30.00 |                                                                                                              |
-|29/05/2016   |Issue #4: Drawing a path for the balls... |1.00  |Opened and worked on it.                                                                                      |
-|31/05/2016   |Issue #1: Drawing inTube                  |0.50  |Completed and Closed.                                                                                         |
-|02/06/2016   |Issue #3: Drawing outTube                 |0.50  |Opened, completed and closed.                                                                                 |
-|03/06/2016   |Issue #4: Drawing a path for the balls... |1.00  |Completed and closed.                                                                                         |
-|04/06/2016   |Issue #7: Balls detect yellow line...     |3.00  |Opened issue. Worked on "Moving the balls attempt 1" branch.                                                  |
-|05/06/2016   |Issue #7: Balls detect yellow line...     |4.00  |Worked on "Moving the balls attempt 1" branch. Balls detect pixel color in front of them, quite slow.         |
-|07/06/2016   |Issue #7: Balls detect yellow line...     |3.00  |Worked on "Moving the balls attempt 1" branch. Optimisation                                                   |
-|08/06/2016   |Issue #7: Balls detect yellow line...     |2.00  |Closed "Moving the balls attempt 1", very buggy. Worked on "Moving the balls attempt 2" branch.               |
-|10/06/2016   |Issue #7: Balls detect yellow line...     |8.00  |Worked on "Moving the balls attempt 2" branch.                                                                |
-|15/06/2016   |Issue #7: Balls detect yellow line...     |3.00  |Worked on "Moving the balls attempt 2" branch. Store path coordinates and junction detection.                 |
-|17/06/2016   |Issue #7: Balls detect yellow line...     |5.00  |Merged "Moving the balls attempt 2" branch.                                                                   |
-|18/06/2016   |Issue #13: Level::draw()... bug           |2.00  |Reported, fixed bug and closed issue.                                                                         |
-|18/06/2016   |Issue #15: Pushing into Stacks            |4.00  |Set up code to store stack location and balls detect them.                                                    |
-|20/06/2016   |Issue #15: Pushing into Stacks            |4.00  |Time consuming bug, balls don't detect stacks. Overhauled code, shifted relevant functions to Level class.    |
-|22/06/2016   |Issue #15: Pushing into Stacks            |6.00  |Merged "Pushing into stacks" branch.                                                                          |
-|22/06/2016   |Issue #17: Change ball selection          |0.50  |Opened and Closed. Changed player controls.                                                                   |
-|22/06/2016   |Issue #19: Select Stack                   |1.00  |Worked on "Select and pop stack" branch                                                                       |
-|23/06/2016   |Issue #19: Select Stack                   |1.50  |Worked on "Select and pop stack" branch. Detects mouse click on stack at Level class and Stack class.         |
-|24/06/2016   |Issue #19: Select Stack                   |6.00  |Worked on "Select and pop stack" branch                                                                       |
-|25/06/2016   |Issue #19: Select Stack                   |3.00  |Worked on "Select and pop stack" branch. Stack can be selected by left mouse button                           |
-|26/06/2016   |"Select and pop stack" branch             |2.00  |Worked on "Select and pop stack" branch. Implementing pop function                                            |
-|28/06/2016   |"Select and pop stack" branch             |6.00  |Merged "Select and pop stack" branch.                                                                         |
-|28/06/2016   |Issue #8: Making level info vectors...    |1.50  |Opened 08/06/2016. Closed it. Shifted level info initialisation into main program, changed all necessary code.|
-|28/06/2016   |Issue #25: Set and check level complete...|0.50  |Opened and Closed. Level checks for win condition.                                                            |
-|28/06/2016   |Issue #24: Use right mouse button         |1.50  |Opened and Closed. Right mouse button used to peek at top ball in stack.                                      |
-|28/06/2016   |Issue #22: outTube requirement bar        |0.50  |Opened 24/06/2016. Closed it. Player can see win condition and level status. Level 1 can be played.           |
-|28/06/2016   |Issue #26: Dynamically generate...        |0.50  |Opened and Closed. Resource access full path not required.                                                    |
-|             |Sprint Total:                             |71.50 |                                                                                                              |
-|29/06/2016   |Issue #20 Create Queue class              |1.00  |Opened 22/06/2016 and created basic queue class. Will close when it works with all game functions.            |
-|29/06/2016   |Issue #20 Create Queue class              |1.00  |Attempted to add queues to Level::draw(). Bug encountered when generating yellow path to queues.              |
-|29/06/2016   |Issue #20 Create Queue class              |4.00  |Opened and worked on "stack and queue yellow path".                                                           |
-|02/07/2016   |Issue #27 resourcePath and Visual Studio  |1.00  |Opened 28/06/2016. Created a new folder with modified game files for windows visual studio.                   |
-|07/07/2016   |Issue #27 resourcePath and Visual Studio  |1.00  |Made all necessary modifications for this version.                                                            |
-|08/07/2016   |Issue #20 Create Queue class              |2.00  |Closed "stack and queue yellow path". Worked on bug.                                                          |
-|13/07/2016   |Issue #20 Create Queue class              |7.00  |Opened and worked on "queues" branch                                                                          |
-|13/07/2016   |Issue #20 Create Queue class              |2.00  |Fixed bug, queue class is completed and integrated with the game. Merged "queues" branch and closed issue.    |
-|21/07/2016   |Issue #31 Next Level System               |3.00  |Opened 15/07/2016. Worked on "next-level branch". Created level 2 and unlock level system.                    |
-|21/07/2016   |Issue #31 Next Level System               |2.00  |Worked on "next-level" branch. Level Select system, encountered arrow key double count bug in level 2.        |
-|22/07/2016   |Issue #31 Next Level System               |0.50  |Merged "next-level" branch, level selection system complete, but bug in level 2 remains.                      |
-|23/07/2016   |Issue #18 Q and E keys                    |1.00  |Opened 22/06/2016. Fixed double count bug. Closed issue.                                                      |
-|23/07/2016   |Issue #30 Add "Help and Controls" page    |1.00  |Opened 13/07/2016. Closed after creating and adding help page.                                                |
-|23/07/2016   |Issue #34 One file for menu system        |2.50  |Opened, completed and closed. Two files (.cpp and .hpp) control all menu pages instead of 6                   |
-|23/07/2016   |Issue #11 Pathcoords Vector               |2.00  |Tried to implement the proposed changes but found that the current system works better. Closed issue          |
-|24/07/2016   |Issue #35 Level 3                         |3.00  |Opened, completed and closed. Level 3 integrated!                                                             |
-|24/07/2016   |Issue #12 Public and private functions    |1.00  |Privatised certain functions and attributes, added relevant comments describing them for better practice.     |
-|24/07/2016   |"SQv1 .app bundle for mac OSX" branch     |0.50  |Compiled an app bundle for the game on OSX for version 1.                                                     |
-|24/07/2016   |SQ version 1.0.1                          |1.00  |Redid the help page and released the mac OSX app bundle for version 1.0.1                                     |
-|             |Sprint Total:                             |30.50 |                                                                                                              |
-|             |Grand Total:                              |132.00|                                                                                                              |
+|Remarks Color|Meaning                                   |FIELD3|FIELD4                                                                                                        |FIELD5             |
+|-------------|------------------------------------------|------|--------------------------------------------------------------------------------------------------------------|-------------------|
+|             |Progress made                             |      |                                                                                                              |                   |
+|             |Minor task complete                       |      |                                                                                                              |                   |
+|             |Milestone reached                         |      |                                                                                                              |                   |
+|             |Minor setback                             |      |                                                                                                              |                   |
+|             |Major setback                             |      |                                                                                                              |                   |
+|             |                                          |      |                                                                                                              |                   |
+|Date         |Task                                      |Hours |Remarks                                                                                                       |Remark Type        |
+|10/05/2016   |Liftoff                                   |6.00  |Project Ideation                                                                                              |                   |
+|             |                                          |      |Was overseas                                                                                                  |Minor setback      |
+|17/05/2016   |Mission Control 1                         |6.00  |Bootstrap tutorial. Java and C++ tutorials during break                                                       |                   |
+|24/05/2016   |Mission Control 2                         |6.00  |Game Development class and environment setup                                                                  |Minor task complete|
+|25/05/2016   |Experimenting with game development       |6.00  |Made small two player game to learn: Game loops, Frames, Controls, etc                                        |                   |
+|27/05/2016   |More tutorials, using custom header files |5.00  |                                                                                                              |                   |
+|29/05/2016   |Issue #1: Drawing inTube                  |1.00  |Opened and worked on it.                                                                                      |                   |
+|             |Sprint Total:                             |30.00 |                                                                                                              |                   |
+|29/05/2016   |Issue #4: Drawing a path for the balls... |1.00  |Opened and worked on it.                                                                                      |                   |
+|31/05/2016   |Issue #1: Drawing inTube                  |0.50  |Completed and Closed.                                                                                         |Minor task complete|
+|02/06/2016   |Issue #3: Drawing outTube                 |0.50  |Opened, completed and closed.                                                                                 |Minor task complete|
+|03/06/2016   |Issue #4: Drawing a path for the balls... |1.00  |Completed and closed.                                                                                         |Minor task complete|
+|04/06/2016   |Issue #7: Balls detect yellow line...     |3.00  |Opened issue. Worked on "Moving the balls attempt 1" branch.                                                  |                   |
+|05/06/2016   |Issue #7: Balls detect yellow line...     |4.00  |Worked on "Moving the balls attempt 1" branch. Balls detect pixel color in front of them, quite slow.         |                   |
+|07/06/2016   |Issue #7: Balls detect yellow line...     |3.00  |Worked on "Moving the balls attempt 1" branch. Optimisation                                                   |                   |
+|08/06/2016   |Issue #7: Balls detect yellow line...     |2.00  |Closed "Moving the balls attempt 1", very buggy. Worked on "Moving the balls attempt 2" branch.               |Major setback      |
+|10/06/2016   |Issue #7: Balls detect yellow line...     |8.00  |Worked on "Moving the balls attempt 2" branch.                                                                |                   |
+|15/06/2016   |Issue #7: Balls detect yellow line...     |3.00  |Worked on "Moving the balls attempt 2" branch. Store path coordinates and junction detection.                 |                   |
+|17/06/2016   |Issue #7: Balls detect yellow line...     |5.00  |Merged "Moving the balls attempt 2" branch.                                                                   |Milestone reached  |
+|18/06/2016   |Issue #13: Level::draw()... bug           |2.00  |Reported, fixed bug and closed issue.                                                                         |Minor task complete|
+|18/06/2016   |Issue #15: Pushing into Stacks            |4.00  |Set up code to store stack location and balls detect them.                                                    |                   |
+|20/06/2016   |Issue #15: Pushing into Stacks            |4.00  |Time consuming bug, balls don't detect stacks. Overhauled code, shifted relevant functions to Level class.    |Minor setback      |
+|22/06/2016   |Issue #15: Pushing into Stacks            |6.00  |Merged "Pushing into stacks" branch.                                                                          |Milestone reached  |
+|22/06/2016   |Issue #17: Change ball selection          |0.50  |Opened and Closed. Changed player controls.                                                                   |Minor task complete|
+|22/06/2016   |Issue #19: Select Stack                   |1.00  |Worked on "Select and pop stack" branch                                                                       |                   |
+|23/06/2016   |Issue #19: Select Stack                   |1.50  |Worked on "Select and pop stack" branch. Detects mouse click on stack at Level class and Stack class.         |                   |
+|24/06/2016   |Issue #19: Select Stack                   |6.00  |Worked on "Select and pop stack" branch                                                                       |                   |
+|25/06/2016   |Issue #19: Select Stack                   |3.00  |Worked on "Select and pop stack" branch. Stack can be selected by left mouse button                           |Minor task complete|
+|26/06/2016   |"Select and pop stack" branch             |2.00  |Worked on "Select and pop stack" branch. Implementing pop function                                            |                   |
+|28/06/2016   |"Select and pop stack" branch             |6.00  |Merged "Select and pop stack" branch.                                                                         |Milestone reached  |
+|28/06/2016   |Issue #8: Making level info vectors...    |1.50  |Opened 08/06/2016. Closed it. Shifted level info initialisation into main program, changed all necessary code.|Minor task complete|
+|28/06/2016   |Issue #25: Set and check level complete...|0.50  |Opened and Closed. Level checks for win condition.                                                            |Minor task complete|
+|28/06/2016   |Issue #24: Use right mouse button         |1.50  |Opened and Closed. Right mouse button used to peek at top ball in stack.                                      |Minor task complete|
+|28/06/2016   |Issue #22: outTube requirement bar        |0.50  |Opened 24/06/2016. Closed it. Player can see win condition and level status. Level 1 can be played.           |                   |
+|28/06/2016   |Issue #26: Dynamically generate...        |0.50  |Opened and Closed. Resource access full path not required.                                                    |Minor task complete|
+|             |Sprint Total:                             |71.50 |                                                                                                              |                   |
+|29/06/2016   |Issue #20 Create Queue class              |1.00  |Opened 22/06/2016 and created basic queue class. Will close when it works with all game functions.            |                   |
+|29/06/2016   |Issue #20 Create Queue class              |1.00  |Attempted to add queues to Level::draw(). Bug encountered when generating yellow path to queues.              |Minor setback      |
+|29/06/2016   |Issue #20 Create Queue class              |4.00  |Opened and worked on "stack and queue yellow path".                                                           |                   |
+|02/07/2016   |Issue #27 resourcePath and Visual Studio  |1.00  |Opened 28/06/2016. Created a new folder with modified game files for windows visual studio.                   |                   |
+|07/07/2016   |Issue #27 resourcePath and Visual Studio  |1.00  |Made all necessary modifications for this version.                                                            |                   |
+|08/07/2016   |Issue #20 Create Queue class              |2.00  |Closed "stack and queue yellow path". Worked on bug.                                                          |Minor setback      |
+|13/07/2016   |Issue #20 Create Queue class              |7.00  |Opened and worked on "queues" branch                                                                          |                   |
+|13/07/2016   |Issue #20 Create Queue class              |2.00  |Fixed bug, queue class is completed and integrated with the game. Merged "queues" branch and closed issue.    |Milestone reached  |
+|21/07/2016   |Issue #31 Next Level System               |3.00  |Opened 15/07/2016. Worked on "next-level branch". Created level 2 and unlock level system.                    |Minor task complete|
+|21/07/2016   |Issue #31 Next Level System               |2.00  |Worked on "next-level" branch. Level Select system, encountered arrow key double count bug in level 2.        |Minor setback      |
+|22/07/2016   |Issue #31 Next Level System               |0.50  |Merged "next-level" branch, level selection system complete, but bug in level 2 remains.                      |Milestone reached  |
+|23/07/2016   |Issue #18 Q and E keys                    |1.00  |Opened 22/06/2016. Fixed double count bug. Closed issue.                                                      |Minor task complete|
+|23/07/2016   |Issue #30 Add "Help and Controls" page    |1.00  |Opened 13/07/2016. Closed after creating and adding help page.                                                |Milestone reached  |
+|23/07/2016   |Issue #34 One file for menu system        |2.50  |Opened, completed and closed. Two files (.cpp and .hpp) control all menu pages instead of 6                   |Minor task complete|
+|23/07/2016   |Issue #11 Pathcoords Vector               |2.00  |Tried to implement the proposed changes but found that the current system works better. Closed issue          |Minor setback      |
+|24/07/2016   |Issue #35 Level 3                         |3.00  |Opened, completed and closed. Level 3 integrated!                                                             |Milestone reached  |
+|24/07/2016   |Issue #12 Public and private functions    |1.00  |Privatised certain functions and attributes, added relevant comments describing them for better practice.     |                   |
+|24/07/2016   |"SQv1 .app bundle for mac OSX" branch     |0.50  |Compiled an app bundle for the game on OSX for version 1.                                                     |Milestone reached  |
+|24/07/2016   |SQ version 1.0.1                          |1.00  |Redid the help page and released the mac OSX app bundle for version 1.0.1                                     |                   |
+|             |Sprint Total:                             |30.50 |                                                                                                              |                   |
+|             |Grand Total:                              |132.00|                                                                                                              |                   |
