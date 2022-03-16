@@ -103,9 +103,10 @@ Version 1.0.2: https://www.youtube.com/watch?v=k6PHwyAVn8Q&ab_channel=ShwethaRav
     .table tr:nth-child(3) { background: green; }
 </style>
 
-<div class="table">
+
 ### Development ###
 
+<div class="table">
 |Remarks Color|Meaning                                   |FIELD3|FIELD4                                                                                                        |
 |-------------|------------------------------------------|------|--------------------------------------------------------------------------------------------------------------|
 |             |Progress made                             |      |                                                                                                              |
